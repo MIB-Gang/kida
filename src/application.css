@@ -1,0 +1,44 @@
+.root{
+    -fx-base: rgb(255, 138, 0);
+    -fx-background: rgb(41, 41, 41);
+    -fx-focus-color: transparent;
+}
+
+.split-pane-divider {
+  -fx-padding: 0 ;
+  -fx-background-color: transparent;
+}
+
+.split-pane {
+    -fx-padding: 0;
+    -fx-background-color: rgb(41, 41, 41);
+}
+
+
+.button {
+	-fx-base: rgb(41, 41, 41);
+    -fx-focus-color: transparent;
+    /* -fx-background-color: transparent; */
+}
+
+/*
+.slider .track {
+	-progress : 0.4;
+	-fx-background-color: linear-gradient(to right, #2D819D -progress, #969696 -progress);
+}
+*/
+
+#bottomBar {
+	-fx-alignment: center;
+	-fx-min-height: 64;
+	-fx-background-color: rgb(19, 19, 19);
+}
+
+#sidemenu {
+	-fx-min-width: 128;
+	-fx-background-color: rgb(19, 19, 19);
+}
+
+#center {
+	-fx-alignment: center;
+}
