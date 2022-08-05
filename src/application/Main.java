@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	public void start(Stage stage) throws Exception {
-		Label hello = new Label("42 kida\nyaaay\nDeine Mutter");
+		Label hello = new Label("42 kida\nyaaay\nDeine Mutter\nMyDarling");
 		
 		Scene scene = new Scene(hello);
 		stage.setMinWidth(200);
