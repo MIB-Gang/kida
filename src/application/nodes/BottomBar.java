@@ -14,7 +14,7 @@ public class BottomBar extends HBox {
 		Label endTime = new Label("13:37");
 		
 		HBox.setHgrow(seekbar, Priority.ALWAYS);
-		
+
 		this.setId("bottomBar");
 		this.getChildren().addAll(
 				new Rectangle(128, 0),
