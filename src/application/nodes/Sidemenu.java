@@ -1,7 +1,7 @@
 package application.nodes;
 
 import application.canvas.HomeCanva;
-import application.controller.NavigationController;
+import application.controller.SceneController;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
