@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,9 +16,16 @@ import javafx.collections.ObservableList;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
+import javafx.util.Duration;
 
 public class MediaController {
 	
+	Media audio;
+	Media video;
+	MediaPlayer audioPlayer;
+	MediaPlayer videoPlayer;
+	MediaView videoView;
 	//TODO ALLES
 	
 	//private List<Song> allSongs = new ArrayList<>();
@@ -47,13 +55,35 @@ public class MediaController {
 	}
 
 	public void playSong(Song song) {
-		Media media = new Media("file:///" + song.getAudioFilePath());
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
+		if (audioPlayer.getStatus()!= MediaPlayer.Status.PLAYING) {
+			audio = new Media("file:///" + song.getAudioFilePath());
+			video = new Media ("file:///" + song.getVideoFilePath());
+			audioPlayer = new MediaPlayer(audio);
+			videoPlayer = new MediaPlayer(video);
+			videoView = new MediaView (videoPlayer);
+			audioPlayer.play();
+		}
 	}
 	
 	public void pause() {
+		if (audioPlayer.getStatus()==MediaPlayer.Status.PLAYING) {
+			audioPlayer.pause();
+			videoPlayer.pause();
+		}	
+	}
+	
+	public void nextSong(Song song) {
 		
+	}
+	
+	public void previousSong(Song song) {
+		
+		if (audioPlayer.getStatus()== MediaPlayer.Status.PLAYING ){ // && es ist nicht am Anfang
+			audioPlayer.seek(Duration.seconds(0));
+			videoPlayer.seek(Duration.seconds(0));
+		}else {
+			
+		}
 	}
 	
 	public void search() {
@@ -68,7 +98,7 @@ public class MediaController {
 		
 	}
 	
-	public void changeDate() {
+	public void changeDate(Scanner scan, Song song) {
 		
 	}
 	
