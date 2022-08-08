@@ -79,25 +79,39 @@ public class MediaController {
 	}
 	
 	public void nextSong(Song song) {
-		
+		if (allSongs.indexOf(song)!= allSongs.size()) {
+			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)+1).getAudioFilePath());
+			video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
+			audioPlayer = new MediaPlayer(audio);
+			videoPlayer = new MediaPlayer(video);
+			videoView = new MediaView (videoPlayer);
+			audioPlayer.play();
+		}
+		else {
+			audio = new Media("file:///" + allSongs.get(0).getAudioFilePath());
+			video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
+			audioPlayer = new MediaPlayer(audio);
+			videoPlayer = new MediaPlayer(video);
+			videoView = new MediaView (videoPlayer);
+			audioPlayer.play();
+		}
 	}
 	
 	public void previousSong(Song song) {
 		
-		if (audioPlayer.getStatus()== MediaPlayer.Status.PLAYING ){ // && es ist nicht am Anfang
+		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || allSongs.indexOf(song) == 0 ){
 			audioPlayer.seek(Duration.seconds(0));
 			videoPlayer.seek(Duration.seconds(0));
-		}else {
-			if (allSongs.indexOf(song)>=1) {
-				audio = new Media("file:///" + song.getAudioFilePath());
-				video = new Media ("file:///" + song.getVideoFilePath());
-				audioPlayer = new MediaPlayer(audio);
-				videoPlayer = new MediaPlayer(video);
-				videoView = new MediaView (videoPlayer);
-				audioPlayer.play();
-			}
 		}
-		
+		//if (allSongs.indexOf(song)>=1) {
+		else {
+			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)-1).getAudioFilePath());
+			video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
+			audioPlayer = new MediaPlayer(audio);
+			videoPlayer = new MediaPlayer(video);
+			videoView = new MediaView (videoPlayer);
+			audioPlayer.play();
+			}
 	}
 	
 	public void search() {
