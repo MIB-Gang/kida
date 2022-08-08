@@ -1,12 +1,25 @@
 package application.scenes;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import application.Song;
+import application.controller.MediaController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class BodyLibrary extends VBox {
 	
@@ -24,15 +37,15 @@ public class BodyLibrary extends VBox {
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
 		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
 		
-		table.setItems(getSongs());
+		table.setItems(MediaController.getAllSongs());
 		table.getColumns().addAll(titleColumn, artistColumn, genreColumn);
 		this.getChildren().add(table);
 	}
 	
 	public ObservableList<Song> getSongs() {
+		
 		ObservableList<Song> songs = FXCollections.observableArrayList();
-		songs.add(new Song());
-		songs.add(new Song());
+		
 		return songs;
 	}
 	
