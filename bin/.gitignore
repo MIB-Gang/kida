@@ -1,1 +1,13 @@
 /application/
+<<<<<<< HEAD
+=======
+/test.wav
+/test.mp3
+/like.png
+/like_empty.png
+/play.png
+/prev.png
+/skip.png
+/volume.png
+/videoPlaceholder.jpg
+>>>>>>> branch 'master' of https://github.com/MIB-Gang/kida

@@ -21,22 +21,23 @@ import javafx.scene.media.MediaPlayer;
 public class MediaController {
 	
 	//TODO ALLES
-	
-	//private List<Song> allSongs = new ArrayList<>();
 	private static ObservableList<Song> allSongs = FXCollections.observableArrayList();
-	//TODO Filepath wird ben�tigt nur, um die Lieder abzuspielen
 	
 	public void scanForMedia() {
-		// "file:///" + pathList.get(0).replace("\\", "/"
 		List<String> pathList = new ArrayList<>();
 
-		try (Stream<Path> paths = Files.walk(Paths.get("C:/Users/" + System.getProperty("user.name") + "/Music"))) {
+		try (Stream<Path> paths = Files.walk(Paths.get("C:/Users/" + System.getProperty("user.name") + "/Music"))) { // System.getProperty("user.name") gibt Benutzernamen
+			// Sucht nach Dateipfaden, wandelt diese in Strings um, schaut ob diese Strings jeweils mit "mp3" enden und wenn ja, speichert sie in Liste
 			pathList = paths.map(path -> path.toString().toLowerCase().replace("\\", "/")).filter(path -> path.endsWith("mp3")).collect(Collectors.toList());
 		} catch (IOException error) {
 			error.getMessage();
 		}
+
 				
 		for (String path: pathList) allSongs.add(new Song("t",1,"a","album","g","m",false, path,"vFP"));
+
+		// TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()")
+		
 		for (Song song: allSongs) System.out.println(song.getAudioFilePath());
 	}
 	
@@ -49,7 +50,7 @@ public class MediaController {
 	}
 
 	public void playSong(Song song) {
-		Media media = new Media("file:///" + song.getAudioFilePath());
+		Media media = new Media("file:///" + song.getAudioFilePath()); // "file:///" => außerhalb dieses Java-Projekts
 		MediaPlayer mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.play();
 	}
