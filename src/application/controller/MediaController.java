@@ -1,18 +1,19 @@
-package application;
+package application.controller;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import application.Song;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class Controller {
+public class MediaController {
 	
 	//TODO ALLES
 	
 	List<Song> allSongs = new ArrayList<>();
-	//TODO Filepath wird benötigt nur, um die Lieder abzuspielen
+	//TODO Filepath wird benï¿½tigt nur, um die Lieder abzuspielen
 	
 	public void playPlaylist(MouseEvent event) {
 		
