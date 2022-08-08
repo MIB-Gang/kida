@@ -9,6 +9,27 @@ public class Song {
 	private boolean like;
 	private String audioFilePath;
 	private String videoFilePath;
+	
+	
+	public Song() {
+		this.title = "Titel";
+		this.artist = "Interpret";
+		this.genre = "Genre";
+		this.mood = "Stimmung";
+		this.like = false;
+		this.audioFilePath = "";
+		this.videoFilePath = "";
+	}
+	
+	public Song(String title, String artist, String genre, String mood, boolean like, String audioFilePath, String videoFilePath) {
+		this.title = title;
+		this.artist = artist;
+		this.genre = genre;
+		this.mood = mood;
+		this.like = like;
+		this.audioFilePath = audioFilePath;
+		this.videoFilePath = videoFilePath;
+	}
 
 	
 	public String getAudioFilePath() {
