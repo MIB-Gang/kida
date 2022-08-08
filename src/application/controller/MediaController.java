@@ -1,5 +1,6 @@
 package application.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,6 +19,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
+
 
 public class MediaController {
 	
@@ -38,8 +40,12 @@ public class MediaController {
 		} catch (IOException error) {
 			error.getMessage();
 		}
+
+				
+		for (String path: pathList) allSongs.add(new Song("t",1,"a","album","g","m",false, path,"vFP"));
+
+		// TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()")
 		
-		for (String path: pathList) allSongs.add(new Song("t","a","g","m",false, path,"vFP")); // TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()")
 		for (Song song: allSongs) System.out.println(song.getAudioFilePath());
 	}
 	
@@ -113,6 +119,7 @@ public class MediaController {
 	public void createPlaylist() {
 		
 	}
-	
+
+
 	//TODO seekbar, volume
 }

@@ -3,7 +3,9 @@ package application;
 public class Song {
 	private int id;
 	private String title;
+	private double duration;
 	private String artist;
+	private String album;
 	private String genre;
 	private String mood;
 	private boolean like;
@@ -13,7 +15,9 @@ public class Song {
 	
 	public Song() {
 		this.title = "Titel";
+		this.duration = 0;
 		this.artist = "Interpret";
+		this.album = "Album";
 		this.genre = "Genre";
 		this.mood = "Stimmung";
 		this.like = false;
@@ -21,8 +25,9 @@ public class Song {
 		this.videoFilePath = "";
 	}
 	
-	public Song(String title, String artist, String genre, String mood, boolean like, String audioFilePath, String videoFilePath) {
+	public Song(String title, double duration, String artist, String album, String genre, String mood, boolean like, String audioFilePath, String videoFilePath) {
 		this.title = title;
+		this.duration = duration;
 		this.artist = artist;
 		this.genre = genre;
 		this.mood = mood;
@@ -65,12 +70,28 @@ public class Song {
 		this.title = title;
 	}
 
+	public double getDuration() {
+		return duration;
+	}
+
+	public void setDuration(double duration) {
+		this.duration = duration;
+	}
+
 	public String getArtist() {
 		return artist;
 	}
 
 	public void setArtist(String artist) {
 		this.artist = artist;
+	}
+
+	public String getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(String album) {
+		this.album = album;
 	}
 
 	public String getGenre() {
