@@ -88,8 +88,16 @@ public class MediaController {
 			audioPlayer.seek(Duration.seconds(0));
 			videoPlayer.seek(Duration.seconds(0));
 		}else {
-			
+			if (allSongs.indexOf(song)>=1) {
+				audio = new Media("file:///" + song.getAudioFilePath());
+				video = new Media ("file:///" + song.getVideoFilePath());
+				audioPlayer = new MediaPlayer(audio);
+				videoPlayer = new MediaPlayer(video);
+				videoView = new MediaView (videoPlayer);
+				audioPlayer.play();
+			}
 		}
+		
 	}
 	
 	public void search() {
