@@ -1,11 +1,11 @@
-package application.screens;
+package application.scenes;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class ScreenSearch extends VBox {
+public class BodySearch extends VBox {
 	
-	public ScreenSearch() {
+	public BodySearch() {
 		this.getChildren().add(new Label("Search"));
 	}
 

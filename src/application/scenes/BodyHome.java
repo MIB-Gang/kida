@@ -1,11 +1,11 @@
-package application.screens;
+package application.scenes;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class ScreenHome extends VBox {
+public class BodyHome extends VBox {
 
-	public ScreenHome() {
+	public BodyHome() {
 		this.getChildren().add(new Label("Home"));
 	}
 	

@@ -1,7 +1,7 @@
 package application;
 
-import application.screens.Scaffold;
-import application.screens.ScreenHome;
+import application.scenes.BodyHome;
+import application.scenes.Scaffold;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,7 +15,7 @@ public class Main extends Application{
 		stage.setMinWidth(1000);
 		stage.setMinHeight(700);
 		
-		stage.setScene(new Scene(new Scaffold(new ScreenHome())));		
+		stage.setScene(new Scene(new Scaffold(new BodyHome())));		
 		stage.show();
 	}
 

@@ -1,50 +1,16 @@
-.root{
-    -fx-base: rgb(255, 138, 0);
-    -fx-background: rgb(41, 41, 41);
-    -fx-focus-color: transparent;
-}
-
-.button{
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: transparent;
-    -fx-text-fill: rgb(100, 100, 100);
+.button {
+	-fx-border-color: transparent;
+	-fx-border-width: 0;
+	-fx-background-radius: 0;
+	-fx-background-color: transparent;
+	-fx-text-fill: rgb(100, 100, 100);
 }
 
 .button:hover {
 	-fx-text-fill: white;
-	-fx-font-weight: bold;
 }
 
 .button:pressed {
-    -fx-background-color: black;
-    -fx-text-fill: white;
-}
-
-.slider {
-	-fx-min-width: 200;
-}
-
-/*
-.slider .track {
-	-progress : 0.4;
-	-fx-background-color: linear-gradient(to right, #2D819D -progress, #969696 -progress);
-}
-*/
-
-#bottomBar {
-	-fx-alignment: center;
-	-fx-min-height: 64;
-	-fx-background-color: rgb(19, 19, 19);
-}
-
-#sidemenu {
-	-fx-min-width: 128;
-	-fx-background-color: rgb(19, 19, 19);
-	-fx-padding: 32;
-}
-
-#center {
-	-fx-alignment: center;
+	-fx-background-color: black;
+	-fx-text-fill: white;
 }

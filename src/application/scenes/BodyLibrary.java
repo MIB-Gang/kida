@@ -1,11 +1,11 @@
-package application.screens;
+package application.scenes;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class ScreenLibrary extends VBox {
+public class BodyLibrary extends VBox {
 
-	public ScreenLibrary() {
+	public BodyLibrary() {
 		this.getChildren().add(new Label("Library"));
 	}
 	
