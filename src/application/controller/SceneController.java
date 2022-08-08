@@ -1,13 +1,17 @@
 package application.controller;
 
-import application.scenes.Scaffold;
+import application.screens.Scaffold;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.stage.Stage;
+import javafx.scene.Scene;
 
 public class SceneController {
+	
+	private Scene scene;
 
-	public static void changeCanva(Stage stage, Node canva) {
-		stage.setScene(new Scaffold(stage, canva));
+	public void changeCanva(ActionEvent e, Node canva) {
+		scene = (Scene) ((Node) e.getSource()).getScene();
+		scene.setRoot(new Scaffold(canva));
 	}
 	
 }

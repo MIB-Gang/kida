@@ -4,23 +4,6 @@
     -fx-focus-color: transparent;
 }
 
-.split-pane-divider {
-  -fx-padding: 0 ;
-  -fx-background-color: transparent;
-}
-
-.split-pane {
-    -fx-padding: 0;
-    -fx-background-color: rgb(41, 41, 41);
-}
-
-
-.button {
-	-fx-base: rgb(41, 41, 41);
-    -fx-focus-color: transparent;
-    /* -fx-background-color: transparent; */
-}
-
 .button{
     -fx-border-color: transparent;
     -fx-border-width: 0;

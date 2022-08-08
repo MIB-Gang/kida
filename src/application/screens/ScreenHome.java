@@ -1,11 +1,11 @@
-package application.canvas;
+package application.screens;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class HomeCanva extends VBox {
+public class ScreenHome extends VBox {
 
-	public HomeCanva() {
+	public ScreenHome() {
 		this.getChildren().add(new Label("Home"));
 	}
 	

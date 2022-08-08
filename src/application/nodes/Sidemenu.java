@@ -1,28 +1,29 @@
 package application.nodes;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import application.canvas.HomeCanva;
-import application.canvas.LibraryCanva;
-import application.canvas.SearchCanva;
 import application.controller.SceneController;
+import application.screens.ScreenHome;
+import application.screens.ScreenLibrary;
+import application.screens.ScreenSearch;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Sidemenu extends VBox {
 	
-	private Map<String, Node> buttons = new HashMap<>();
+	private Map<String, Node> buttons = new LinkedHashMap<>();
 	
 	public Sidemenu() {	
 		this.setId("sidemenu");
 
-		Image logo = new Image("kida.png");
+		Image logo = new Image("/kida.png");
 		
 		ImageView logoContainer = new ImageView();
 		logoContainer.setImage(logo);
@@ -31,18 +32,15 @@ public class Sidemenu extends VBox {
 		
 		this.getChildren().addAll(logoContainer, new Rectangle(0, 32));
 		
-		buttons = Map.of(
-				"Home", new HomeCanva(),
-				"Suchen", new SearchCanva(),
-				"Bibliothek", new LibraryCanva()
-		);
+		buttons.put("Home", new ScreenHome());
+		buttons.put("Suchen", new ScreenSearch());
+		buttons.put("Bibliothek", new ScreenLibrary());
 		
 		for (String name: buttons.keySet()) {
 			Button menuButton = new Button(name);
-			menuButton.setOnAction((e) -> System.out.println(name));
+			menuButton.setFont(new Font(20));
 			SceneController controller = new SceneController();
-			//menuButton.setOnAction((e) -> controller.changeCanva(e, new LibraryCanva()));
-			//home.setOnAction((e) -> { NavigationController.changeCanva(stage, new HomeCanva()); });
+			menuButton.setOnAction((event) -> controller.changeCanva(event, buttons.get(name)));
 			this.getChildren().add(menuButton);
 		}
 		
