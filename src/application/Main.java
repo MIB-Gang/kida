@@ -11,7 +11,7 @@ public class Main extends Application{
 	
 	public void start(Stage stage) throws Exception {		
 		stage.getIcons().add(new Image("/kida_icon.png"));
-		stage.setTitle("kiɗa");
+		stage.setTitle("kida");
 		stage.setMinWidth(1000);
 		stage.setMinHeight(700);
 		

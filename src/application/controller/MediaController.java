@@ -30,7 +30,7 @@ public class MediaController {
 		} catch (IOException error) {
 			error.getMessage();
 		}
-				
+		
 		for (String path: pathList) allSongs.add(new Song("t","a","g","m",false, path,"vFP")); // TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()")
 		for (Song song: allSongs) System.out.println(song.getAudioFilePath());
 	}
