@@ -14,3 +14,7 @@
 	-fx-background-color: black;
 	-fx-text-fill: white;
 }
+
+#progressSlider .track {
+	-fx-background-color: rgb(217, 217, 217);
+}
