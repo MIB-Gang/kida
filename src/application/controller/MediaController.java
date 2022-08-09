@@ -59,7 +59,8 @@ public class MediaController {
 
 	public void playSong(Song song) {
 		
-		if (audioPlayer != null) if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) return;
+		/* Ich musste diese Zeile ändern, weil Status nicht überprüft werden kann, wenn noch kein audioPlayer erstellt wurde (null) */
+		if (audioPlayer != null) if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) return; /* return => Abbruch */
 		
 		audio = new Media("file:///" + song.getAudioFilePath());
 		//video = new Media("file:///" + song.getVideoFilePath());
