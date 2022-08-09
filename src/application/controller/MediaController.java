@@ -28,29 +28,29 @@ public class MediaController {
 	MediaPlayer audioPlayer;
 	MediaPlayer videoPlayer;
 	MediaView videoView;
-	//TODO ALLES
+	
+	/* TODO ALLES */
 	private static ObservableList<Song> allSongs = FXCollections.observableArrayList();
+	public static ObservableList<Song> getAllSongs() { return allSongs; }
+	public static void clearAllSongs() { allSongs.clear(); }
 	
 	public void scanForMedia() {
+		clearAllSongs();
 		List<String> pathList = new ArrayList<>();
 
-		try (Stream<Path> paths = Files.walk(Paths.get("C:/Users/" + System.getProperty("user.name") + "/Music"))) { // System.getProperty("user.name") gibt Benutzernamen
-			// Sucht nach Dateipfaden, wandelt diese in Strings um, schaut ob diese Strings jeweils mit "mp3" enden und wenn ja, speichert sie in Liste
+		try (Stream<Path> paths = Files.walk(Paths.get("C:/Users/" + System.getProperty("user.name") + "/Music"))) { /* System.getProperty("user.name") gibt Benutzernamen */
+			/* Sucht nach Dateipfaden, wandelt diese in Strings um, schaut ob diese Strings jeweils mit "mp3" enden und wenn ja, speichert sie in Liste */
 			pathList = paths.map(path -> path.toString().toLowerCase().replace("\\", "/")).filter(path -> path.endsWith("mp3")).collect(Collectors.toList());
 		} catch (IOException error) {
 			error.getMessage();
 		}
 
 				
-		for (String path: pathList) allSongs.add(new Song("t",1,"a","album","g","m",false, path,"vFP"));
+		for (String path: pathList) allSongs.add(new Song(path,1,"a","album","g","m",false, path,"vFP"));
 
-		// TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()")
+		/* TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()") */
 		
 		for (Song song: allSongs) System.out.println(song.getAudioFilePath());
-	}
-	
-	public static ObservableList<Song> getAllSongs() {
-		return allSongs;
 	}
 	
 	public void playPlaylist(MouseEvent event) {
@@ -58,41 +58,46 @@ public class MediaController {
 	}
 
 	public void playSong(Song song) {
-		if (audioPlayer.getStatus()!= MediaPlayer.Status.PLAYING) {
-			audio = new Media("file:///" + song.getAudioFilePath());
-			video = new Media ("file:///" + song.getVideoFilePath());
-			audioPlayer = new MediaPlayer(audio);
-			videoPlayer = new MediaPlayer(video);
-			videoView = new MediaView (videoPlayer);
-			audioPlayer.play();
-		}
+		
+		if (audioPlayer != null) if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) return;
+		
+		audio = new Media("file:///" + song.getAudioFilePath());
+		//video = new Media("file:///" + song.getVideoFilePath());
+		audioPlayer = new MediaPlayer(audio);
+		//videoPlayer = new MediaPlayer(video);
+		//videoView = new MediaView (videoPlayer);
+		audioPlayer.play();
+		
+		/* \/ BRAUCHEN WIR DAS HIER ÜBERHAUPT NOCH?? \/
 		Media media = new Media("file:///" + song.getAudioFilePath()); // "file:///" => außerhalb dieses Java-Projekts
 		MediaPlayer mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.play();
+ 		*/
+ 
 	}
 	
 	public void pause() {
 		if (audioPlayer.getStatus()==MediaPlayer.Status.PLAYING) {
 			audioPlayer.pause();
-			videoPlayer.pause();
+			//videoPlayer.pause();
 		}	
 	}
 	
 	public void nextSong(Song song) {
 		if (allSongs.indexOf(song)!= allSongs.size()) {
 			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)+1).getAudioFilePath());
-			video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
+			//video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
-			videoPlayer = new MediaPlayer(video);
-			videoView = new MediaView (videoPlayer);
+			//videoPlayer = new MediaPlayer(video);
+			//videoView = new MediaView (videoPlayer);
 			audioPlayer.play();
 		}
 		else {
 			audio = new Media("file:///" + allSongs.get(0).getAudioFilePath());
-			video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
+			//video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
-			videoPlayer = new MediaPlayer(video);
-			videoView = new MediaView (videoPlayer);
+			//videoPlayer = new MediaPlayer(video);
+			//videoView = new MediaView (videoPlayer);
 			audioPlayer.play();
 		}
 	}
@@ -101,15 +106,15 @@ public class MediaController {
 		
 		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || allSongs.indexOf(song) == 0 ){
 			audioPlayer.seek(Duration.seconds(0));
-			videoPlayer.seek(Duration.seconds(0));
+			//videoPlayer.seek(Duration.seconds(0));
 		}
-		//if (allSongs.indexOf(song)>=1) {
+		/* if (allSongs.indexOf(song)>=1) { */
 		else {
 			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)-1).getAudioFilePath());
-			video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
+			//video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
-			videoPlayer = new MediaPlayer(video);
-			videoView = new MediaView (videoPlayer);
+			//videoPlayer = new MediaPlayer(video);
+			//videoView = new MediaView (videoPlayer);
 			audioPlayer.play();
 			}
 	}
@@ -143,5 +148,5 @@ public class MediaController {
 	}
 
 
-	//TODO seekbar, volume
+	/* TODO seekbar, volume */
 }
