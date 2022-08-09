@@ -52,6 +52,18 @@ public class MediaController {
 		for (Song song: allSongs) System.out.println(song.getAudioFilePath());
 	}
 	
+	public void getMedia() {
+		audioPlayer.getMedia();
+	}
+	
+	public void getAudioPlayer() {
+		
+	}
+	
+	public void getVideoPlayer(){
+		
+	}
+	
 	public void playPlaylist(MouseEvent event) {
 		
 	}
@@ -67,12 +79,6 @@ public class MediaController {
 		//videoPlayer = new MediaPlayer(video);
 		//videoView = new MediaView (videoPlayer);
 		audioPlayer.play();
-		
-		/* \/ BRAUCHEN WIR DAS HIER ÜBERHAUPT NOCH?? \/
-		Media media = new Media("file:///" + song.getAudioFilePath()); // "file:///" => außerhalb dieses Java-Projekts
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
- 		*/
  
 	}
 	
@@ -86,7 +92,7 @@ public class MediaController {
 	public void nextSong(Song song) {
 		if (allSongs.indexOf(song)!= allSongs.size()) {
 			audioPlayer.stop();
-			videoPlayer.stop();
+			//videoPlayer.stop();
 			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)+1).getAudioFilePath());
 			//video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -96,7 +102,7 @@ public class MediaController {
 		}
 		else {
 			audioPlayer.stop();
-			videoPlayer.stop();
+			//videoPlayer.stop();
 			audio = new Media("file:///" + allSongs.get(0).getAudioFilePath());
 			//video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -109,15 +115,13 @@ public class MediaController {
 	public void previousSong(Song song) {
 		
 		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || allSongs.indexOf(song) == 0 ){
-			audioPlayer.stop();
-			videoPlayer.stop();
 			audioPlayer.seek(Duration.seconds(0));
 			//videoPlayer.seek(Duration.seconds(0));
 		}
 		/* if (allSongs.indexOf(song)>=1) { */
 		else {
 			audioPlayer.stop();
-			videoPlayer.stop();
+			//videoPlayer.stop();
 			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)-1).getAudioFilePath());
 			//video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
