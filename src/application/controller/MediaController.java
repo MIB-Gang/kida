@@ -1,6 +1,5 @@
 package application.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -80,6 +79,8 @@ public class MediaController {
 	
 	public void nextSong(Song song) {
 		if (allSongs.indexOf(song)!= allSongs.size()) {
+			audioPlayer.stop();
+			videoPlayer.stop();
 			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)+1).getAudioFilePath());
 			video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -88,6 +89,8 @@ public class MediaController {
 			audioPlayer.play();
 		}
 		else {
+			audioPlayer.stop();
+			videoPlayer.stop();
 			audio = new Media("file:///" + allSongs.get(0).getAudioFilePath());
 			video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -100,11 +103,15 @@ public class MediaController {
 	public void previousSong(Song song) {
 		
 		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || allSongs.indexOf(song) == 0 ){
+			audioPlayer.stop();
+			videoPlayer.stop();
 			audioPlayer.seek(Duration.seconds(0));
 			videoPlayer.seek(Duration.seconds(0));
 		}
 		//if (allSongs.indexOf(song)>=1) {
 		else {
+			audioPlayer.stop();
+			videoPlayer.stop();
 			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song)-1).getAudioFilePath());
 			video = new Media ("file:///" + allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
