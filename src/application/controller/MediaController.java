@@ -52,15 +52,17 @@ public class MediaController {
 		for (Song song: allSongs) System.out.println(song.getAudioFilePath());
 	}
 	
-	public void getMedia() {
-		audioPlayer.getMedia();
+	public Media getMedia() {
+		return audioPlayer.getMedia();
 	}
 	
-	public void getAudioPlayer() {
+	public Media getAudioPlayer() {
+		return null;
 		
 	}
 	
-	public void getVideoPlayer(){
+	public Media getVideoPlayer(){
+		return null;
 		
 	}
 	
