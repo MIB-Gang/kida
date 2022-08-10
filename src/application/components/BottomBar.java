@@ -8,32 +8,44 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class BottomBar extends HBox {
 		
-	private Label currentTime = new Label("00:42");
+	private Label currentTimeLabel = new Label("00:00");
 	private ProgressSlider seekbar = new ProgressSlider();
-	private Label endTime = new Label("13:37");
+	private Label endTimeLabel = new Label("00:00");
 	private ImageView volumeIcon = new ImageView();
 	private ProgressSlider volumeSlider = new ProgressSlider();
+	
+	private MediaController controller = MediaController.getInstance();
+	
+	boolean isDragged = false;
+
 
 	public BottomBar() {
 		
 		this.getChildren().addAll(
 				new Rectangle(32, 0),
-				currentTime,
+				currentTimeLabel,
 				seekbar,
-				endTime,
+				endTimeLabel,
 				new Rectangle(48, 0),
 				volumeIcon,
 				new Rectangle(12, 0),
@@ -41,17 +53,58 @@ public class BottomBar extends HBox {
 				new Rectangle(32, 0)
 		);
 		
+		volumeSlider.setValue(100);
+		
 		TimerTask seekbarProgressTask = new TimerTask() {
 			@Override
 			public void run() {
-				seekbar.setValue(seekbar.getValue()+1);
+				//seekbar.setValue(seekbar.getValue()+1);
+				Platform.runLater(() -> {
+					if (controller.getAudioPlayer() != null) {
+						double currentTime = controller.getAudioPlayer().getCurrentTime().toSeconds();
+						double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
+						int currentMinutes = (int) Math.abs(currentTime /~ 60);
+						int currentSeconds = (int) Math.abs(currentTime - currentMinutes * 60);
+						int endMinutes = (int) Math.abs((totalTime - currentTime) /~ 60);
+						int endSeconds = (int) Math.abs((totalTime - currentTime) - endMinutes * 60);
+						currentTimeLabel.setText(String.format("%02d:%02d", currentMinutes, currentSeconds));
+						endTimeLabel.setText(String.format("%02d:%02d", endMinutes, endSeconds));
+						seekbar.setValue(100 * currentTime / totalTime);
+						
+						controller.volumeChange(volumeSlider);
+					}
+	            });
 			};
 		};
+		
 		
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(seekbarProgressTask, 0, 250);
 		
 		
+		seekbar.setOnDragDetected(new EventHandler<Event>() {
+	        @Override
+	        public void handle(Event event) {
+            	controller.getAudioPlayer().pause();
+            	timer.cancel();
+	            isDragged=true;     
+	        }
+	    });
+
+		seekbar.setOnMouseReleased(new EventHandler<Event>() {
+	        @Override
+	        public void handle(Event event) {
+	            if(isDragged){
+	            	controller.getAudioPlayer().seek(Duration.seconds((double) seekbar.getValue()));
+	                //controller.playSong(controller.getAllSongs().get(0));
+	            	controller.getAudioPlayer().play();
+	        		timer.scheduleAtFixedRate(seekbarProgressTask, 0, 250);
+	                isDragged=false;
+	            }
+	        }
+	    });
+		
+			
 		applyStyle();
 	}
 	
@@ -68,5 +121,5 @@ public class BottomBar extends HBox {
 				
 		HBox.setHgrow(seekbar, Priority.ALWAYS);
 	}
-	
+
 }

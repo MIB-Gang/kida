@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 public class BodyLibrary extends VBox {
 	
 	private TableView<Song> table = new TableView<>();
+	private MediaController controller = MediaController.getInstance();
 
 	@SuppressWarnings("unchecked")
 	public BodyLibrary() {
@@ -25,16 +26,9 @@ public class BodyLibrary extends VBox {
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
 		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
 		
-		table.setItems(MediaController.getAllSongs());
+		table.setItems(controller.getAllSongs());
 		table.getColumns().addAll(titleColumn, artistColumn, genreColumn);
 		this.getChildren().add(table);
-	}
-	
-	public ObservableList<Song> getSongs() {
-		
-		ObservableList<Song> songs = FXCollections.observableArrayList();
-		
-		return songs;
 	}
 	
 }
