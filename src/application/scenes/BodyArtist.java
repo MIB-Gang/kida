@@ -1,11 +1,11 @@
-package application.canvas;
+package application.scenes;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
-public class ArtistCanva extends VBox {
+public class BodyArtist extends VBox {
 
-	public ArtistCanva() {
+	public BodyArtist() {
 		this.getChildren().add(new Label("Artist"));
 	}
 	

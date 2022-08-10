@@ -1,31 +1,39 @@
 package application.scenes;
 
-import application.nodes.BottomBar;
-import application.nodes.Sidemenu;
+import application.components.BottomBar;
+import application.components.Sidemenu;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class Scaffold extends Scene {
+public class Scaffold extends BorderPane {
 
-	private static BorderPane secondaryPane = new BorderPane();
-	static SplitPane primaryPane = new SplitPane();
+	private BorderPane secondaryPane = new BorderPane();
+	private BottomBar bottomBar = new BottomBar();
+	private Sidemenu sidemenu = new Sidemenu();
+
 	
-	public Scaffold(Stage stage, Node child) {
-		super(secondaryPane); /* primaryPane */
+	public Scaffold(Node body) {
 		this.getStylesheets().add("application.css");
-				
-		BottomBar bottomBar = new BottomBar();
-		Sidemenu sidemenu = new Sidemenu(stage);
 		
 		secondaryPane.setBottom(bottomBar);
-		secondaryPane.setLeft(sidemenu);
-		secondaryPane.setCenter(child);
-				
-		//primaryPane.getItems().addAll(sidemenu, secondaryPane);
-
+		secondaryPane.setCenter(body);
+		
+		this.setLeft(sidemenu);
+		this.setCenter(secondaryPane);
+		
+		applyStyle();
+	}
+	
+	private void applyStyle() {
+		// TODO: Override with common JavaFX Code
+		this.setStyle("-fx-base: white; -fx-background: rgb(41, 41, 41); -fx-focus-color: transparent;");
+		//this.setBackground(Background.fill(Color.rgb(41, 41, 41)));
 	}
 
 }
