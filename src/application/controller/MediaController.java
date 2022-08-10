@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import application.Song;
+import application.components.ControlElements;
 import application.components.ProgressSlider;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +25,7 @@ import javafx.util.Duration;
 public class MediaController {
 
 	private static final MediaController controller = new MediaController();
-
+	
 	public static MediaController getInstance() {
 		return controller;
 	}
@@ -107,12 +108,13 @@ public class MediaController {
 		// videoPlayer = new MediaPlayer(video);
 		// videoView = new MediaView (videoPlayer);
 		audioPlayer.play();
+		
 	}
 
-	public void pause() {
+	public void pause(Song song) {
 		if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
 			audioPlayer.pause();
-			// videoPlayer.pause();
+			//videoPlayer.pause();
 		}
 	}
 

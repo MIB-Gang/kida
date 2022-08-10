@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -23,7 +24,9 @@ public class ControlElements extends VBox {
 	private Button prevButton = new Button();
 	private Button playButton = new Button();
 	private Button nextButton = new Button();
+	private Button pauseButton = new Button();
 	private MediaController controller = MediaController.getInstance();
+	
 
 	public ControlElements() {		
 		title.setText("Never Gonna Give You Up");
@@ -39,6 +42,15 @@ public class ControlElements extends VBox {
 		playButton.setOnAction((event) -> {
 			controller.scanForMedia();
 			controller.playSong(controller.getAllSongs().get(0));
+			buttonArea.getChildren().remove(playButton);
+			buttonArea.getChildren().add(1, pauseButton);
+			
+		});
+		
+		pauseButton.setOnAction((event)->{
+			controller.pause(controller.getAllSongs().get(0));
+			buttonArea.getChildren().remove(pauseButton);
+			buttonArea.getChildren().add(1, playButton);
 		});
 		
 		nextButton.setOnAction((event) -> controller.nextSong(controller.getAllSongs().get(1)));
@@ -73,11 +85,14 @@ public class ControlElements extends VBox {
 		nextGraphic.setFitWidth(24);
 		nextGraphic.setPreserveRatio(true);
 		nextButton.setGraphic(nextGraphic);
+		ImageView pauseGraphic = new ImageView(new Image("/pause.png"));
+		pauseGraphic.setFitWidth(36);
+		pauseGraphic.setPreserveRatio(true);
+		pauseButton.setGraphic(pauseGraphic);
 		
 		videoPlaceholder.setImage(new Image("/videoPlaceholder.jpg"));
 		videoPlaceholder.setFitWidth(176);
 		videoPlaceholder.setPreserveRatio(true);
 
 	}	
-
 }
