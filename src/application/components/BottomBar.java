@@ -1,5 +1,13 @@
 package application.components;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
+import application.controller.MediaController;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -9,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class BottomBar extends HBox {
 		
@@ -31,6 +40,17 @@ public class BottomBar extends HBox {
 				volumeSlider,
 				new Rectangle(32, 0)
 		);
+		
+		TimerTask seekbarProgressTask = new TimerTask() {
+			@Override
+			public void run() {
+				seekbar.setValue(seekbar.getValue()+1);
+			};
+		};
+		
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(seekbarProgressTask, 0, 250);
+		
 		
 		applyStyle();
 	}
