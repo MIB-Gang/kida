@@ -31,10 +31,10 @@ public class MediaController {
 	}
 
 	private Media audio;
-	private Media video;
+//	private Media video;
 	private MediaPlayer audioPlayer;
 	private MediaPlayer videoPlayer;
-	private MediaView videoView;
+//	private MediaView videoView;
 
 	private Song currentSong;
 
@@ -80,6 +80,9 @@ public class MediaController {
 			System.out.println(song.getAudioFilePath());
 	}
 
+	public Song firstSong() {
+		return allSongs.get(0);
+	}
 	public MediaPlayer getAudioPlayer() {
 		return audioPlayer;
 	}
