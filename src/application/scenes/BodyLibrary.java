@@ -1,34 +1,36 @@
 package application.scenes;
 
-import application.Song;
+
 import application.controller.MediaController;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import application.controller.SceneController;
+import javafx.geometry.Insets;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class BodyLibrary extends VBox {
 	
-	private TableView<Song> table = new TableView<>();
 	private MediaController controller = MediaController.getInstance();
-
-	@SuppressWarnings("unchecked")
+	private SceneController sceneController = SceneController.getInstance();
+	
+	private Label title = new Label();
+			
 	public BodyLibrary() {
-		TableColumn<Song, String> titleColumn = new TableColumn<>("Titel");
-		TableColumn<Song, String> artistColumn = new TableColumn<>("Interpret");
-		TableColumn<Song, String> genreColumn = new TableColumn<>("Genre");
-		titleColumn.setMinWidth(100);
-		artistColumn.setMinWidth(100);
-		genreColumn.setMinWidth(100);
-		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
-		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
+		title.setText("Bibliothek");
 		
-		table.setItems(controller.getAllSongs());
-		table.getColumns().addAll(titleColumn, artistColumn, genreColumn);
-		this.getChildren().add(table);
+		Button ENTFERNEMICHSPAETER = new Button("Alle Songs verwalten");
+		ENTFERNEMICHSPAETER.setOnAction((event) -> sceneController.changeBody(event, new BodyAdmin()));
+		
+		this.getChildren().addAll(title, ENTFERNEMICHSPAETER);
+
+		
+		applyStyle();
+	}
+	
+	private void applyStyle() {
+		this.setPadding(new Insets(31.25, 32, 0, 32));
+		title.setFont(new Font(48));
 	}
 	
 }

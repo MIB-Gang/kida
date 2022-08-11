@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import application.Song;
-import application.components.ControlElements;
 import application.components.ProgressSlider;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,16 +24,16 @@ import javafx.util.Duration;
 public class MediaController {
 
 	private static final MediaController controller = new MediaController();
-	
+
 	public static MediaController getInstance() {
 		return controller;
 	}
 
 	private Media audio;
-//	private Media video;
+	private Media video;
 	private MediaPlayer audioPlayer;
 	private MediaPlayer videoPlayer;
-//	private MediaView videoView;
+	private MediaView videoView;
 
 	private Song currentSong;
 
@@ -43,6 +42,10 @@ public class MediaController {
 
 	public ObservableList<Song> getAllSongs() {
 		return allSongs;
+	}
+	
+	public void addToAllSongs(Song song) {
+		allSongs.add(song);
 	}
 
 	public void clearAllSongs() {
@@ -71,7 +74,7 @@ public class MediaController {
 
 		for (Path path : pathList) {
 			String pathString = path.toString().toLowerCase().replace("\\", "/");
-			allSongs.add(new Song(pathString, 1, "a", "album", "g", "m", false, pathString, "vFP"));
+			allSongs.add(new Song(pathString, "a", "album", "g", false, pathString, "vFP"));
 		}
 
 		/* TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()") */
@@ -80,9 +83,6 @@ public class MediaController {
 			System.out.println(song.getAudioFilePath());
 	}
 
-	public Song firstSong() {
-		return allSongs.get(0);
-	}
 	public MediaPlayer getAudioPlayer() {
 		return audioPlayer;
 	}
@@ -111,13 +111,12 @@ public class MediaController {
 		// videoPlayer = new MediaPlayer(video);
 		// videoView = new MediaView (videoPlayer);
 		audioPlayer.play();
-		
 	}
 
 	public void pause(Song song) {
 		if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
 			audioPlayer.pause();
-			//videoPlayer.pause();
+			// videoPlayer.pause();
 		}
 	}
 
@@ -195,11 +194,6 @@ public class MediaController {
 	public void volumeChange(ProgressSlider volumeSlider) {
 		if (audioPlayer != null)
 			audioPlayer.setVolume(volumeSlider.getValue() * 0.01);
-	}
-
-	public void timeChange(ProgressSlider seekbar) {
-		if (audioPlayer != null)
-			audioPlayer.seek(Duration.seconds(seekbar.getValue()));
 	}
 
 	/* TODO seekbar, volume */

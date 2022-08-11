@@ -22,6 +22,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -57,12 +58,13 @@ public class BottomBar extends HBox {
 		volumeSlider.setValue(100);		
 		
 		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
+
 		
 		
 		seekbar.setOnDragDetected(new EventHandler<Event>() {
 	        @Override
 	        public void handle(Event event) {
-            	controller.getAudioPlayer().pause();
+	        	controller.getAudioPlayer().pause();
             	if (timer != null) timer.cancel();
 	            dragDetected=true;     
 	        }

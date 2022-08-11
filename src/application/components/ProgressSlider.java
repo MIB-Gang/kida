@@ -20,7 +20,7 @@ public class ProgressSlider extends Slider {
 				String style = String.format(
 						"-fx-background-color: linear-gradient(to right, rgb(255, 138, 0) %d%%, rgb(217, 217, 217) %d%%); -fx-background-insets: 0 0 -1 0, 0, 1;",
 						newValue.intValue(), newValue.intValue());
-				trackPane.setStyle(style);
+				if (trackPane != null) trackPane.setStyle(style);
 			}
 		});
 	}

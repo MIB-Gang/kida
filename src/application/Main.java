@@ -1,7 +1,13 @@
 package application;
 
-import application.scenes.BodyHome;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import application.scenes.BodyAdmin;
+import application.scenes.BodyLibrary;
 import application.scenes.Scaffold;
+import application.stages.ImportStage;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,8 +21,16 @@ public class Main extends Application{
 		stage.setMinWidth(1000);
 		stage.setMinHeight(700);
 		
-		stage.setScene(new Scene(new Scaffold(new BodyHome())));		
+		stage.setScene(new Scene(new Scaffold(new BodyLibrary())));		
 		stage.show();
+		
+//		ImportStage importStage = new ImportStage(List.of(
+//				new File("C:/Users/" + System.getProperty("user.name") + "/Music/Get-Through_NEFFEX.mp3"),
+//				new File("C:/Users/" + System.getProperty("user.name") + "/Music/Hush-Little-Baby_The-Green-Orbs.mp3"),
+//				new File("C:/Users/" + System.getProperty("user.name") + "/Music/Positive-Fuse_French-Fuse.mp3")			
+//		));
+//		importStage.show();
+		
 	}
 
 	public static void main(String[] args) {

@@ -1,9 +1,11 @@
 package application.components;
 
-import application.scenes.BodyHome;
+import application.scenes.BodyExplore;
 import application.scenes.BodyLibrary;
+import application.scenes.BodyAdmin;
 import application.scenes.BodySearch;
 import javafx.geometry.Insets;
+import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -21,10 +23,10 @@ public class Sidemenu extends BorderPane {
 	public Sidemenu() {
 		menuContent.getChildren().addAll(logoContainer, new Rectangle(0, 32));
 
-		menuContent.getChildren().add(new MenuButton("Home", new Image("/home.png"), new BodyHome()));
 		menuContent.getChildren().add(new MenuButton("Suche", new Image("/search.png"), new BodySearch()));
 		menuContent.getChildren().add(new MenuButton("Bibliothek", new Image("/library.png"), new BodyLibrary()));
-		
+		menuContent.getChildren().add(new MenuButton("Entdecken", new Image("/explore.png"), new BodyExplore()));
+
 		this.setCenter(menuContent);
 		this.setBottom(controlElements);
 		
