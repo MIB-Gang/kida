@@ -36,7 +36,8 @@ public class BottomBar extends HBox {
 	
 	private MediaController controller = MediaController.getInstance();
 	
-	boolean isDragged = false;
+	Timer timer = new Timer();
+	boolean dragDetected = false;
 
 
 	public BottomBar() {
@@ -53,59 +54,60 @@ public class BottomBar extends HBox {
 				new Rectangle(32, 0)
 		);
 		
-		volumeSlider.setValue(100);
+		volumeSlider.setValue(100);		
 		
-		TimerTask seekbarProgressTask = new TimerTask() {
-			@Override
-			public void run() {
-				//seekbar.setValue(seekbar.getValue()+1);
-				Platform.runLater(() -> {
-					if (controller.getAudioPlayer() != null) {
-						double currentTime = controller.getAudioPlayer().getCurrentTime().toSeconds();
-						double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
-						int currentMinutes = (int) Math.abs(currentTime /~ 60);
-						int currentSeconds = (int) Math.abs(currentTime - currentMinutes * 60);
-						int endMinutes = (int) Math.abs((totalTime - currentTime) /~ 60);
-						int endSeconds = (int) Math.abs((totalTime - currentTime) - endMinutes * 60);
-						currentTimeLabel.setText(String.format("%02d:%02d", currentMinutes, currentSeconds));
-						endTimeLabel.setText(String.format("%02d:%02d", endMinutes, endSeconds));
-						seekbar.setValue(100 * currentTime / totalTime);
-						
-						controller.volumeChange(volumeSlider);
-					}
-	            });
-			};
-		};
-		
-		
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(seekbarProgressTask, 0, 250);
+		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
 		
 		
 		seekbar.setOnDragDetected(new EventHandler<Event>() {
 	        @Override
 	        public void handle(Event event) {
             	controller.getAudioPlayer().pause();
-            	timer.cancel();
-	            isDragged=true;     
+            	if (timer != null) timer.cancel();
+	            dragDetected=true;     
 	        }
 	    });
 
 		seekbar.setOnMouseReleased(new EventHandler<Event>() {
 	        @Override
 	        public void handle(Event event) {
-	            if(isDragged){
-	            	controller.getAudioPlayer().seek(Duration.seconds((double) seekbar.getValue()));
-	                //controller.playSong(controller.getAllSongs().get(0));
+	            if(dragDetected){
+					double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
+	            	controller.getAudioPlayer().seek(Duration.seconds(totalTime * 0.01 * ((double) seekbar.getValue() )));
 	            	controller.getAudioPlayer().play();
-	        		timer.scheduleAtFixedRate(seekbarProgressTask, 0, 250);
-	                isDragged=false;
+	            	timer = new Timer();
+	        		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
+	                dragDetected=false;
 	            }
 	        }
 	    });
 		
-			
 		applyStyle();
+	}
+	
+	
+	public TimerTask getSeekbarProgressTask() {
+		return new TimerTask() {
+			@Override
+			public void run() {
+				Platform.runLater(() -> {
+					if (controller.getAudioPlayer() != null) {
+						double currentTime = controller.getAudioPlayer().getCurrentTime().toSeconds();
+						double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
+						int currentMinutes = (int) Math.abs(currentTime / 60);
+						int currentSeconds = (int) Math.abs(currentTime - currentMinutes * 60);
+						int endMinutes = (int) Math.abs((totalTime - currentTime) / 60);
+						int endSeconds = (int) Math.abs((totalTime - currentTime) - endMinutes * 60);
+						currentTimeLabel.setText(String.format("%02d:%02d", currentMinutes, currentSeconds));
+						endTimeLabel.setText(String.format("%02d:%02d", endMinutes, endSeconds));
+						seekbar.setValue(100 * (currentTime / totalTime));
+						
+						controller.volumeChange(volumeSlider);
+					}
+	            });
+			};
+		};
+
 	}
 	
 	private void applyStyle() {
