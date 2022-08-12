@@ -11,6 +11,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import application.Playlist;
 import application.Song;
 import application.uiComponents.ProgressSlider;
 import javafx.collections.FXCollections;
@@ -36,6 +37,15 @@ public class MediaController {
 	private MediaView videoView;
 
 	private Song currentSong;
+	private Playlist currentPlaylist;
+
+	public Playlist getCurrentPlaylist() {
+		return currentPlaylist;
+	}
+
+	public void setCurrentPlaylist(Playlist currentPlaylist) {
+		this.currentPlaylist = currentPlaylist;
+	}
 
 	/* TODO ALLES */
 	private ObservableList<Song> allSongs = FXCollections.observableArrayList();
@@ -60,27 +70,32 @@ public class MediaController {
 		this.currentSong = currentSong;
 	}
 
-	public void scanForMedia() {
-		clearAllSongs();
-		List<Path> pathList = new ArrayList<>();
-
-		try (Stream<Path> paths = Files.walk(Paths.get("C:/Users/" + System.getProperty("user.name") + "/Music"))) {
-			// pathList = paths.map(path -> path.toString().toLowerCase().replace("\\",
-			// "/")).filter(path -> path.endsWith("mp3")).collect(Collectors.toList());
-			pathList = paths.filter(path -> path.toString().toLowerCase().endsWith("mp3")).collect(Collectors.toList());
-		} catch (IOException error) {
-			error.getMessage();
-		}
-
-		for (Path path : pathList) {
-			String pathString = path.toString().toLowerCase().replace("\\", "/");
-			allSongs.add(new Song(pathString, "a", "album", "g", false, pathString, "vFP"));
-		}
-
-		/* TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()") */
-
-		for (Song song : allSongs)
-			System.out.println(song.getAudioFilePath());
+//	public void scanForMedia() {
+//		clearAllSongs();
+//		List<Path> pathList = new ArrayList<>();
+//
+//		try (Stream<Path> paths = Files.walk(Paths.get("C:/Users/" + System.getProperty("user.name") + "/Music"))) {
+//			// pathList = paths.map(path -> path.toString().toLowerCase().replace("\\",
+//			// "/")).filter(path -> path.endsWith("mp3")).collect(Collectors.toList());
+//			pathList = paths.filter(path -> path.toString().toLowerCase().endsWith("mp3")).collect(Collectors.toList());
+//		} catch (IOException error) {
+//			error.getMessage();
+//		}
+//
+//		for (Path path : pathList) {
+//			String pathString = path.toString().toLowerCase().replace("\\", "/");
+//			allSongs.add(new Song(pathString, "a", "album", "g", false, pathString, "vFP"));
+//		}
+//
+//		/* TODO: Austauschen mit richtigen Song-Infos (Metadaten / "properties()") */
+//
+//		for (Song song : allSongs)
+//			System.out.println(song.getAudioFilePath());
+//	}
+	
+	public void proStart() {
+		setCurrentSong(currentPlaylist.get(0));
+		playSong(currentSong);
 	}
 
 	public MediaPlayer getAudioPlayer() {
@@ -95,12 +110,10 @@ public class MediaController {
 
 	}
 
+	public void play() {
+		audioPlayer.play();
+	}
 	public void playSong(Song song) {
-
-		/*
-		 * Ich musste diese Zeile ändern, weil Status nicht überprüft werden kann,
-		 * wenn noch kein audioPlayer erstellt wurde (null)
-		 */
 		if (audioPlayer != null)
 			if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING)
 				return; /* return => Abbruch */
@@ -113,18 +126,18 @@ public class MediaController {
 		audioPlayer.play();
 	}
 
-	public void pause(Song song) {
-		if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+	public void pause() {
+//		if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
 			audioPlayer.pause();
 			// videoPlayer.pause();
-		}
+//		}
 	}
 
-	public void nextSong(Song song) {
-		if (allSongs.indexOf(song) != allSongs.size()) {
+	public void nextSong() {
+		if (allSongs.indexOf(currentSong) != currentPlaylist.size()) {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song) + 1).getAudioFilePath());
+			audio = new Media("file:///" + currentPlaylist.get(currentPlaylist.indexOf(currentSong) + 1).getAudioFilePath());
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -134,7 +147,7 @@ public class MediaController {
 		} else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + allSongs.get(0).getAudioFilePath());
+			audio = new Media("file:///" + currentPlaylist.get(0).getAudioFilePath());
 			// video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
 			// videoPlayer = new MediaPlayer(video);
@@ -143,9 +156,9 @@ public class MediaController {
 		}
 	}
 
-	public void previousSong(Song song) {
+	public void previousSong() {
 
-		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || allSongs.indexOf(song) == 0) {
+		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || currentPlaylist.indexOf(currentSong) == 0) {
 			audioPlayer.seek(Duration.seconds(0));
 			// videoPlayer.seek(Duration.seconds(0));
 		}
@@ -153,7 +166,7 @@ public class MediaController {
 		else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + allSongs.get(allSongs.indexOf(song) - 1).getAudioFilePath());
+			audio = new Media("file:///" + currentPlaylist.get(currentPlaylist.indexOf(currentSong) - 1).getAudioFilePath());
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -164,30 +177,6 @@ public class MediaController {
 	}
 
 	public void search() {
-
-	}
-
-	public void sort() {
-
-	}
-
-	public void addLibrary() {
-
-	}
-
-	public void changeDate(Scanner scan, Song song) {
-
-	}
-
-	public void deleteLibrary() {
-
-	}
-
-	public void generatePlaylist() {
-
-	}
-
-	public void createPlaylist() {
 
 	}
 

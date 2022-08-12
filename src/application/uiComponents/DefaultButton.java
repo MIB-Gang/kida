@@ -20,7 +20,7 @@ public class DefaultButton extends Button {
 	}
 	
 	private void applyStyle() {
-		this.setFont(new Font(18));
+//		this.setFont(new Font(18));
 
 		this.setStyle(defaultStyle);
 		this.setOnMouseEntered(e -> this.setStyle(hoverStyle));

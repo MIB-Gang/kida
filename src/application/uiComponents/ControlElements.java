@@ -37,10 +37,9 @@ public class ControlElements extends VBox {
 		
 		buttonArea.getChildren().addAll(prevButton, playButton, nextButton);
 		
-		prevButton.setOnAction((event) -> controller.previousSong(controller.getAllSongs().get(2)));
+		prevButton.setOnAction((event) -> controller.previousSong());
 	
 		playButton.setOnAction((event) -> {
-			controller.scanForMedia();
 			controller.playSong(controller.getAllSongs().get(0));
 			buttonArea.getChildren().remove(playButton);
 			buttonArea.getChildren().add(1, pauseButton);
@@ -48,12 +47,12 @@ public class ControlElements extends VBox {
 		});
 		
 		pauseButton.setOnAction((event)->{
-			controller.pause(controller.getAllSongs().get(0));
+			controller.pause();
 			buttonArea.getChildren().remove(pauseButton);
 			buttonArea.getChildren().add(1, playButton);
 		});
 		
-		nextButton.setOnAction((event) -> controller.nextSong(controller.getAllSongs().get(1)));
+		nextButton.setOnAction((event) -> controller.nextSong());
 		
 		this.getChildren().addAll(videoPlaceholder, new Rectangle(0, 16), infoArea, new Rectangle(0, 8), buttonArea);
 		
