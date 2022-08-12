@@ -1,4 +1,4 @@
-package application.components;
+package application.uiComponents;
 
 import application.controller.MediaController;
 import javafx.geometry.Pos;

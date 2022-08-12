@@ -1,7 +1,7 @@
 package application.scenes;
 
-import application.components.BottomBar;
-import application.components.Sidemenu;
+import application.uiComponents.BottomBar;
+import application.uiComponents.Sidemenu;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
@@ -20,9 +20,13 @@ public class Scaffold extends BorderPane {
 	private BottomBar bottomBar = new BottomBar();
 	private Sidemenu sidemenu = new Sidemenu();
 	
-//	public void setBody(Node body) {
-//		secondaryPane.setCenter(body);
-//	}
+	public Node getBody() {
+		return secondaryPane.getCenter();
+	}
+	
+	public void setBody(Node body) {
+		secondaryPane.setCenter(body);
+	}
 
 	public Scaffold(Node body) {
 		this.getStylesheets().add("application.css");

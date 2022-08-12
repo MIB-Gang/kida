@@ -1,4 +1,4 @@
-package application.components;
+package application.uiComponents;
 
 import application.controller.SceneController;
 import javafx.scene.Node;

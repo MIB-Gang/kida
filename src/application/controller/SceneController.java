@@ -1,20 +1,13 @@
 package application.controller;
 
 import java.io.File;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import application.scenes.Scaffold;
 import application.stages.ImportStage;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 

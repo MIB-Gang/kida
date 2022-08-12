@@ -7,6 +7,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import application.Song;
 import application.controller.MediaController;
+import application.uiComponents.DefaultButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -35,7 +36,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ImportStage extends Stage {
-	
+
 	private MediaController controller = MediaController.getInstance();
 
 	private BorderPane primaryPane = new BorderPane();
@@ -52,10 +53,10 @@ public class ImportStage extends Stage {
 	TextField artistField = new TextField("Interpret");
 	TextField albumField = new TextField("Album");
 	TextField genreField = new TextField("Genre");
-	Button saveEntryButton = new Button("Speichern");
+	DefaultButton saveEntryButton = new DefaultButton("Speichern");
 	Button nextEntryButton = new Button("Nächster");
 	Button previousEntryButton = new Button("Vorherige");
-	
+
 	String selectedFilePath = "";
 
 	public ImportStage(List<File> files) {
@@ -67,7 +68,6 @@ public class ImportStage extends Stage {
 		fileTable.getColumns().add(column);
 		fileTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-		
 		fileTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
 			@Override
 			public void changed(ObservableValue<?> observableValue, Object oldValue, Object newValue) {
@@ -81,24 +81,19 @@ public class ImportStage extends Stage {
 				}
 			}
 		});
-		
+
 		saveEntryButton.setOnAction(new EventHandler<ActionEvent>() {
-	        @Override public void handle(ActionEvent e) {
-	            controller.addToAllSongs(new Song(
-	            		titleField.getText(), 
-	            		artistField.getText(), 
-	            		albumField.getText(), 
-	            		genreField.getText(), 
-	            		false, 
-	            		selectedFilePath, 
-	            		"video"
-	            ));
-	        }
-	    });
+			@Override
+			public void handle(ActionEvent e) {
+				controller.addToAllSongs(new Song(titleField.getText(), artistField.getText(), albumField.getText(),
+						genreField.getText(), false, selectedFilePath, "video"));
+			}
+		});
 
 		textFieldArea.getChildren().addAll(titleField, artistField, albumField, genreField, saveEntryButton);
 		buttonArea.getChildren().addAll(previousEntryButton, nextEntryButton);
 
+		
 		secondaryPane.setTop(headline);
 		secondaryPane.setCenter(textFieldArea);
 		secondaryPane.setBottom(buttonArea);
@@ -116,10 +111,12 @@ public class ImportStage extends Stage {
 		this.getIcons().add(new Image("/kida_icon.png"));
 		this.setTitle("Füge Songdaten hinzu");
 		this.setMinWidth(640);
-		this.setMinHeight(420);
+		this.setMinHeight(450);
 		
-		column.setMinWidth(458);
-		secondaryPane.setMaxWidth(148);
+		saveEntryButton.setbackgroundColor("686868");
+
+		secondaryPane.setMinWidth(300);
+		secondaryPane.setMaxWidth(300);
 
 		textFieldArea.setAlignment(Pos.CENTER);
 		buttonArea.setAlignment(Pos.CENTER);

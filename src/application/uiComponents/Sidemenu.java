@@ -1,4 +1,4 @@
-package application.components;
+package application.uiComponents;
 
 import application.scenes.BodyExplore;
 import application.scenes.BodyLibrary;

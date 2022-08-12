@@ -1,4 +1,4 @@
-package application.components;
+package application.uiComponents;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,7 +55,8 @@ public class BottomBar extends HBox {
 				new Rectangle(32, 0)
 		);
 		
-		volumeSlider.setValue(100);		
+		/* VOLUMESLIDER FUNKTIONIERT NOCH NICHT SO RICHTIG BEI SCENENWECHSEL */
+		if (controller.getAudioPlayer() != null) volumeSlider.setValue(controller.getAudioPlayer().getVolume() * 100);		
 		
 		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
 
