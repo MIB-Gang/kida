@@ -1,7 +1,7 @@
 package application.scenes;
 
 
-import application.controller.MediaController;
+import application.controller.PlayerController;
 import application.controller.SceneController;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -11,7 +11,7 @@ import javafx.scene.text.Font;
 
 public class BodyLibrary extends VBox {
 	
-	private MediaController controller = MediaController.getInstance();
+	private PlayerController controller = PlayerController.getInstance();
 	private SceneController sceneController = SceneController.getInstance();
 	
 	private Label title = new Label();

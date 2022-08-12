@@ -2,6 +2,7 @@ package application.scenes;
 
 import application.Song;
 import application.controller.MediaController;
+import application.controller.PlayerController;
 import application.controller.SceneController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,8 +19,9 @@ import javafx.scene.layout.VBox;
 
 public class BodyAdmin extends VBox {
 	
-	private MediaController controller = MediaController.getInstance();
+	private PlayerController playerController = PlayerController.getInstance();
 	private SceneController sceneController = SceneController.getInstance();
+	private MediaController mediaController = MediaController.getInstance();
 	
 	private TableView<Song> table = new TableView<>();
 	
@@ -37,7 +39,7 @@ public class BodyAdmin extends VBox {
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
 		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
 		
-		table.setItems(controller.getAllSongs());
+		table.setItems(mediaController.getAllSongs());
 		table.getColumns().addAll(titleColumn, artistColumn, genreColumn);
 		this.getChildren().addAll(importButton, table);
 		
@@ -47,6 +49,8 @@ public class BodyAdmin extends VBox {
             public void handle(MouseEvent event) {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
                     // TODO: Doppelgeklickten Eintrag als aktuellen Song auswählten
+                	playerController.updateCurrentSong(table.getSelectionModel().getSelectedItem());
+                	playerController.play();
                     System.out.println(table.getSelectionModel().getSelectedItem().getTitle());
                 }
                 if(event.getButton() == MouseButton.SECONDARY) {

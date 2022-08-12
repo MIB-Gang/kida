@@ -3,7 +3,7 @@ package application.uiComponents;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import application.controller.MediaController;
+import application.controller.PlayerController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -35,7 +35,7 @@ public class BottomBar extends HBox {
 	private ImageView volumeIcon = new ImageView();
 	private ProgressSlider volumeSlider = new ProgressSlider();
 	
-	private MediaController controller = MediaController.getInstance();
+	private PlayerController controller = PlayerController.getInstance();
 	
 	Timer timer = new Timer();
 	boolean dragDetected = false;

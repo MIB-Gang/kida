@@ -7,6 +7,7 @@ import javax.swing.GroupLayout.Alignment;
 
 import application.Song;
 import application.controller.MediaController;
+import application.controller.PlayerController;
 import application.uiComponents.DefaultButton;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -37,7 +38,8 @@ import javafx.stage.Stage;
 
 public class ImportStage extends Stage {
 
-	private MediaController controller = MediaController.getInstance();
+	private MediaController mediaController = MediaController.getInstance();
+
 
 	private BorderPane primaryPane = new BorderPane();
 	private BorderPane secondaryPane = new BorderPane();
@@ -85,7 +87,7 @@ public class ImportStage extends Stage {
 		saveEntryButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				controller.addToAllSongs(new Song(titleField.getText(), artistField.getText(), albumField.getText(),
+				mediaController.addToAllSongs(new Song(titleField.getText(), artistField.getText(), albumField.getText(),
 						genreField.getText(), false, selectedFilePath, "video"));
 			}
 		});

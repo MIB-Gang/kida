@@ -1,6 +1,6 @@
 package application.uiComponents;
 
-import application.controller.MediaController;
+import application.controller.PlayerController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +25,7 @@ public class ControlElements extends VBox {
 	private Button playButton = new Button();
 	private Button nextButton = new Button();
 	private Button pauseButton = new Button();
-	private MediaController controller = MediaController.getInstance();
+	private PlayerController playerController = PlayerController.getInstance();
 	
 
 	public ControlElements() {		
@@ -37,22 +37,22 @@ public class ControlElements extends VBox {
 		
 		buttonArea.getChildren().addAll(prevButton, playButton, nextButton);
 		
-		prevButton.setOnAction((event) -> controller.previousSong());
+		prevButton.setOnAction((event) -> playerController.previousSong());
 	
 		playButton.setOnAction((event) -> {
-			controller.playSong(controller.getAllSongs().get(0));
+			playerController.play();
 			buttonArea.getChildren().remove(playButton);
 			buttonArea.getChildren().add(1, pauseButton);
 			
 		});
 		
 		pauseButton.setOnAction((event)->{
-			controller.pause();
+			playerController.pause();
 			buttonArea.getChildren().remove(pauseButton);
 			buttonArea.getChildren().add(1, playButton);
 		});
 		
-		nextButton.setOnAction((event) -> controller.nextSong());
+		nextButton.setOnAction((event) -> playerController.nextSong());
 		
 		this.getChildren().addAll(videoPlaceholder, new Rectangle(0, 16), infoArea, new Rectangle(0, 8), buttonArea);
 		
