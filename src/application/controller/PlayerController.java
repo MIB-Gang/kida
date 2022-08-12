@@ -90,6 +90,7 @@ public class PlayerController {
 			audioPlayer.stop();
 			// videoPlayer.stop();
 			audio = new Media("file:///" + currentPlaylist.get(currentPlaylist.indexOf(currentSong) + 1).getAudioFilePath());
+			setCurrentSong(currentPlaylist.get(currentPlaylist.indexOf(currentSong) + 1));
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -110,7 +111,7 @@ public class PlayerController {
 
 	public void previousSong() {
 
-		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || currentPlaylist.indexOf(currentSong) == 0) {
+		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(2)) || currentPlaylist.indexOf(currentSong) == 0) {
 			audioPlayer.seek(Duration.seconds(0));
 			// videoPlayer.seek(Duration.seconds(0));
 		}
@@ -118,6 +119,8 @@ public class PlayerController {
 			audioPlayer.stop();
 			// videoPlayer.stop();
 			audio = new Media("file:///" + currentPlaylist.get(currentPlaylist.indexOf(currentSong) - 1).getAudioFilePath());
+			setCurrentSong(currentPlaylist.get(currentPlaylist.indexOf(currentSong) - 1));
+
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
