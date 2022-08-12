@@ -42,6 +42,10 @@ public class PlayerController {
 	public void setCurrentSong(Song currentSong) {
 		this.currentSong = currentSong;
 	}
+	
+	public void initCurrentSong() {
+		updateCurrentSong(currentPlaylist.get(0));
+	}
 
 	public void updateCurrentSong(Song currentSong) {
 		this.currentSong = currentSong;

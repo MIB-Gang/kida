@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -56,8 +57,6 @@ public class ImportStage extends Stage {
 	TextField albumField = new TextField("Album");
 	TextField genreField = new TextField("Genre");
 	DefaultButton saveEntryButton = new DefaultButton("Speichern");
-	Button nextEntryButton = new Button("Nächster");
-	Button previousEntryButton = new Button("Vorherige");
 
 	String selectedFilePath = "";
 
@@ -78,7 +77,7 @@ public class ImportStage extends Stage {
 					ObservableList<?> selectedCells = selectionModel.getSelectedCells();
 					TablePosition<Object, ?> tablePosition = (TablePosition<Object, ?>) selectedCells.get(0);
 					Object val = tablePosition.getTableColumn().getCellData(newValue);
-					selectedFilePath = (String) val;
+					selectedFilePath = ((String) val).replace("\\", "/");
 					headline.setText((String) val);
 				}
 			}
@@ -92,9 +91,8 @@ public class ImportStage extends Stage {
 			}
 		});
 
-		textFieldArea.getChildren().addAll(titleField, artistField, albumField, genreField, saveEntryButton);
-		buttonArea.getChildren().addAll(previousEntryButton, nextEntryButton);
-
+		textFieldArea.getChildren().addAll(titleField, artistField, albumField, genreField);
+		buttonArea.getChildren().add(saveEntryButton);
 		
 		secondaryPane.setTop(headline);
 		secondaryPane.setCenter(textFieldArea);
@@ -121,9 +119,11 @@ public class ImportStage extends Stage {
 		secondaryPane.setMaxWidth(300);
 
 		textFieldArea.setAlignment(Pos.CENTER);
+		secondaryPane.setBackground(Background.fill(Color.rgb(19, 19, 19)));
 		buttonArea.setAlignment(Pos.CENTER);
-
-		fileTable.setBackground(Background.fill(Color.rgb(19, 19, 19)));
+		secondaryPane.setPadding(new Insets(32));
+		
+		fileTable.setStyle("-fx-base: transparent; -fx-background-color: #292929; -fx-text-fill: white;");
 	}
 
 }

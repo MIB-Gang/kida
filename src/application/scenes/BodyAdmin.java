@@ -27,6 +27,7 @@ public class BodyAdmin extends VBox {
 	
 	private Button importButton = new Button();
 	
+	
 	@SuppressWarnings("unchecked")
 	public BodyAdmin() {
 		TableColumn<Song, String> titleColumn = new TableColumn<>("Titel");
@@ -54,9 +55,10 @@ public class BodyAdmin extends VBox {
                     System.out.println(table.getSelectionModel().getSelectedItem().getTitle());
                 }
                 if(event.getButton() == MouseButton.SECONDARY) {
-                    ContextMenu cm = new ContextMenu();
+                	ContextMenu cm = new ContextMenu();
                     MenuItem mi = new MenuItem("Zu Playlist hinzufügen");
-                    cm.getItems().add(mi);
+
+                	cm.getItems().add(mi);
                     cm.show(table, event.getScreenX(), event.getScreenY());
                 }
             }

@@ -14,8 +14,7 @@ public class MediaController {
 	private List<Playlist> allPlaylists = new ArrayList<>();
 	
 	public MediaController() {
-		allSongs.add(new Song("titleField.getText()", "artistField.getText()", "albumField.getText()",
-						"genreField.getText()", false, "selectedFilePath", "video"));
+
 	}
 	
 	public void addToAllSongs(Song song) {
