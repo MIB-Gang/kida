@@ -33,9 +33,9 @@ public class BodyAdmin extends VBox {
 		TableColumn<Song, String> titleColumn = new TableColumn<>("Titel");
 		TableColumn<Song, String> artistColumn = new TableColumn<>("Interpret");
 		TableColumn<Song, String> genreColumn = new TableColumn<>("Genre");
-		titleColumn.setMinWidth(100);
-		artistColumn.setMinWidth(100);
-		genreColumn.setMinWidth(100);
+		titleColumn.setMinWidth(150);
+		artistColumn.setMinWidth(150);
+		genreColumn.setMinWidth(150);
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
 		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
@@ -49,16 +49,23 @@ public class BodyAdmin extends VBox {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
-                    // TODO: Doppelgeklickten Eintrag als aktuellen Song auswählten
+                    // TODO: Doppelgeklickten Eintrag als aktuellen Song auswï¿½hlten
                 	playerController.updateCurrentSong(table.getSelectionModel().getSelectedItem());
                 	playerController.play();
                     System.out.println(table.getSelectionModel().getSelectedItem().getTitle());
                 }
                 if(event.getButton() == MouseButton.SECONDARY) {
+<<<<<<< HEAD
                 	ContextMenu cm = new ContextMenu();
                     MenuItem mi = new MenuItem("Zu Playlist hinzufügen");
 
                 	cm.getItems().add(mi);
+=======
+                    ContextMenu cm = new ContextMenu();
+                    MenuItem mi = new MenuItem("Zu Playlist hinzufuegen");
+                    MenuItem mi1 = new MenuItem("Umbenennen");
+                    cm.getItems().addAll(mi,mi1);
+>>>>>>> branch 'master' of https://github.com/MIB-Gang/kida
                     cm.show(table, event.getScreenX(), event.getScreenY());
                 }
             }
