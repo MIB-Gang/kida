@@ -27,6 +27,9 @@ public class BodyAdmin extends VBox {
 	
 	private Button importButton = new Button();
 	
+    ContextMenu cm = new ContextMenu();
+    MenuItem mi = new MenuItem("Zu Playlist hinzufuegen");
+    MenuItem mi1 = new MenuItem("Umbenennen");
 	
 	@SuppressWarnings("unchecked")
 	public BodyAdmin() {
@@ -44,7 +47,6 @@ public class BodyAdmin extends VBox {
 		table.getColumns().addAll(titleColumn, artistColumn, genreColumn);
 		this.getChildren().addAll(importButton, table);
 		
-		
 		table.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -55,17 +57,7 @@ public class BodyAdmin extends VBox {
                     System.out.println(table.getSelectionModel().getSelectedItem().getTitle());
                 }
                 if(event.getButton() == MouseButton.SECONDARY) {
-<<<<<<< HEAD
-                	ContextMenu cm = new ContextMenu();
-                    MenuItem mi = new MenuItem("Zu Playlist hinzufügen");
-
-                	cm.getItems().add(mi);
-=======
-                    ContextMenu cm = new ContextMenu();
-                    MenuItem mi = new MenuItem("Zu Playlist hinzufuegen");
-                    MenuItem mi1 = new MenuItem("Umbenennen");
                     cm.getItems().addAll(mi,mi1);
->>>>>>> branch 'master' of https://github.com/MIB-Gang/kida
                     cm.show(table, event.getScreenX(), event.getScreenY());
                 }
             }
