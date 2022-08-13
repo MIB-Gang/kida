@@ -45,7 +45,11 @@ public class PlayerController {
 	
 	public void initCurrentSong() {
 		// TODO: ist allSongs (bzw. currentPlaylist?) empty??? =>> FEHLERMELDUNG: "Du hast noch keine Songs hinzugefügt..."
-		updateCurrentSong(currentPlaylist.get(0));
+		if (currentPlaylist.isEmpty()) {
+			updateCurrentSong(currentPlaylist.get(0));
+		}
+		else {
+		}
 	}
 
 	public void updateCurrentSong(Song currentSong) {
@@ -75,11 +79,11 @@ public class PlayerController {
 	}
 
 	public void play() {
-		// TODO: currentSong != null? bzw. audioPlayer != null?
-		audioPlayer.play();
+		if(currentSong != null) {
+			audioPlayer.play();
+		}
 	}
 	
-
 	public void pause() {
 //		if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
 			audioPlayer.pause();
@@ -98,7 +102,7 @@ public class PlayerController {
 			audioPlayer = new MediaPlayer(audio);
 			// videoPlayer = new MediaPlayer(video);
 			// videoView = new MediaView (videoPlayer);
-			audioPlayer.play();
+			play();
 		} else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
@@ -108,13 +112,13 @@ public class PlayerController {
 			audioPlayer = new MediaPlayer(audio);
 			// videoPlayer = new MediaPlayer(video);
 			// videoView = new MediaView (videoPlayer);
-			audioPlayer.play();
+			play();
 		}
 	}
 
 	public void previousSong() {
 
-		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(2)) || currentPlaylist.indexOf(currentSong) == 0) {
+		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || currentPlaylist.indexOf(currentSong) == 0) {
 			audioPlayer.seek(Duration.seconds(0));
 			// videoPlayer.seek(Duration.seconds(0));
 		}
@@ -129,13 +133,8 @@ public class PlayerController {
 			audioPlayer = new MediaPlayer(audio);
 			// videoPlayer = new MediaPlayer(video);
 			// videoView = new MediaView (videoPlayer);
-			audioPlayer.play();
+			play();
 		}
-	}
-
-	
-	public void search() {
-
 	}
 
 	public void volumeChange(ProgressSlider volumeSlider) {

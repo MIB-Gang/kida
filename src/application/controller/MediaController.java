@@ -1,7 +1,7 @@
 package application.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import application.Playlist;
 import application.Song;
@@ -10,8 +10,13 @@ public class MediaController {
 	
 	private static MediaController mediaController = new MediaController();
 	
-	private Playlist allSongs = new Playlist();
-	private List<Playlist> allPlaylists = new ArrayList<>();
+	private Playlist allSongs = new Playlist("All Songs");
+	private Map<String,Playlist> allPlaylists = new HashMap<>();
+	private Playlist selectedPlaylist;
+	
+	public static MediaController getInstance() {
+		return mediaController;
+	}
 	
 	public MediaController() {
 
@@ -21,22 +26,42 @@ public class MediaController {
 		allSongs.add(song);
 	}
 
-	public List<Playlist> getAllPlaylists() {
+	public Playlist getAllSongs() {
+		return allSongs;
+	}	
+
+	public Map<String,Playlist> getAllPlaylists() {
 		return allPlaylists;
 	}
 
-
-	public void setAllPlaylists(List<Playlist> allPlaylists) {
+	public void setAllPlaylists(Map<String,Playlist> allPlaylists) {
 		this.allPlaylists = allPlaylists;
 	}
+	
+	public Playlist getSelectedPlaylist() {
+		return selectedPlaylist;
+	}
 
-
-	public Playlist getAllSongs() {
-		return allSongs;
+	public void setSelectedPlaylist(Playlist selectedPlaylist) {
+		this.selectedPlaylist = selectedPlaylist;
 	}
 	
-
-	public static MediaController getInstance() {
-		return mediaController;
+	public void createPlaylist(String name) {
+		allPlaylists.put(name, new Playlist(name));
 	}
+	
+	public void deletePlaylist(String name) {
+		allPlaylists.remove(name);
+	}
+
+	public void addSong(Song song, Playlist playlist) {
+		allPlaylists.get(playlist.getName()).add(song);
+	}
+	
+	public void removeSong(Song song, Playlist playlist) {
+		allPlaylists.get(playlist.getName()).remove(song);
+	}
+
+
+	
 }

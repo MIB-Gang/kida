@@ -1,7 +1,5 @@
 package application;
 
-import java.util.ArrayList;
-
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 
@@ -10,8 +8,9 @@ public class Playlist extends SimpleListProperty<Song> {
 	private String name;
 	private boolean hoechstPriolike; 
 	
-	public Playlist(){
+	public Playlist(String name){
 		super(FXCollections.observableArrayList());
+		this.name = name;
 	}
 
 	public String getName() {
