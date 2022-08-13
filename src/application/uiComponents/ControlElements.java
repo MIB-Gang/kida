@@ -105,7 +105,7 @@ public class ControlElements extends VBox {
 		nextButton.setStyle(defaultStyle);
 		nextButton.setOnMousePressed(e -> nextButton.setStyle(pressStyle));
 		nextButton.setOnMouseReleased(e -> nextButton.setStyle(defaultStyle));
-		
+				
 		videoPlaceholder.setImage(new Image("/videoPlaceholder.jpg"));
 		videoPlaceholder.setFitWidth(176);
 		videoPlaceholder.setPreserveRatio(true);

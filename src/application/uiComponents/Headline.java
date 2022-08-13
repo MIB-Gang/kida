@@ -1,22 +1,26 @@
 package application.uiComponents;
 
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class Headline extends Label {
 	
 	public Headline() {
 		this.setFont(new Font(48));
+		applyStyle();
 	}
 	
 	public Headline(String text) {
 		this.setText(text);
 		this.setFont(new Font(48));
+		applyStyle();
 	}
 	
 	public Headline(String text, String type) {
 		this.setText(text);
-		
+		applyStyle();
+
 		switch (type) {
 		case "h1":
 			this.setFont(new Font(48));
@@ -31,6 +35,13 @@ public class Headline extends Label {
 			this.setFont(new Font(48));
 			break;
 		}
+	}
+	
+	
+	private void applyStyle() {
+		this.setStyle("-fx-font-weight: bold");
+		this.setWrapText(true);
+		this.setTextFill(Color.web("#FFFFFF"));
 	}
 	
 }

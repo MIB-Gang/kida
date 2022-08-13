@@ -22,16 +22,20 @@ public class SongTable extends TableView<Song> {
     ContextMenu cm = new ContextMenu();
     MenuItem mi = new MenuItem("Zu Playlist hinzufuegen");
     MenuItem mi1 = new MenuItem("Umbenennen");
+    
+    TableColumn<Song, String> titleColumn = new TableColumn<>("Titel");
+	TableColumn<Song, String> artistColumn = new TableColumn<>("Interpret");
+	TableColumn<Song, String> albumColumn = new TableColumn<>("Album");
+	TableColumn<Song, String> genreColumn = new TableColumn<>("Genre");
 
+	@SuppressWarnings("unchecked")
 	public SongTable() {
-		TableColumn<Song, String> titleColumn = new TableColumn<>("Titel");
-		TableColumn<Song, String> artistColumn = new TableColumn<>("Interpret");
-		TableColumn<Song, String> genreColumn = new TableColumn<>("Genre");
+		
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
+		albumColumn.setCellValueFactory(new PropertyValueFactory<>("album"));
 		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
-		
-		this.getColumns().addAll(titleColumn, artistColumn, genreColumn);
+		this.getColumns().addAll(titleColumn, artistColumn, albumColumn, genreColumn);
 		
 		
 		this.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -56,7 +60,13 @@ public class SongTable extends TableView<Song> {
 	
 	private void applyStyle() {
 		this.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		this.setStyle("-fx-base: transparent; -fx-background-color: #292929; -fx-text-fill: white;");
+		this.setStyle("-fx-base: transparent; -fx-background-color: #292929; -fx-selection-bar: #686868; -fx-selection-bar-non-focused: #686868;");
+		
+		titleColumn.setStyle("-fx-text-fill: white;");
+		artistColumn.setStyle("-fx-text-fill: white;");
+		albumColumn.setStyle("-fx-text-fill: white;");
+		genreColumn.setStyle("-fx-text-fill: white;");
+	
 	}	
 	
 }

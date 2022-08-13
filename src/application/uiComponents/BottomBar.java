@@ -62,27 +62,20 @@ public class BottomBar extends HBox {
 
 		
 		
-		seekbar.setOnDragDetected(new EventHandler<Event>() {
-	        @Override
-	        public void handle(Event event) {
-	        	controller.getAudioPlayer().pause();
-            	if (timer != null) timer.cancel();
-	            dragDetected=true;     
-	        }
+		seekbar.setOnDragDetected(event -> {controller.getAudioPlayer().pause();
+        	if (timer != null) timer.cancel();
+            dragDetected=true;     
 	    });
 
-		seekbar.setOnMouseReleased(new EventHandler<Event>() {
-	        @Override
-	        public void handle(Event event) {
-	            if(dragDetected){
-					double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
-	            	controller.getAudioPlayer().seek(Duration.seconds(totalTime * 0.01 * ((double) seekbar.getValue() )));
-	            	controller.getAudioPlayer().play();
-	            	timer = new Timer();
-	        		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
-	                dragDetected=false;
-	            }
-	        }
+		seekbar.setOnMouseReleased(event -> {
+            if(dragDetected){
+				double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
+            	controller.getAudioPlayer().seek(Duration.seconds(totalTime * 0.01 * ((double) seekbar.getValue() )));
+            	controller.getAudioPlayer().play();
+            	timer = new Timer();
+        		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
+                dragDetected=false;
+            }
 	    });
 		
 		applyStyle();
