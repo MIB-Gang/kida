@@ -44,6 +44,7 @@ public class PlayerController {
 	}
 	
 	public void initCurrentSong() {
+		// TODO: ist allSongs (bzw. currentPlaylist?) empty??? =>> FEHLERMELDUNG: "Du hast noch keine Songs hinzugefügt..."
 		updateCurrentSong(currentPlaylist.get(0));
 	}
 
@@ -74,6 +75,7 @@ public class PlayerController {
 	}
 
 	public void play() {
+		// TODO: currentSong != null? bzw. audioPlayer != null?
 		audioPlayer.play();
 	}
 	
@@ -86,7 +88,7 @@ public class PlayerController {
 	}
 
 	public void nextSong() {
-		if (currentPlaylist.indexOf(currentSong) != currentPlaylist.size()) {
+		if (currentPlaylist.indexOf(currentSong) + 1 != currentPlaylist.size()) {
 			audioPlayer.stop();
 			// videoPlayer.stop();
 			audio = new Media("file:///" + currentPlaylist.get(currentPlaylist.indexOf(currentSong) + 1).getAudioFilePath());

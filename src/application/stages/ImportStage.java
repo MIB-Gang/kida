@@ -67,7 +67,6 @@ public class ImportStage extends Stage {
 
 		fileTable.setItems(FXCollections.observableArrayList(files));
 		fileTable.getColumns().add(column);
-		fileTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 		fileTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
 			@Override
@@ -123,6 +122,7 @@ public class ImportStage extends Stage {
 		buttonArea.setAlignment(Pos.CENTER);
 		secondaryPane.setPadding(new Insets(32));
 		
+		fileTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		fileTable.setStyle("-fx-base: transparent; -fx-background-color: #292929; -fx-text-fill: white;");
 	}
 

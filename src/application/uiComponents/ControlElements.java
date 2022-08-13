@@ -27,7 +27,11 @@ public class ControlElements extends VBox {
 	private Button pauseButton = new Button();
 	private PlayerController playerController = PlayerController.getInstance();
 	
+	private String styleBase = "-fx-background-radius: 8;  -fx-padding: 6 12 6 12;"; // -fx-font-weight: bold;
+	private String defaultStyle = "-fx-background-color: transparent;" + styleBase;
+	private String pressStyle = "-fx-background-color: #292929;" + styleBase;
 
+	
 	public ControlElements() {		
 		title.setText("Never Gonna Give You Up");
 		subtitle.setText("Rick Astley");
@@ -80,14 +84,27 @@ public class ControlElements extends VBox {
 		playGraphic.setFitWidth(36);
 		playGraphic.setPreserveRatio(true);
 		playButton.setGraphic(playGraphic);
-		ImageView nextGraphic = new ImageView(new Image("/next.png"));
-		nextGraphic.setFitWidth(24);
-		nextGraphic.setPreserveRatio(true);
-		nextButton.setGraphic(nextGraphic);
 		ImageView pauseGraphic = new ImageView(new Image("/pause.png"));
 		pauseGraphic.setFitWidth(36);
 		pauseGraphic.setPreserveRatio(true);
 		pauseButton.setGraphic(pauseGraphic);
+		ImageView nextGraphic = new ImageView(new Image("/next.png"));
+		nextGraphic.setFitWidth(24);
+		nextGraphic.setPreserveRatio(true);
+		nextButton.setGraphic(nextGraphic);
+		
+		prevButton.setStyle(defaultStyle);
+		prevButton.setOnMousePressed(e -> prevButton.setStyle(pressStyle));
+		prevButton.setOnMouseReleased(e -> prevButton.setStyle(defaultStyle));
+		playButton.setStyle(defaultStyle);
+		playButton.setOnMousePressed(e -> playButton.setStyle(pressStyle));
+		playButton.setOnMouseReleased(e -> playButton.setStyle(defaultStyle));
+		pauseButton.setStyle(defaultStyle);
+		pauseButton.setOnMousePressed(e -> pauseButton.setStyle(pressStyle));
+		pauseButton.setOnMouseReleased(e -> pauseButton.setStyle(defaultStyle));
+		nextButton.setStyle(defaultStyle);
+		nextButton.setOnMousePressed(e -> nextButton.setStyle(pressStyle));
+		nextButton.setOnMouseReleased(e -> nextButton.setStyle(defaultStyle));
 		
 		videoPlaceholder.setImage(new Image("/videoPlaceholder.jpg"));
 		videoPlaceholder.setFitWidth(176);
