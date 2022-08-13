@@ -103,6 +103,7 @@ public class ImportStage extends Stage {
 		this.setScene(new Scene(primaryPane));
 		this.show();
 
+		
 		applyStyle();
 	}
 
