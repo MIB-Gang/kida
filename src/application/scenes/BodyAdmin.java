@@ -5,8 +5,6 @@ import application.controller.PlayerController;
 import application.controller.SceneController;
 import application.uiComponents.DefaultButton;
 import application.uiComponents.SongTable;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 
 public class BodyAdmin extends VBox {
