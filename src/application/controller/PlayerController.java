@@ -103,6 +103,7 @@ public class PlayerController {
 			audioPlayer.stop();
 			// videoPlayer.stop();
 			audio = new Media("file:///" + currentPlaylist.get(0).getAudioFilePath());
+			setCurrentSong(currentPlaylist.get(0));
 			// video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
 			// videoPlayer = new MediaPlayer(video);
@@ -132,6 +133,7 @@ public class PlayerController {
 		}
 	}
 
+	
 	public void search() {
 
 	}
