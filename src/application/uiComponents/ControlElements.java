@@ -1,6 +1,8 @@
 package application.uiComponents;
 
 import application.controller.PlayerController;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -42,19 +45,28 @@ public class ControlElements extends VBox {
 		buttonArea.getChildren().addAll(prevButton, playButton, nextButton);
 		
 		prevButton.setOnAction((event) -> playerController.previousSong());
-	
-		playButton.setOnAction((event) -> {
-			playerController.play();
-			buttonArea.getChildren().remove(playButton);
-			buttonArea.getChildren().add(1, pauseButton);
-			
-		});
 		
-		pauseButton.setOnAction((event)->{
-			playerController.pause();
-			buttonArea.getChildren().remove(pauseButton);
-			buttonArea.getChildren().add(1, playButton);
-		});
+//		playerController.getAudioPlayer().statusProperty().addListener((observableStatus, oldStatus, newStatus) -> {
+//			System.out.println("observableStatus: " + observableStatus);
+//			System.out.println("oldStatus: " + oldStatus);
+//			System.out.println("newStatus: " + newStatus);
+//			if (newStatus == Status.PLAYING) playButton.setGraphic(new ImageView(new Image("/pause.png")));
+//			else playButton.setGraphic(new ImageView(new Image("/play.png")));
+//		});
+		
+	
+//		playButton.setOnAction((event) -> {
+//			playerController.play();
+//			buttonArea.getChildren().remove(playButton);
+//			buttonArea.getChildren().add(1, pauseButton);
+//			
+//		});
+//		
+//		pauseButton.setOnAction((event)->{
+//			playerController.pause();
+//			buttonArea.getChildren().remove(pauseButton);
+//			buttonArea.getChildren().add(1, playButton);
+//		});
 		
 		nextButton.setOnAction((event) -> playerController.nextSong());
 		

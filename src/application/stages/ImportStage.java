@@ -139,8 +139,9 @@ public class ImportStage extends Stage {
 	private void updateHeadline(File newFile) {
 		@SuppressWarnings("unchecked")
 		TablePosition<File, String> selectedCell = fileTable.getSelectionModel().getSelectedCells().get(0);
-		String path = selectedCell.getTableColumn().getCellData(newFile).replace("\\", "/");
-		String[] splittedPath = path.split("/");
+		System.out.println("selectedCell:\n" + selectedCell);
+		selectedFilePath = selectedCell.getTableColumn().getCellData(newFile).replace("\\", "/");
+		String[] splittedPath = selectedFilePath.split("/");
 		headline.setText(splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("-", " ").replace("_", " "));
 		toggleElements(true);
 	}

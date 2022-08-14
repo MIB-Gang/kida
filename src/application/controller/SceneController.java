@@ -13,27 +13,20 @@ import javafx.stage.Stage;
 
 public class SceneController {
 	
-	private static SceneController sceneController = new SceneController();
+	private static SceneController sceneController = new SceneController();	
 	
 	private Stage importStage;
 	private Scene scene;
-	
-//	private Scaffold scaffold = Scaffold.getInstance();
 
 	public static SceneController getInstance() {
 		return sceneController;
 	}
 	
-	public void changeBody(ActionEvent e, Node body) {
-		scene = (Scene) ((Node) e.getSource()).getScene();
-		scene.setRoot(new Scaffold(body));
-	}
 	
-//	public void changeBody(ActionEvent e, Node body) {
-//		//scene = (Scene) ((Node) e.getSource()).getScene();
-//		//scene.setRoot(new Scaffold(body));
-//		scaffold.setBody(body);
-//	}
+	public void changeBody(ActionEvent e, Node body) {
+		Scaffold scaffold = Scaffold.getInstance();
+		scaffold.setBody(body);
+	}
 		
 	public List<File> openFileChooser(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
