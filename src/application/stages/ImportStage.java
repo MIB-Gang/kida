@@ -44,7 +44,6 @@ public class ImportStage extends Stage {
 
 	private MediaController mediaController = MediaController.getInstance();
 
-
 	private BorderPane primaryPane = new BorderPane();
 	private BorderPane secondaryPane = new BorderPane();
 
@@ -55,10 +54,10 @@ public class ImportStage extends Stage {
 	private HBox buttonArea = new HBox();
 
 	Headline headline = new Headline("", "h3");
-	DefaultTextField titleField = new DefaultTextField("Titel");
-	DefaultTextField artistField = new DefaultTextField("Interpret");
-	DefaultTextField albumField = new DefaultTextField("Album");
-	DefaultTextField genreField = new DefaultTextField("Genre");
+	DefaultTextField titleField = new DefaultTextField();
+	DefaultTextField artistField = new DefaultTextField();
+	DefaultTextField albumField = new DefaultTextField();
+	DefaultTextField genreField = new DefaultTextField();
 	DefaultButton saveEntryButton = new DefaultButton("Speichern");
 
 	String selectedFilePath = "";
@@ -71,26 +70,29 @@ public class ImportStage extends Stage {
 		fileTable.setItems(FXCollections.observableArrayList(files));
 		fileTable.getColumns().add(column);
 
-		fileTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
-			@Override
-			public void changed(ObservableValue<?> observableValue, Object oldValue, Object newValue) {
-				if (fileTable.getSelectionModel().getSelectedItem() != null) {
-					TableViewSelectionModel<File> selectionModel = fileTable.getSelectionModel();
-					ObservableList<?> selectedCells = selectionModel.getSelectedCells();
-					TablePosition<Object, ?> tablePosition = (TablePosition<Object, ?>) selectedCells.get(0);
-					Object val = tablePosition.getTableColumn().getCellData(newValue);
-					selectedFilePath = ((String) val).replace("\\", "/");
-					String[] pathToName = selectedFilePath.split("/");
-					headline.setText(pathToName[pathToName.length - 1].replace(".mp3", "").replace("-", " ").replace("_", " "));
-				}
+		fileTable.getSelectionModel().selectedItemProperty().addListener((observableFile, oldFile, newFile) -> {
+			if (fileTable.getSelectionModel().getSelectedItem() != null) {
+				updateHeadline(newFile);
+				toggleElements(true);
 			}
+			else toggleElements(false);
+		});
+		
+		fileTable.getSelectionModel().clearSelection();
+		toggleElements(false);
+
+
+		saveEntryButton.setOnAction(event -> {
+			mediaController.addToAllSongs(new Song(titleField.getText(), artistField.getText(), albumField.getText(), genreField.getText(), false, selectedFilePath, "video"));
+			initTextFields();
+			fileTable.getItems().remove(fileTable.getSelectionModel().getSelectedItem());
+			fileTable.getSelectionModel().selectFirst();
 		});
 
-		saveEntryButton.setOnAction(event -> mediaController.addToAllSongs(new Song(titleField.getText(), artistField.getText(), albumField.getText(), genreField.getText(), false, selectedFilePath, "video")));
-
+		initTextFields();
 		textFieldArea.getChildren().addAll(titleField, new Rectangle(0, 12), artistField, new Rectangle(0, 12), albumField, new Rectangle(0, 12), genreField);
 		buttonArea.getChildren().add(saveEntryButton);
-		
+
 		secondaryPane.setTop(headline);
 		secondaryPane.setCenter(textFieldArea);
 		secondaryPane.setBottom(buttonArea);
@@ -98,19 +100,20 @@ public class ImportStage extends Stage {
 		primaryPane.setCenter(fileTable);
 		primaryPane.setRight(secondaryPane);
 
+
 		this.setScene(new Scene(primaryPane));
 		this.show();
-
 		
+
 		applyStyle();
 	}
 
 	private void applyStyle() {
 		this.getIcons().add(new Image("/kida_icon.png"));
 		this.setTitle("Füge Songdaten hinzu");
-		this.setMinWidth(640);
+		this.setMinWidth(700);
 		this.setMinHeight(450);
-		
+
 		saveEntryButton.setbackgroundColor("686868");
 
 		secondaryPane.setMinWidth(300);
@@ -120,10 +123,35 @@ public class ImportStage extends Stage {
 		secondaryPane.setBackground(Background.fill(Color.rgb(19, 19, 19)));
 		buttonArea.setAlignment(Pos.CENTER);
 		secondaryPane.setPadding(new Insets(32));
-		
+
 		column.setStyle("-fx-text-fill: white;");
 		fileTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		fileTable.setStyle("-fx-base: transparent; -fx-background-color: #292929; -fx-selection-bar: #686868; -fx-selection-bar-non-focused: #686868;");
+	}
+	
+	private void initTextFields() {
+		titleField.setText("Title");
+		artistField.setText("Interpret");
+		albumField.setText("Album");
+		genreField.setText("Genre");
+	}
+
+	private void updateHeadline(File newFile) {
+		@SuppressWarnings("unchecked")
+		TablePosition<File, String> selectedCell = fileTable.getSelectionModel().getSelectedCells().get(0);
+		String path = selectedCell.getTableColumn().getCellData(newFile).replace("\\", "/");
+		String[] splittedPath = path.split("/");
+		headline.setText(splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("-", " ").replace("_", " "));
+		toggleElements(true);
+	}
+
+	private void toggleElements(boolean visible) {
+		if (!visible) headline.setText("Wähle einen Song zum Bearbeiten aus.");;
+		titleField.setVisible(visible);
+		artistField.setVisible(visible);
+		albumField.setVisible(visible);
+		genreField.setVisible(visible);
+		saveEntryButton.setVisible(visible);
 	}
 
 }
