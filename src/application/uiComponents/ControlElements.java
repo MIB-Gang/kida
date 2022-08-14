@@ -8,7 +8,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -110,5 +109,5 @@ public class ControlElements extends VBox {
 		videoPlaceholder.setFitWidth(176);
 		videoPlaceholder.setPreserveRatio(true);
 
-	}	
+	}
 }

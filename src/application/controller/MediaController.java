@@ -5,6 +5,7 @@ import java.util.Map;
 
 import application.Playlist;
 import application.Song;
+import javafx.collections.transformation.FilteredList;
 
 public class MediaController {
 	
@@ -13,6 +14,7 @@ public class MediaController {
 	private Playlist allSongs = new Playlist("All Songs");
 	private Map<String,Playlist> allPlaylists = new HashMap<>();
 	private Playlist selectedPlaylist;
+	private FilteredList<Song> filteredSongs = new FilteredList<>(allSongs);
 	
 	public static MediaController getInstance() {
 		return mediaController;
@@ -60,6 +62,18 @@ public class MediaController {
 	
 	public void removeSong(Song song, Playlist playlist) {
 		allPlaylists.get(playlist.getName()).remove(song);
+	}
+	
+	public void search() {
+		
+	}
+
+	public FilteredList<Song> getFilteredSongs() {
+		return filteredSongs;
+	}
+
+	public void setFilteredSongs(FilteredList<Song> filteredSongs) {
+		this.filteredSongs = filteredSongs;
 	}
 
 

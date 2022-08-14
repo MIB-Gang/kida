@@ -6,8 +6,8 @@ import javafx.collections.FXCollections;
 public class Playlist extends SimpleListProperty<Song> {
 	
 	private String name;
-	private boolean hoechstPriolike; 
-	
+	private boolean like; 
+		
 	public Playlist(String name){
 		super(FXCollections.observableArrayList());
 		this.name = name;
@@ -20,6 +20,7 @@ public class Playlist extends SimpleListProperty<Song> {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	
 	
 }

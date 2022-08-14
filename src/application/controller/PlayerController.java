@@ -77,6 +77,14 @@ public class PlayerController {
 	public MediaPlayer getVideoPlayer() {
 		return videoPlayer;
 	}
+	
+//	public void playPause() {
+//		if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+//			pause();
+//			
+//			// videoPlayer.pause();
+//			}
+//	}
 
 	public void play() {
 		if(currentSong != null) {
