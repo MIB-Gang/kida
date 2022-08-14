@@ -41,6 +41,7 @@ public class ControlElements extends VBox {
 		buttonArea.getChildren().addAll(prevButton, playButton, nextButton);
 		
 		prevButton.setOnAction((event) -> playerController.previousSong());
+		
 	
 		playButton.setOnAction((event) -> {
 			playerController.play();

@@ -13,8 +13,10 @@ import javafx.stage.Stage;
 
 public class Scaffold extends BorderPane {
 	
-//	private static Scaffold scaffold = new Scaffold(new BodyHome());
-//	public static Scaffold getInstance() { return scaffold; }
+	private static final Scaffold scaffold = new Scaffold();
+	public static Scaffold getInstance() { 
+		return scaffold; 
+	}
 	
 	private BorderPane secondaryPane = new BorderPane();
 	private BottomBar bottomBar = new BottomBar();
@@ -28,11 +30,11 @@ public class Scaffold extends BorderPane {
 		secondaryPane.setCenter(body);
 	}
 
-	public Scaffold(Node body) {
+	private Scaffold() {
 		this.getStylesheets().add("application.css");
 		
 		secondaryPane.setBottom(bottomBar);
-		secondaryPane.setCenter(body);
+		secondaryPane.setCenter(new BodyLibrary());
 		
 		this.setLeft(sidemenu);
 		this.setCenter(secondaryPane);

@@ -3,9 +3,12 @@ package application.controller;
 import application.Playlist;
 import application.Song;
 import application.uiComponents.ProgressSlider;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.util.Duration;
 
 public class PlayerController {
@@ -26,6 +29,7 @@ public class PlayerController {
 	
 
 	private Playlist currentPlaylist;
+
 
 	public Playlist getCurrentPlaylist() {
 		return currentPlaylist;
