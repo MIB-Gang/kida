@@ -31,7 +31,6 @@ public class Scaffold extends BorderPane {
 	}
 
 	private Scaffold() {
-		System.out.println("Scaffold created.");
 		this.getStylesheets().add("application.css");
 		
 		secondaryPane.setBottom(bottomBar);

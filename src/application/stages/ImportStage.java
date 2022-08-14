@@ -35,10 +35,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class ImportStage extends Stage {
 
@@ -51,7 +53,7 @@ public class ImportStage extends Stage {
 	TableColumn<File, String> column;
 
 	private VBox textFieldArea = new VBox();
-	private HBox buttonArea = new HBox();
+	private StackPane buttonArea = new StackPane();
 
 	Headline headline = new Headline("", "h3");
 	DefaultTextField titleField = new DefaultTextField();
@@ -59,6 +61,7 @@ public class ImportStage extends Stage {
 	DefaultTextField albumField = new DefaultTextField();
 	DefaultTextField genreField = new DefaultTextField();
 	DefaultButton saveEntryButton = new DefaultButton("Speichern");
+	DefaultButton closeButton = new DefaultButton("Beenden");
 
 	String selectedFilePath = "";
 
@@ -71,27 +74,27 @@ public class ImportStage extends Stage {
 		fileTable.getColumns().add(column);
 
 		fileTable.getSelectionModel().selectedItemProperty().addListener((observableFile, oldFile, newFile) -> {
-			if (fileTable.getSelectionModel().getSelectedItem() != null) {
-				updateHeadline(newFile);
-				toggleElements(true);
-			}
+			if (fileTable.getSelectionModel().getSelectedItem() != null) updateHeadline(newFile);
 			else toggleElements(false);
 		});
 		
-		fileTable.getSelectionModel().clearSelection();
-		toggleElements(false);
-
+		fileTable.getSelectionModel().setCellSelectionEnabled(true);
+		fileTable.getSelectionModel().select(0, fileTable.getColumns().get(0));
+		//fileTable.getSelectionModel().clearSelection();
+		//toggleElements(false);
 
 		saveEntryButton.setOnAction(event -> {
 			mediaController.addToAllSongs(new Song(titleField.getText(), artistField.getText(), albumField.getText(), genreField.getText(), false, selectedFilePath, "video"));
 			initTextFields();
 			fileTable.getItems().remove(fileTable.getSelectionModel().getSelectedItem());
-			fileTable.getSelectionModel().selectFirst();
+			fileTable.getSelectionModel().select(0, fileTable.getColumns().get(0));
 		});
+		
+		closeButton.setOnAction(event -> this.fireEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSE_REQUEST)));
 
 		initTextFields();
 		textFieldArea.getChildren().addAll(titleField, new Rectangle(0, 12), artistField, new Rectangle(0, 12), albumField, new Rectangle(0, 12), genreField);
-		buttonArea.getChildren().add(saveEntryButton);
+		buttonArea.getChildren().addAll(closeButton, saveEntryButton);
 
 		secondaryPane.setTop(headline);
 		secondaryPane.setCenter(textFieldArea);
@@ -115,6 +118,7 @@ public class ImportStage extends Stage {
 		this.setMinHeight(450);
 
 		saveEntryButton.setbackgroundColor("686868");
+		closeButton.setbackgroundColor("686868");
 
 		secondaryPane.setMinWidth(300);
 		secondaryPane.setMaxWidth(300);
@@ -139,7 +143,6 @@ public class ImportStage extends Stage {
 	private void updateHeadline(File newFile) {
 		@SuppressWarnings("unchecked")
 		TablePosition<File, String> selectedCell = fileTable.getSelectionModel().getSelectedCells().get(0);
-		System.out.println("selectedCell:\n" + selectedCell);
 		selectedFilePath = selectedCell.getTableColumn().getCellData(newFile).replace("\\", "/");
 		String[] splittedPath = selectedFilePath.split("/");
 		headline.setText(splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("-", " ").replace("_", " "));
@@ -147,12 +150,13 @@ public class ImportStage extends Stage {
 	}
 
 	private void toggleElements(boolean visible) {
-		if (!visible) headline.setText("Wähle einen Song zum Bearbeiten aus.");;
+		if (!visible) headline.setText("Fertig!");
 		titleField.setVisible(visible);
 		artistField.setVisible(visible);
 		albumField.setVisible(visible);
 		genreField.setVisible(visible);
 		saveEntryButton.setVisible(visible);
+		closeButton.setVisible(!visible);
 	}
 
 }

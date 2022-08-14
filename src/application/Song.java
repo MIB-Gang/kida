@@ -25,6 +25,7 @@ public class Song {
 	public Song(String title, String artist, String album, String genre, boolean like, String audioFilePath, String videoFilePath) {
 		this.title = title;
 		this.artist = artist;
+		this.album = album;
 		this.genre = genre;
 		this.like = like;
 		this.audioFilePath = audioFilePath;
