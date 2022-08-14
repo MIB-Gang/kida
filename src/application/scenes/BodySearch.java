@@ -1,24 +1,51 @@
 package application.scenes;
 
+import application.controller.MediaController;
 import application.uiComponents.DefaultTextField;
+import application.uiComponents.Headline;
 import application.uiComponents.SongTable;
 import javafx.geometry.Insets;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class BodySearch extends VBox {
 	
-	DefaultTextField searchField = new DefaultTextField();
-	SongTable table = new SongTable();
+	private MediaController mediaController = MediaController.getInstance();
+	
+	private Headline headline = new Headline("Suche", "h1");
+	private HBox searchArea = new HBox();
+	private DefaultTextField searchField = new DefaultTextField();
+	private SongTable table = new SongTable();
+	private ChoiceBox<String> choiceBox = new ChoiceBox<>();
 	
 	public BodySearch() {
-		this.setSpacing(12);
-		this.getChildren().addAll(searchField, table);
+		
+		searchField.setPromptText("Gib einen Suchbegriff ein");
+		
+		choiceBox.setValue("Titel");
+		choiceBox.getItems().addAll("Titel", "Interpret", "Album", "Genre");
+		
+		searchArea.getChildren().addAll(searchField, choiceBox);
+		this.getChildren().addAll(headline, searchArea, table);
+		
+		table.setItems(mediaController.getAllSongs());
+		
+		searchField.textProperty().addListener((observableText, oldText, newText) -> {
+			table.setItems(mediaController.search(newText,choiceBox.getValue()));
+		});
+		
 		
 		applyStyle();
 	}
 	
 	private void applyStyle() {
 		this.setPadding(new Insets(31.25, 32, 0, 32));
+		this.setSpacing(12);
+		searchArea.setSpacing(12);
+		HBox.setHgrow(searchField, Priority.ALWAYS);
 	}
 
 }

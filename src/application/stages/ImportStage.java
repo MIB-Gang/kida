@@ -20,6 +20,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -30,6 +32,7 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -40,6 +43,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class ImportStage extends Stage {
@@ -63,7 +67,11 @@ public class ImportStage extends Stage {
 	DefaultButton saveEntryButton = new DefaultButton("Speichern");
 	DefaultButton closeButton = new DefaultButton("Beenden");
 
+	Alert titleAlert = new Alert(AlertType.ERROR);
+	
 	String selectedFilePath = "";
+	
+	
 
 	public ImportStage(List<File> files) {
 
@@ -84,10 +92,25 @@ public class ImportStage extends Stage {
 		//toggleElements(false);
 
 		saveEntryButton.setOnAction(event -> {
-			mediaController.addToAllSongs(new Song(titleField.getText(), artistField.getText(), albumField.getText(), genreField.getText(), false, selectedFilePath, "video"));
-			initTextFields();
-			fileTable.getItems().remove(fileTable.getSelectionModel().getSelectedItem());
-			fileTable.getSelectionModel().select(0, fileTable.getColumns().get(0));
+			if(titleField.getText().isEmpty()) {
+				titleAlert.setTitle("Fehlende Daten");
+				Stage stage = (Stage) titleAlert.getDialogPane().getScene().getWindow();
+				stage.getIcons().add(new Image("/kida_icon.png"));
+				titleAlert.setHeaderText(null);
+				titleAlert.setContentText("Bitte gib einen Titel ein, damit du dein Lied wiederfindest.");
+				titleAlert.showAndWait();
+			} else {
+				mediaController.addToAllSongs(new Song(
+						titleField.getText(), 
+						artistField.getText().isEmpty() ? "Unbekannter Interpret" : artistField.getText(), 
+						albumField.getText().isEmpty() ? "Unbekanntes Album" : albumField.getText(), 
+						genreField.getText().isEmpty() ? "Unbekanntes Genre" : genreField.getText(), 
+						false, selectedFilePath, "video"));
+				resetTextFields();
+				fileTable.getItems().remove(fileTable.getSelectionModel().getSelectedItem());
+				fileTable.getSelectionModel().select(0, fileTable.getColumns().get(0));	
+			}
+			
 		});
 		
 		closeButton.setOnAction(event -> this.fireEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSE_REQUEST)));
@@ -134,10 +157,17 @@ public class ImportStage extends Stage {
 	}
 	
 	private void initTextFields() {
-		titleField.setText("Title");
-		artistField.setText("Interpret");
-		albumField.setText("Album");
-		genreField.setText("Genre");
+		titleField.setPromptText("Title");
+		artistField.setPromptText("Interpret");
+		albumField.setPromptText("Album");
+		genreField.setPromptText("Genre");
+	}
+	
+	private void resetTextFields() {
+		titleField.clear();
+		artistField.clear();
+		albumField.clear();
+		genreField.clear();
 	}
 
 	private void updateHeadline(File newFile) {

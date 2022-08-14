@@ -1,10 +1,15 @@
 package application.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import application.Playlist;
 import application.Song;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
 public class MediaController {
@@ -64,8 +69,27 @@ public class MediaController {
 		allPlaylists.get(playlist.getName()).remove(song);
 	}
 	
-	public void search() {
-		
+	public ObservableList<Song> search(String input, String type) {
+		Stream<Song> result;
+		String word = input.toLowerCase();
+		switch (type) {
+		case "Titel":
+			result = allSongs.stream().filter(item -> item.getTitle().toLowerCase().contains(word));	
+			break;
+		case "Interpret":
+			result = allSongs.stream().filter(item -> item.getArtist().toLowerCase().contains(word));	     	
+			break;
+		case "Album":
+			result = allSongs.stream().filter(item -> item.getAlbum().toLowerCase().contains(word));     
+			break;
+		case "Genre":
+			result = allSongs.stream().filter(item -> item.getGenre().toLowerCase().contains(word));
+			break;
+		default:
+			result = allSongs.stream().filter(item -> item.getTitle().toLowerCase().contains(word));	     
+			break;
+		}
+		return  FXCollections.observableArrayList(result.collect(Collectors.toList()));
 	}
 
 	public FilteredList<Song> getFilteredSongs() {
