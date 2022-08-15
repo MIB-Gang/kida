@@ -35,16 +35,20 @@ public class BottomBar extends HBox {
 	private ImageView volumeIcon = new ImageView();
 	private KProgressSlider volumeSlider = new KProgressSlider();
 	
+	private ImageView starButton = new ImageView();
+	
 	private PlayerController controller = PlayerController.getInstance();
 	
 	Timer timer = new Timer();
 	boolean dragDetected = false;
+	boolean clickDetected = false;
 
 
 	public BottomBar() {
 		
 		this.getChildren().addAll(
-				new Rectangle(32, 0),
+				starButton,
+				new Rectangle(35, 0),
 				currentTimeLabel,
 				seekbar,
 				endTimeLabel,
@@ -59,8 +63,17 @@ public class BottomBar extends HBox {
 		if (controller.getAudioPlayer() != null) volumeSlider.setValue(controller.getAudioPlayer().getVolume() * 100);		
 		
 		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
-
 		
+		starButton.setOnMouseClicked(event -> {
+            	if(clickDetected){
+            		starButton.setImage(new Image("like.png"));
+            		clickDetected=false;
+            	}else{
+            		starButton.setImage(new Image("like_outline.png"));
+            		clickDetected=true;
+            	}
+	    });
+			
 		
 		seekbar.setOnDragDetected(event -> {controller.getAudioPlayer().pause();
         	if (timer != null) timer.cancel();
@@ -114,6 +127,10 @@ public class BottomBar extends HBox {
 		volumeIcon.setImage(new Image("/volume.png"));
 		volumeIcon.setFitWidth(24);
 		volumeIcon.setPreserveRatio(true);
+		
+		starButton.setImage(new Image("like_outline.png"));
+		starButton.setFitWidth(24);
+		starButton.setPreserveRatio(true);
 		
 		volumeSlider.setMaxWidth(64);
 				
