@@ -26,8 +26,9 @@ public class SceneController {
 	}
 	
 	
-	public void changeBody(Node body) {			//EVENT WEG?
+	public void changeBody(Node body) {
 		Scaffold scaffold = Scaffold.getInstance();
+		body.setVisible(true);
 		scaffold.setBody(body);
 	}
 		

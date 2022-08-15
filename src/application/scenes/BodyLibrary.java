@@ -38,16 +38,22 @@ public class BodyLibrary extends VBox {
 	private TilePane tiles = new TilePane();
 	private KPlaylistButton addButton = new KPlaylistButton(new Image("/add.png"));
 	private KPlaylistButton favoritesButton = new KPlaylistButton(new Image("/like_outline.png"));
-			
+	
 
 	public BodyLibrary() {		
 		adminButton.setOnAction((event) -> sceneController.changeBody(new BodyAdmin()));
 		initTiles();
+				
+		this.visibleProperty().addListener((obv, ov, nv) -> {
+			initTiles();
+			System.out.println("Hi");
+		});
 		
 		addButton.getButton().setOnAction(event -> {
 			String newPlaylistName = "Neue Playlist " + (mediaController.getAllPlaylists().size() + 1);
 			mediaController.createPlaylist(newPlaylistName);
 			initTiles();
+			setVisible(false);
 			sceneController.changeBody(new BodyPlaylist(mediaController.getPlaylistByName(newPlaylistName)));
 		});
 				
@@ -74,7 +80,7 @@ public class BodyLibrary extends VBox {
 	private void initTiles() {
 		tiles.getChildren().clear();
 		tiles.getChildren().addAll(addButton, favoritesButton);
-		for (Playlist p : mediaController.getAllPlaylists()) tiles.getChildren().add(new KPlaylistButton(p.getName()));
+		for (Playlist playlist : mediaController.getAllPlaylists()) tiles.getChildren().add(new KPlaylistButton(playlist));
 	}
 	
 }

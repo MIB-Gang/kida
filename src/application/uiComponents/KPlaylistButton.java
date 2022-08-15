@@ -1,5 +1,6 @@
 package application.uiComponents;
 
+import application.Playlist;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,13 @@ public class KPlaylistButton extends VBox {
 
 	public KPlaylistButton() {
 		button.setGraphic(new ImageView(new Image("/disc.png")));
+		this.getChildren().addAll(button, nameLabel);
+		applyStyle();
+	}
+	
+	public KPlaylistButton(Playlist playlist) {
+		button.setText(playlist.getName().substring(0, 1));
+		nameLabel.setText(playlist.getName());
 		this.getChildren().addAll(button, nameLabel);
 		applyStyle();
 	}
