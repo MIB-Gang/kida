@@ -7,8 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -25,6 +27,10 @@ public class MediaController {
 	private Playlist allSongs = new Playlist("All Songs");
 	private List<Playlist> allPlaylists = new ArrayList<>();
 	private Playlist favorite = new Playlist("Favoriten");
+	private List <Playlist> artistPlaylists = new ArrayList<>();
+	private List <Playlist> albumPlaylists = new ArrayList<>();
+
+	private List <Playlist> genrePlaylists = new ArrayList<>();
 	private Playlist selectedPlaylist;
 	private File allSongsFile = new File("./allSongsFile.txt");
 	
@@ -156,6 +162,46 @@ public class MediaController {
         System.out.println("read: " + allSongs.getSongs());
     }
 
+	public List <Playlist> getArtistPlaylists() {
+		return artistPlaylists;
+	}
+	
+	public List<Playlist> getAlbumPlaylists() {
+		return albumPlaylists;
+	}
 
+	public List<Playlist> getGenrePlaylists() {
+		return genrePlaylists;
+	}
+
+	public void setArtistPlaylists() {
+		Set <String> artistList=new HashSet<>(allSongs.getSongs().stream().map(Song::getArtist).collect(Collectors.toList()));
+		for(String s:artistList) {
+			artistPlaylists.add(new Playlist(s));
+		}
+		for(Song song:allSongs.getSongs()) {
+			artistPlaylists.stream().filter(element-> element.getName().equals(song.getArtist())).findFirst().orElse(null).getSongs().add(song);
+		}
+	}
+
+	public void setAlbumPlaylists() {
+		Set <String> albumList=new HashSet<>(allSongs.getSongs().stream().map(Song::getAlbum).collect(Collectors.toList()));
+		for(String s:albumList) {
+			albumPlaylists.add(new Playlist(s));
+		}
+		for(Song song:allSongs.getSongs()) {
+			albumPlaylists.stream().filter(element-> element.getName().equals(song.getAlbum())).findFirst().orElse(null).getSongs().add(song);
+		}
+	}
+	
+	public void setGenrePlaylists() {
+		Set <String> genreList=new HashSet<>(allSongs.getSongs().stream().map(Song::getGenre).collect(Collectors.toList()));
+		for(String s:genreList) {
+			genrePlaylists.add(new Playlist(s));
+		}
+		for(Song song:allSongs.getSongs()) {
+			genrePlaylists.stream().filter(element-> element.getName().equals(song.getGenre())).findFirst().orElse(null).getSongs().add(song);
+		}
+	}
 	
 }
