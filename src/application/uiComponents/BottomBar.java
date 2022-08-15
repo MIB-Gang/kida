@@ -3,6 +3,7 @@ package application.uiComponents;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import application.controller.MediaController;
 import application.controller.PlayerController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -14,6 +15,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,9 +37,11 @@ public class BottomBar extends HBox {
 	private ImageView volumeIcon = new ImageView();
 	private KProgressSlider volumeSlider = new KProgressSlider();
 	
-	private ImageView starButton = new ImageView();
+	private Button starButton = new Button();
+	private ImageView starView = new ImageView();
 	
-	private PlayerController controller = PlayerController.getInstance();
+	private PlayerController playerController = PlayerController.getInstance();
+	private MediaController mediaController = MediaController.getInstance();
 	
 	Timer timer = new Timer();
 	boolean dragDetected = false;
@@ -60,31 +64,33 @@ public class BottomBar extends HBox {
 		);
 		
 		/* VOLUMESLIDER FUNKTIONIERT NOCH NICHT SO RICHTIG BEI SCENENWECHSEL */
-		if (controller.getAudioPlayer() != null) volumeSlider.setValue(controller.getAudioPlayer().getVolume() * 100);		
+		if (playerController.getAudioPlayer() != null) volumeSlider.setValue(playerController.getAudioPlayer().getVolume() * 100);		
 		
 		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
 		
-		starButton.setOnMouseClicked(event -> {
+		starButton.setOnAction(event -> {
             	if(clickDetected){
-            		starButton.setImage(new Image("like.png"));
+            		starView.setImage(new Image("like.png"));
             		clickDetected=false;
+            		mediaController.setOnFavorites(playerController.getCurrentSong());
             	}else{
-            		starButton.setImage(new Image("like_outline.png"));
+            		starView.setImage(new Image("like_outline.png"));
             		clickDetected=true;
+            		mediaController.deleteOnFavorites(playerController.getCurrentSong());
             	}
 	    });
 			
 		
-		seekbar.setOnDragDetected(event -> {controller.getAudioPlayer().pause();
+		seekbar.setOnDragDetected(event -> {playerController.getAudioPlayer().pause();
         	if (timer != null) timer.cancel();
             dragDetected=true;     
 	    });
 
 		seekbar.setOnMouseReleased(event -> {
             if(dragDetected){
-				double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
-            	controller.getAudioPlayer().seek(Duration.seconds(totalTime * 0.01 * ((double) seekbar.getValue() )));
-            	controller.getAudioPlayer().play();
+				double totalTime = playerController.getAudioPlayer().getTotalDuration().toSeconds();
+				playerController.getAudioPlayer().seek(Duration.seconds(totalTime * 0.01 * ((double) seekbar.getValue() )));
+				playerController.getAudioPlayer().play();
             	timer = new Timer();
         		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
                 dragDetected=false;
@@ -100,9 +106,9 @@ public class BottomBar extends HBox {
 			@Override
 			public void run() {
 				Platform.runLater(() -> {
-					if (controller.getAudioPlayer() != null) {
-						double currentTime = controller.getAudioPlayer().getCurrentTime().toSeconds();
-						double totalTime = controller.getAudioPlayer().getTotalDuration().toSeconds();
+					if (playerController.getAudioPlayer() != null) {
+						double currentTime = playerController.getAudioPlayer().getCurrentTime().toSeconds();
+						double totalTime = playerController.getAudioPlayer().getTotalDuration().toSeconds();
 						int currentMinutes = (int) Math.abs(currentTime / 60);
 						int currentSeconds = (int) Math.abs(currentTime - currentMinutes * 60);
 						int endMinutes = (int) Math.abs((totalTime - currentTime) / 60);
@@ -111,7 +117,7 @@ public class BottomBar extends HBox {
 						endTimeLabel.setText(String.format("%02d:%02d", endMinutes, endSeconds));
 						seekbar.setValue(100 * (currentTime / totalTime));
 						
-						controller.volumeChange(volumeSlider);
+						playerController.volumeChange(volumeSlider);
 					}
 	            });
 			};
@@ -128,9 +134,11 @@ public class BottomBar extends HBox {
 		volumeIcon.setFitWidth(24);
 		volumeIcon.setPreserveRatio(true);
 		
-		starButton.setImage(new Image("like_outline.png"));
-		starButton.setFitWidth(24);
-		starButton.setPreserveRatio(true);
+		starView.setImage(new Image("like_outline.png"));
+		starButton.setGraphic(starView);
+		starView.setFitWidth(24);
+		starView.setPreserveRatio(true);
+		starButton.setStyle("-fx-background-color:transparent;");
 		
 		volumeSlider.setMaxWidth(64);
 				

@@ -24,6 +24,7 @@ public class MediaController {
 	
 	private Playlist allSongs = new Playlist("All Songs");
 	private List<Playlist> allPlaylists = new ArrayList<>();
+	private Playlist favorite = new Playlist("Favoriten");
 	private Playlist selectedPlaylist;
 	private File allSongsFile = new File("./allSongsFile.txt");
 	
@@ -83,6 +84,19 @@ public class MediaController {
 	
 	public void removeSong(Song song, Playlist playlist) {
 		getPlaylistByName(playlist.getName()).getSongs().remove(song);
+	}
+	
+	public void setOnFavorites(Song s) {
+		s.setLike(true);
+	}
+	
+	public void deleteOnFavorites(Song s) {
+		s.setLike(false);
+	}
+	
+	public Playlist getOnFavorite() {
+		favorite = (Playlist) allSongs.getSongs().stream().filter(element->element.isLike());
+		return favorite;
 	}
 	
 	public ObservableList<Song> search(String input, String type) {
