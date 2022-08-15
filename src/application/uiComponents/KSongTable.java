@@ -7,17 +7,24 @@ import application.controller.SceneController;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.TableColumnHeader;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
-public class SongTable extends TableView<Song> {
+public class KSongTable extends TableView<Song> {
 	
 	private MediaController mediaController = MediaController.getInstance();
 	private SceneController sceneController = SceneController.getInstance();
@@ -30,7 +37,7 @@ public class SongTable extends TableView<Song> {
 	TableColumn<Song, String> genreColumn = new TableColumn<>("Genre");
 
 	@SuppressWarnings("unchecked")
-	public SongTable() {
+	public KSongTable() {
 		
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
@@ -50,7 +57,7 @@ public class SongTable extends TableView<Song> {
 	            MenuItem editItem = new MenuItem("Bearbeiten");
 	            
 	            menu.getItems().addAll(addItem, editItem);
-            
+	            
 	            row.setOnMouseClicked(event -> {
 					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
 						playerController.updateCurrentSong(getSelectionModel().getSelectedItem());
@@ -58,6 +65,11 @@ public class SongTable extends TableView<Song> {
 						System.out.println(getSelectionModel().getSelectedItem().getAlbum());
 					}
 	            }); 
+	            
+	    		ImageView nextGraphic = new ImageView(new Image("/next.png"));
+	    		nextGraphic.setFitWidth(24);
+	    		nextGraphic.setPreserveRatio(true);
+	    		row.setGraphic(nextGraphic);
 	            
 	            row.contextMenuProperty().bind(Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(menu));
 	            return row;
@@ -70,8 +82,15 @@ public class SongTable extends TableView<Song> {
 	
 	
 	private void applyStyle() {
+		VBox.setVgrow(this, Priority.ALWAYS);
+		this.setMaxHeight(Double.MAX_VALUE);
+
 		this.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		this.setStyle("-fx-base: transparent; -fx-background-color: #292929; -fx-selection-bar: #686868; -fx-selection-bar-non-focused: #686868;");
+		this.setStyle("-fx-base: transparent; -fx-background-color: transparent; -fx-selection-bar: #686868; -fx-selection-bar-non-focused: #686868;");
+		
+		// TODO: Table-Header rund
+//		this.lookup(".column-header-background").setStyle("-fx-background-radius: 5; -fx-border-radius: 10;");
+//		System.out.println(this.lookup(".column-header-background"));
 		
 		titleColumn.setStyle("-fx-text-fill: white;");
 		artistColumn.setStyle("-fx-text-fill: white;");

@@ -8,9 +8,9 @@ import javax.swing.GroupLayout.Alignment;
 import application.Song;
 import application.controller.MediaController;
 import application.controller.PlayerController;
-import application.uiComponents.DefaultButton;
-import application.uiComponents.DefaultTextField;
-import application.uiComponents.Headline;
+import application.uiComponents.KButton;
+import application.uiComponents.KTextField;
+import application.uiComponents.KHeadline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -59,21 +60,22 @@ public class ImportStage extends Stage {
 	private VBox textFieldArea = new VBox();
 	private StackPane buttonArea = new StackPane();
 
-	Headline headline = new Headline("", "h3");
-	DefaultTextField titleField = new DefaultTextField();
-	DefaultTextField artistField = new DefaultTextField();
-	DefaultTextField albumField = new DefaultTextField();
-	DefaultTextField genreField = new DefaultTextField();
-	DefaultButton saveEntryButton = new DefaultButton("Speichern");
-	DefaultButton closeButton = new DefaultButton("Beenden");
+	KHeadline headline = new KHeadline("", "h3");
+	KTextField titleField = new KTextField();
+	KTextField artistField = new KTextField();
+	KTextField albumField = new KTextField();
+	KTextField genreField = new KTextField();
+	KButton saveEntryButton = new KButton("Speichern");
+	KButton closeButton = new KButton("Beenden");
 
-	Alert titleAlert = new Alert(AlertType.ERROR);
 	
 	String selectedFilePath = "";
 	
 	
 
 	public ImportStage(List<File> files) {
+		
+		primaryPane.getStylesheets().add("application.css");
 
 		column = new TableColumn<>("Dateien");
 		column.setCellValueFactory(new PropertyValueFactory<>("path"));
@@ -93,9 +95,9 @@ public class ImportStage extends Stage {
 
 		saveEntryButton.setOnAction(event -> {
 			if(titleField.getText().isEmpty()) {
+				Alert titleAlert = new Alert(AlertType.ERROR);
+				titleAlert.initOwner(((Node) event.getSource()).getScene().getWindow());
 				titleAlert.setTitle("Fehlende Daten");
-				Stage stage = (Stage) titleAlert.getDialogPane().getScene().getWindow();
-				stage.getIcons().add(new Image("/kida_icon.png"));
 				titleAlert.setHeaderText(null);
 				titleAlert.setContentText("Bitte gib einen Titel ein, damit du dein Lied wiederfindest.");
 				titleAlert.showAndWait();
@@ -110,7 +112,6 @@ public class ImportStage extends Stage {
 				fileTable.getItems().remove(fileTable.getSelectionModel().getSelectedItem());
 				fileTable.getSelectionModel().select(0, fileTable.getColumns().get(0));	
 			}
-			
 		});
 		
 		closeButton.setOnAction(event -> this.fireEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSE_REQUEST)));
@@ -168,6 +169,7 @@ public class ImportStage extends Stage {
 		artistField.clear();
 		albumField.clear();
 		genreField.clear();
+		titleField.requestFocus();
 	}
 
 	private void updateHeadline(File newFile) {

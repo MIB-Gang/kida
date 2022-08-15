@@ -30,10 +30,10 @@ import javafx.util.Duration;
 public class BottomBar extends HBox {
 		
 	private Label currentTimeLabel = new Label("00:00");
-	private ProgressSlider seekbar = new ProgressSlider();
+	private KProgressSlider seekbar = new KProgressSlider();
 	private Label endTimeLabel = new Label("00:00");
 	private ImageView volumeIcon = new ImageView();
-	private ProgressSlider volumeSlider = new ProgressSlider();
+	private KProgressSlider volumeSlider = new KProgressSlider();
 	
 	private PlayerController controller = PlayerController.getInstance();
 	

@@ -4,20 +4,20 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class Headline extends Label {
+public class KHeadline extends Label {
 	
-	public Headline() {
+	public KHeadline() {
 		this.setFont(new Font(48));
 		applyStyle();
 	}
 	
-	public Headline(String text) {
+	public KHeadline(String text) {
 		this.setText(text);
 		this.setFont(new Font(48));
 		applyStyle();
 	}
 	
-	public Headline(String text, String type) {
+	public KHeadline(String text, String type) {
 		this.setText(text);
 		applyStyle();
 

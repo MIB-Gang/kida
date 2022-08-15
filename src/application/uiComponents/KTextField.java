@@ -2,13 +2,13 @@ package application.uiComponents;
 
 import javafx.scene.control.TextField;
 
-public class DefaultTextField extends TextField {
+public class KTextField extends TextField {
 
-	public DefaultTextField() {
+	public KTextField() {
 		applyStyle();
 	}
 	
-	public DefaultTextField(String name) {
+	public KTextField(String name) {
 		this.setText(name);
 		applyStyle();
 	}

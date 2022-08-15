@@ -3,9 +3,9 @@ package application.uiComponents;
 import javafx.scene.control.Button;
 import javafx.scene.text.Font;
 
-public class DefaultButton extends Button {
+public class KButton extends Button {
 
-	private String styleBase = "-fx-background-radius: 8; -fx-text-fill: rgb(255, 255, 255);  -fx-padding: 6 12 6 12";
+	private String styleBase = "-fx-background-radius: 8; -fx-text-fill: rgb(255, 255, 255);  -fx-padding: 6 12 6 12;";
 	private String defaultStyle = "-fx-background-color: #131313;" + styleBase;
 	private String hoverStyle = "-fx-background-color: #FF8A00;" + styleBase;
 	private String pressStyle = "-fx-background-color: #C35200;" + styleBase;
@@ -15,7 +15,7 @@ public class DefaultButton extends Button {
 		this.applyStyle();
 	}
 
-	public DefaultButton(String text) {
+	public KButton(String text) {
 		this.setText(text);
 		
 		applyStyle();

@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public class MenuButton extends Button {
+public class KMenuButton extends Button {
 	
 	private String styleBase = "-fx-background-radius: 8;  -fx-padding: 6 12 6 12;"; // -fx-font-weight: bold;
 	private String defaultStyle = "-fx-background-color: transparent; -fx-text-fill: #686868;" + styleBase;
@@ -20,7 +20,7 @@ public class MenuButton extends Button {
 	private ImageView icon;
 	private VBox graphic = new VBox();
 
-	public MenuButton(String text, Image icon, Node body) {
+	public KMenuButton(String text, Image icon, Node body) {
 		this.icon = new ImageView(icon);
 		graphic.getChildren().addAll(this.icon, new Rectangle(32,0));
 		this.setText(text);

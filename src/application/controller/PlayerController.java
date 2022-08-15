@@ -2,7 +2,7 @@ package application.controller;
 
 import application.Playlist;
 import application.Song;
-import application.uiComponents.ProgressSlider;
+import application.uiComponents.KProgressSlider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -149,7 +149,7 @@ public class PlayerController {
 		}
 	}
 
-	public void volumeChange(ProgressSlider volumeSlider) {
+	public void volumeChange(KProgressSlider volumeSlider) {
 		if (audioPlayer != null)
 			audioPlayer.setVolume(volumeSlider.getValue() * 0.01);
 	}

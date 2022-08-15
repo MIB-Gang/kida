@@ -3,8 +3,8 @@ package application.scenes;
 
 import application.controller.PlayerController;
 import application.controller.SceneController;
-import application.uiComponents.DefaultButton;
-import application.uiComponents.Headline;
+import application.uiComponents.KButton;
+import application.uiComponents.KHeadline;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,9 +18,9 @@ public class BodyLibrary extends VBox {
 	private PlayerController controller = PlayerController.getInstance();
 	private SceneController sceneController = SceneController.getInstance();
 	
-	private Headline headline = new Headline("Bibliothek", "h1");
+	private KHeadline headline = new KHeadline("Bibliothek", "h1");
 	
-	private DefaultButton adminButton = new DefaultButton("Alle Songs verwalten");
+	private KButton adminButton = new KButton("Alle Songs verwalten");
 			
 	public BodyLibrary() {		
 		adminButton.setOnAction((event) -> sceneController.changeBody(event, new BodyAdmin()));
@@ -33,6 +33,7 @@ public class BodyLibrary extends VBox {
 	
 	private void applyStyle() {
 		this.setPadding(new Insets(31.25, 32, 0, 32));
+		this.setSpacing(12);
 		
 		HBox.setHgrow(adminButton, Priority.ALWAYS);
 		adminButton.setMaxWidth(Double.MAX_VALUE);

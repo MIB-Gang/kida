@@ -5,9 +5,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.StackPane;
 
-public class ProgressSlider extends Slider {
+public class KProgressSlider extends Slider {
 
-	public ProgressSlider() {
+	public KProgressSlider() {
 		this.setId("progressSlider");
 		applyStyle();
 	}

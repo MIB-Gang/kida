@@ -23,11 +23,11 @@ public class Sidemenu extends BorderPane {
 	public Sidemenu() {
 		menuContent.getChildren().addAll(logoContainer, new Rectangle(0, 32));
 
-		menuContent.getChildren().add(new MenuButton("Suche", new Image("/search.png"), new BodySearch()));
+		menuContent.getChildren().add(new KMenuButton("Suche", new Image("/search.png"), new BodySearch()));
 		menuContent.getChildren().add(new Rectangle(0, 4));
-		menuContent.getChildren().add(new MenuButton("Bibliothek", new Image("/library.png"), new BodyLibrary()));
+		menuContent.getChildren().add(new KMenuButton("Bibliothek", new Image("/library.png"), new BodyLibrary()));
 		menuContent.getChildren().add(new Rectangle(0, 4));
-		menuContent.getChildren().add(new MenuButton("Entdecken", new Image("/explore.png"), new BodyExplore()));
+		menuContent.getChildren().add(new KMenuButton("Entdecken", new Image("/explore.png"), new BodyExplore()));
 
 		this.setCenter(menuContent);
 		this.setBottom(controlElements);

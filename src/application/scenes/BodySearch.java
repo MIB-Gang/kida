@@ -1,25 +1,27 @@
 package application.scenes;
 
 import application.controller.MediaController;
-import application.uiComponents.DefaultTextField;
-import application.uiComponents.Headline;
-import application.uiComponents.SongTable;
+import application.uiComponents.KTextField;
+import application.uiComponents.KChoiceBox;
+import application.uiComponents.KHeadline;
+import application.uiComponents.KSongTable;
 import javafx.geometry.Insets;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 
 public class BodySearch extends VBox {
 	
 	private MediaController mediaController = MediaController.getInstance();
 	
-	private Headline headline = new Headline("Suche", "h1");
+	private KHeadline headline = new KHeadline("Suche", "h1");
 	private HBox searchArea = new HBox();
-	private DefaultTextField searchField = new DefaultTextField();
-	private SongTable table = new SongTable();
-	private ChoiceBox<String> choiceBox = new ChoiceBox<>();
+	private KTextField searchField = new KTextField();
+	private KSongTable table = new KSongTable();
+	private KChoiceBox choiceBox = new KChoiceBox();
 	
 	public BodySearch() {
 		

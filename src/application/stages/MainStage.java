@@ -1,17 +1,16 @@
 package application.stages;
 
-import application.scenes.BodyLibrary;
 import application.scenes.Scaffold;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainStage extends Stage {
-	
-	private Scaffold scaffold = Scaffold.getInstance();
+		
+	Scaffold scaffold = Scaffold.getInstance();
 	
 	public MainStage() {
+
 		this.getIcons().add(new Image("/kida_icon.png"));
 		this.setTitle("kida");
 		this.setMinWidth(1000);
