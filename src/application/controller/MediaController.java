@@ -23,12 +23,9 @@ public class MediaController {
 	private static MediaController mediaController = new MediaController();
 	
 	private Playlist allSongs = new Playlist("All Songs");
-	private Map<String,Playlist> allPlaylists = new HashMap<>();
+	private List<Playlist> allPlaylists = new ArrayList<>();
 	private Playlist selectedPlaylist;
 	private File allSongsFile = new File("./allSongsFile.txt");
-	private File allPlaylistsFile = new File("./allPlaylists.txt");
-	private File currentSongFile  = new File ("./currentSongFile.txt");
-	private File currentPlaylistFile = new File ("./currentPlaylist.txt");
 	
 	public static MediaController getInstance() {
 		return mediaController;
@@ -47,12 +44,16 @@ public class MediaController {
 		return allSongs;
 	}	
 
-	public Map<String,Playlist> getAllPlaylists() {
+	public List<Playlist> getAllPlaylists() {
 		return allPlaylists;
 	}
 
-	public void setAllPlaylists(Map<String,Playlist> allPlaylists) {
+	public void setAllPlaylists(List<Playlist> allPlaylists) {
 		this.allPlaylists = allPlaylists;
+	}
+	
+	public Playlist getPlaylistByName(String name) {
+		return allPlaylists.stream().filter(element-> element.getName().equals(name)).findFirst().orElse(null);
 	}
 	
 	public Playlist getSelectedPlaylist() {
@@ -64,19 +65,24 @@ public class MediaController {
 	}
 	
 	public void createPlaylist(String name) {
-		allPlaylists.put(name, new Playlist(name));
+		allPlaylists.add(new Playlist(name));
 	}
 	
-	public void deletePlaylist(String name) {
-		allPlaylists.remove(name);
+	public void deletePlaylist(Playlist playlist) {
+		allPlaylists.remove(playlist);
+	}
+	
+	public void deletePlaylistByName(String name) {
+		allPlaylists.remove(getPlaylistByName(name));
 	}
 
+
 	public void addSong(Song song, Playlist playlist) {
-		allPlaylists.get(playlist.getName()).getSongs().add(song);
+		getPlaylistByName(playlist.getName()).getSongs().add(song);
 	}
 	
 	public void removeSong(Song song, Playlist playlist) {
-		allPlaylists.get(playlist.getName()).getSongs().remove(song);
+		getPlaylistByName(playlist.getName()).getSongs().remove(song);
 	}
 	
 	public ObservableList<Song> search(String input, String type) {
