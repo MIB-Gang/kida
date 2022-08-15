@@ -44,8 +44,8 @@ public class BodyLibrary extends VBox {
 		adminButton.setOnAction((event) -> sceneController.changeBody(event, new BodyAdmin()));
 		grid.getChildren().addAll(addButton, favoritesButton);
 		
-		mediaController.createPlaylist(" hallo");
-		mediaController.createPlaylist(" test");
+		mediaController.createPlaylist("hallo");
+		mediaController.createPlaylist("test");
 		for (Playlist p : mediaController.getAllPlaylists().values()) 
 			grid.getChildren().add(new KPlaylistButton(p.getName()));
 		
