@@ -49,8 +49,8 @@ public class PlayerController {
 	
 	public void initCurrentSong() {
 		// TODO: ist allSongs (bzw. currentPlaylist?) empty??? =>> FEHLERMELDUNG: "Du hast noch keine Songs hinzugefügt..."
-		if (currentPlaylist.isEmpty()) {
-			updateCurrentSong(currentPlaylist.get(0));
+		if (currentPlaylist.getSongs().isEmpty()) {
+			updateCurrentSong(currentPlaylist.getSongs().get(0));
 		}
 		else {
 		}
@@ -70,7 +70,7 @@ public class PlayerController {
 	}
 	
 	public void startPlaylist() {
-		updateCurrentSong(currentPlaylist.get(0));
+		updateCurrentSong(currentPlaylist.getSongs().get(0));
 		play();
 	}
 
@@ -104,11 +104,11 @@ public class PlayerController {
 	}
 
 	public void nextSong() {
-		if (currentPlaylist.indexOf(currentSong) + 1 != currentPlaylist.size()) {
+		if (currentPlaylist.getSongs().indexOf(currentSong) + 1 != currentPlaylist.getSongs().size()) {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + currentPlaylist.get(currentPlaylist.indexOf(currentSong) + 1).getAudioFilePath());
-			setCurrentSong(currentPlaylist.get(currentPlaylist.indexOf(currentSong) + 1));
+			audio = new Media("file:///" + currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1).getAudioFilePath());
+			setCurrentSong(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1));
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -118,8 +118,8 @@ public class PlayerController {
 		} else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + currentPlaylist.get(0).getAudioFilePath());
-			setCurrentSong(currentPlaylist.get(0));
+			audio = new Media("file:///" + currentPlaylist.getSongs().get(0).getAudioFilePath());
+			setCurrentSong(currentPlaylist.getSongs().get(0));
 			// video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
 			// videoPlayer = new MediaPlayer(video);
@@ -130,15 +130,15 @@ public class PlayerController {
 
 	public void previousSong() {
 
-		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || currentPlaylist.indexOf(currentSong) == 0) {
+		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || currentPlaylist.getSongs().indexOf(currentSong) == 0) {
 			audioPlayer.seek(Duration.seconds(0));
 			// videoPlayer.seek(Duration.seconds(0));
 		}
 		else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + currentPlaylist.get(currentPlaylist.indexOf(currentSong) - 1).getAudioFilePath());
-			setCurrentSong(currentPlaylist.get(currentPlaylist.indexOf(currentSong) - 1));
+			audio = new Media("file:///" + currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) - 1).getAudioFilePath());
+			setCurrentSong(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) - 1));
 
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());

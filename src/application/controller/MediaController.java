@@ -1,5 +1,11 @@
 package application.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,18 +25,19 @@ public class MediaController {
 	private Playlist allSongs = new Playlist("All Songs");
 	private Map<String,Playlist> allPlaylists = new HashMap<>();
 	private Playlist selectedPlaylist;
-	private FilteredList<Song> filteredSongs = new FilteredList<>(allSongs);
+	private File allSongsFile = new File("./allSongsFile.txt");
 	
 	public static MediaController getInstance() {
 		return mediaController;
 	}
 	
 	public MediaController() {
-		// Konstruktor
+		readFromFile();
 	}
 	
 	public void addToAllSongs(Song song) {
-		allSongs.add(song);
+		allSongs.getSongs().add(song);
+		saveToFile();
 	}
 
 	public Playlist getAllSongs() {
@@ -62,11 +69,11 @@ public class MediaController {
 	}
 
 	public void addSong(Song song, Playlist playlist) {
-		allPlaylists.get(playlist.getName()).add(song);
+		allPlaylists.get(playlist.getName()).getSongs().add(song);
 	}
 	
 	public void removeSong(Song song, Playlist playlist) {
-		allPlaylists.get(playlist.getName()).remove(song);
+		allPlaylists.get(playlist.getName()).getSongs().remove(song);
 	}
 	
 	public ObservableList<Song> search(String input, String type) {
@@ -74,31 +81,57 @@ public class MediaController {
 		String word = input.toLowerCase();
 		switch (type) {
 		case "Titel":
-			result = allSongs.stream().filter(item -> item.getTitle().toLowerCase().contains(word));	
+			result = allSongs.getSongs().stream().filter(item -> item.getTitle().toLowerCase().contains(word));	
 			break;
 		case "Interpret":
-			result = allSongs.stream().filter(item -> item.getArtist().toLowerCase().contains(word));	     	
+			result = allSongs.getSongs().stream().filter(item -> item.getArtist().toLowerCase().contains(word));	     	
 			break;
 		case "Album":
-			result = allSongs.stream().filter(item -> item.getAlbum().toLowerCase().contains(word));     
+			result = allSongs.getSongs().stream().filter(item -> item.getAlbum().toLowerCase().contains(word));     
 			break;
 		case "Genre":
-			result = allSongs.stream().filter(item -> item.getGenre().toLowerCase().contains(word));
+			result = allSongs.getSongs().stream().filter(item -> item.getGenre().toLowerCase().contains(word));
 			break;
 		default:
-			result = allSongs.stream().filter(item -> item.getTitle().toLowerCase().contains(word));	     
+			result = allSongs.getSongs().stream().filter(item -> item.getTitle().toLowerCase().contains(word));	     
 			break;
 		}
 		return  FXCollections.observableArrayList(result.collect(Collectors.toList()));
 	}
 
-	public FilteredList<Song> getFilteredSongs() {
-		return filteredSongs;
-	}
+	public void saveToFile() {
+		
+        try {
+        	if (!allSongsFile.exists()) {
+        		allSongsFile.createNewFile();
+        		}
+            FileOutputStream fos = new FileOutputStream(allSongsFile);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(new ArrayList<Song>(allSongs.getSongs()));
+            System.out.println("\n(i) Data has been saved to file!");
+            oos.close();
+            fos.close();
+        } catch (Exception e) {
+            System.out.println("\n(!) " + e.getMessage());
+        }
+        System.out.println("save: " + allSongs.getSongs());
+    }
 
-	public void setFilteredSongs(FilteredList<Song> filteredSongs) {
-		this.filteredSongs = filteredSongs;
-	}
+    @SuppressWarnings("unchecked")
+	public void readFromFile() {
+        try {
+            FileInputStream fis = new FileInputStream(allSongsFile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            List<Song> so = (ArrayList<Song>)ois.readObject();
+            allSongs.setSongs(FXCollections.observableArrayList(so));
+            System.out.println("\n(i) Data has been read from file!");
+            ois.close();
+            fis.close();
+        } catch (Exception e) {
+            System.out.println("\n(!) " + e.getMessage());
+        }
+        System.out.println("read: " + allSongs.getSongs());
+    }
 
 
 	

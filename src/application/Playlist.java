@@ -1,15 +1,20 @@
 package application;
 
+import java.io.Serializable;
+
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-public class Playlist extends SimpleListProperty<Song> {
+@SuppressWarnings("serial")
+public class Playlist  implements Serializable{
 	
+	private ObservableList<Song> songs = FXCollections.observableArrayList();
 	private String name;
 	private boolean like; 
 		
 	public Playlist(String name){
-		super(FXCollections.observableArrayList());
+		
 		this.name = name;
 	}
 
@@ -21,6 +26,12 @@ public class Playlist extends SimpleListProperty<Song> {
 		this.name = name;
 	}
 
-	
-	
+	public ObservableList<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(ObservableList<Song> songs) {
+		this.songs = songs;
+	}
+
 }

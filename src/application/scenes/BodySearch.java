@@ -33,7 +33,7 @@ public class BodySearch extends VBox {
 		searchArea.getChildren().addAll(searchField, choiceBox);
 		this.getChildren().addAll(headline, searchArea, table);
 		
-		table.setItems(mediaController.getAllSongs());
+		table.setItems(mediaController.getAllSongs().getSongs());
 		
 		searchField.textProperty().addListener((observableText, oldText, newText) -> {
 			table.setItems(mediaController.search(newText,choiceBox.getValue()));

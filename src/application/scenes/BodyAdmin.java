@@ -36,7 +36,7 @@ public class BodyAdmin extends VBox {
 	
 	public BodyAdmin() {
 
-		table.setItems(mediaController.getAllSongs());
+		table.setItems(mediaController.getAllSongs().getSongs());
 		
 		importButton.setOnAction((event) -> sceneController.openImportWindow(sceneController.openFileChooser(event)));
 		

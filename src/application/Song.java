@@ -1,6 +1,8 @@
 package application;
 
-public class Song {
+import java.io.Serializable;
+
+public class Song implements Serializable{
 	private int id;
 	private String title;
 	//private double duration;
