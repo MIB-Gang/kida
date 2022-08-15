@@ -26,7 +26,7 @@ public class MediaController {
 	}
 	
 	public MediaController() {
-
+		// Konstruktor
 	}
 	
 	public void addToAllSongs(Song song) {

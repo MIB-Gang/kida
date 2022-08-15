@@ -52,11 +52,11 @@ public class KSongTable extends TableView<Song> {
 	            final TableRow<Song> row = new TableRow<>();
 	            
 	            ContextMenu menu = new ContextMenu();
+	            MenuItem editItem = new MenuItem("Bearbeiten");
 	            MenuItem favoriteItem = new MenuItem("Zu Favoriten hinzufuegen");
 	            MenuItem addItem = new MenuItem("Zu Playlist hinzufuegen");
-	            MenuItem editItem = new MenuItem("Bearbeiten");
 	            
-	            menu.getItems().addAll(addItem, editItem);
+	            menu.getItems().addAll(editItem, favoriteItem, addItem);
 	            
 	            row.setOnMouseClicked(event -> {
 					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){

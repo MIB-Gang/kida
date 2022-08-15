@@ -13,8 +13,10 @@ public class MainStage extends Stage {
 
 		this.getIcons().add(new Image("/kida_icon.png"));
 		this.setTitle("kida");
-		this.setMinWidth(1000);
-		this.setMinHeight(700);
+		this.setWidth(1100);
+		this.setHeight(720);
+		this.setMinWidth(920);
+		this.setMinHeight(640);
 		
 		this.setScene(new Scene(scaffold));		
 	}

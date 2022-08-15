@@ -10,11 +10,16 @@ public class KButton extends Button {
 	private String hoverStyle = "-fx-background-color: #FF8A00;" + styleBase;
 	private String pressStyle = "-fx-background-color: #C35200;" + styleBase;
 
-	public void setbackgroundColor(String backgroundColor) {
-		defaultStyle = "-fx-background-color: #" + backgroundColor + ";" + styleBase;
+	public void setBackgroundColor(String backgroundColor) {
+		defaultStyle = "-fx-background-color: " + backgroundColor + ";" + styleBase;
 		this.applyStyle();
 	}
 
+	public KButton() {		
+		
+		applyStyle();
+	}
+	
 	public KButton(String text) {
 		this.setText(text);
 		

@@ -141,8 +141,8 @@ public class ImportStage extends Stage {
 		this.setMinWidth(700);
 		this.setMinHeight(450);
 
-		saveEntryButton.setbackgroundColor("686868");
-		closeButton.setbackgroundColor("686868");
+		saveEntryButton.setBackgroundColor("#686868");
+		closeButton.setBackgroundColor("#686868");
 
 		secondaryPane.setMinWidth(300);
 		secondaryPane.setMaxWidth(300);
