@@ -26,6 +26,9 @@ public class MediaController {
 	private Map<String,Playlist> allPlaylists = new HashMap<>();
 	private Playlist selectedPlaylist;
 	private File allSongsFile = new File("./allSongsFile.txt");
+	private File allPlaylistsFile = new File("./allPlaylists.txt");
+	private File currentSongFile  = new File ("./currentSongFile.txt");
+	private File currentPlaylistFile = new File ("./currentPlaylist.txt");
 	
 	public static MediaController getInstance() {
 		return mediaController;
