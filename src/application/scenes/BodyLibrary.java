@@ -35,21 +35,23 @@ public class BodyLibrary extends VBox {
 	private KButton adminButton = new KButton("Alle Songs verwalten");
 	private KHeadline myPlaylistsHeadline = new KHeadline("Meine Playlists", "h3");
 	
-	private TilePane grid = new TilePane();
+	private TilePane tiles = new TilePane();
 	private KPlaylistButton addButton = new KPlaylistButton(new Image("/add.png"));
 	private KPlaylistButton favoritesButton = new KPlaylistButton(new Image("/like_outline.png"));
 			
 
 	public BodyLibrary() {		
-		adminButton.setOnAction((event) -> sceneController.changeBody(event, new BodyAdmin()));
-		grid.getChildren().addAll(addButton, favoritesButton);
+		adminButton.setOnAction((event) -> sceneController.changeBody(new BodyAdmin()));
+		initTiles();
 		
-		mediaController.createPlaylist("hallo");
-		mediaController.createPlaylist("test");
-		for (Playlist p : mediaController.getAllPlaylists().values()) 
-			grid.getChildren().add(new KPlaylistButton(p.getName()));
-		
-		this.getChildren().addAll(headline, adminButton, new Rectangle(0, 6), myPlaylistsHeadline, grid);
+		addButton.getButton().setOnAction(event -> {
+			String newPlaylistName = "Neue Playlist " + (mediaController.getAllPlaylists().size() + 1);
+			mediaController.createPlaylist(newPlaylistName);
+			initTiles();
+			sceneController.changeBody(new BodyPlaylist(mediaController.getPlaylistByName(newPlaylistName)));
+		});
+				
+		this.getChildren().addAll(headline, adminButton, new Rectangle(0, 6), myPlaylistsHeadline, tiles);
 		
 		
 		applyStyle();
@@ -61,12 +63,18 @@ public class BodyLibrary extends VBox {
 		
 		addButton.getButton().setBackgroundColor("#686868");
 		
-		grid.setHgap(16);
-		grid.setVgap(16);
+		tiles.setHgap(16);
+		tiles.setVgap(16);
 		
 		HBox.setHgrow(adminButton, Priority.ALWAYS);
 		adminButton.setMaxWidth(Double.MAX_VALUE);
 
+	}
+	
+	private void initTiles() {
+		tiles.getChildren().clear();
+		tiles.getChildren().addAll(addButton, favoritesButton);
+		for (Playlist p : mediaController.getAllPlaylists()) tiles.getChildren().add(new KPlaylistButton(p.getName()));
 	}
 	
 }

@@ -1,10 +1,12 @@
 package application.uiComponents;
 
+import application.Playlist;
 import application.Song;
 import application.controller.MediaController;
 import application.controller.PlayerController;
 import application.controller.SceneController;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,12 +43,31 @@ public class KSongTable extends TableView<Song> {
 	public KSongTable() {
 		
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+		titleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		titleColumn.setOnEditCommit(event -> {
+			event.getTableView().getItems().get(event.getTablePosition().getRow()).setTitle(event.getNewValue());
+			mediaController.saveToFile();
+		});
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
+		artistColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		artistColumn.setOnEditCommit(event -> {
+			event.getTableView().getItems().get(event.getTablePosition().getRow()).setArtist(event.getNewValue());
+			mediaController.saveToFile();
+		});
 		albumColumn.setCellValueFactory(new PropertyValueFactory<>("album"));
+		albumColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		albumColumn.setOnEditCommit(event -> {
+			event.getTableView().getItems().get(event.getTablePosition().getRow()).setAlbum(event.getNewValue());
+			mediaController.saveToFile();
+		});
 		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
+		genreColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+		genreColumn.setOnEditCommit(event -> {
+			event.getTableView().getItems().get(event.getTablePosition().getRow()).setGenre(event.getNewValue());
+			mediaController.saveToFile();
+		});
 		this.getColumns().addAll(titleColumn, artistColumn, albumColumn, genreColumn);
-		
-		
+						
 		this.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
 	        @Override
 	        public TableRow<Song> call(TableView<Song> tableView) {
@@ -53,13 +75,19 @@ public class KSongTable extends TableView<Song> {
 	            
 	            ContextMenu menu = new ContextMenu();
 	            MenuItem editItem = new MenuItem("Bearbeiten");
-	            MenuItem favoriteItem = new MenuItem("Zu Favoriten hinzufuegen");
 	            MenuItem addItem = new MenuItem("Zu Playlist hinzufuegen");
 	            
-	            menu.getItems().addAll(editItem, favoriteItem, addItem);
+	            menu.getItems().addAll(editItem, addItem);
+	            
+//	            editItem.setOnAction(event -> {
+//	            	sceneController.openEditWindow(getSelectionModel().getSelectedItem());
+//	            	getItems().clear();
+//	            	setItems(mediaController.getAllSongs().getSongs());
+//	            });
 	            
 	            row.setOnMouseClicked(event -> {
-					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+	            	
+					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1){
 						playerController.updateCurrentSong(getSelectionModel().getSelectedItem());
 						playerController.play();
 						System.out.println(getSelectionModel().getSelectedItem().getAlbum());

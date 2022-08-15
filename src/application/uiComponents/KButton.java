@@ -1,6 +1,8 @@
 package application.uiComponents;
 
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 public class KButton extends Button {
@@ -17,6 +19,12 @@ public class KButton extends Button {
 
 	public KButton() {		
 		
+		applyStyle();
+	}
+	
+	public KButton(Image graphicImage) {
+		this.setGraphic(new ImageView(graphicImage));
+
 		applyStyle();
 	}
 	

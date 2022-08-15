@@ -25,7 +25,7 @@ public class KMenuButton extends Button {
 		graphic.getChildren().addAll(this.icon, new Rectangle(32,0));
 		this.setText(text);
 		this.setGraphic(graphic);
-		this.setOnAction((event) -> controller.changeBody(event, body));
+		this.setOnAction((event) -> controller.changeBody(body));
 
 		applyStyle();
 	}

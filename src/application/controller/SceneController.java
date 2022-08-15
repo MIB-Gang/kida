@@ -3,7 +3,9 @@ package application.controller;
 import java.io.File;
 import java.util.List;
 
+import application.Song;
 import application.scenes.Scaffold;
+import application.stages.EditStage;
 import application.stages.ImportStage;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
@@ -16,6 +18,7 @@ public class SceneController {
 	private static SceneController sceneController = new SceneController();	
 	
 	private Stage importStage;
+	private Stage editStage;
 	private Scene scene;
 
 	public static SceneController getInstance() {
@@ -23,7 +26,7 @@ public class SceneController {
 	}
 	
 	
-	public void changeBody(ActionEvent e, Node body) {			//EVENT WEG?
+	public void changeBody(Node body) {			//EVENT WEG?
 		Scaffold scaffold = Scaffold.getInstance();
 		scaffold.setBody(body);
 	}
@@ -41,6 +44,11 @@ public class SceneController {
 	public void openImportWindow(List<File> files) {
 		importStage = new ImportStage(files);	
 		importStage.show();
+	}
+	
+	public void openEditWindow(Song song) {
+		editStage = new EditStage(song);	
+		editStage.showAndWait();
 	}
 
 }

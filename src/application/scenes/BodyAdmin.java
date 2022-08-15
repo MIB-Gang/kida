@@ -4,17 +4,24 @@ import application.controller.MediaController;
 import application.controller.PlayerController;
 import application.controller.SceneController;
 import application.stages.MainStage;
+import application.uiComponents.KBackButton;
 import application.uiComponents.KButton;
 import application.uiComponents.KHeadline;
+import application.uiComponents.KProgressSlider;
 import application.uiComponents.KSongTable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class BodyAdmin extends VBox {
 	
@@ -24,25 +31,43 @@ public class BodyAdmin extends VBox {
 
 	private HBox header = new HBox();
 	private KHeadline headline = new KHeadline("Alle Songs verwalten", "h2");
+	
+	private Label editLabel = new Label("Bearbeiten");
+	//private KButton editButton = new KButton(new Image("/toggle_off.png"));
+	private KProgressSlider editSlider = new KProgressSlider();
+	
 	private KButton importButton = new KButton("Importieren");
-	private Button backButton = new Button();
+	private KBackButton backButton = new KBackButton();
 	
 		
 	private KSongTable table = new KSongTable();
 	
-	private String styleBase = "-fx-background-radius: 8;  -fx-padding: 4;"; // -fx-font-weight: bold;
-	private String defaultStyle = "-fx-background-color: transparent;" + styleBase;
-	private String pressStyle = "-fx-background-color: #181818;" + styleBase;
 	
 	public BodyAdmin() {
 
+		editSlider.setMaxWidth(32);
+		editSlider.setMinWidth(32);
+		editSlider.setMax(1);
+		editSlider.setBlockIncrement(1);
+		editSlider.setMajorTickUnit(1);
+		editSlider.setMinorTickCount(0);
+		editSlider.setSnapToTicks(true);
+				
+		editSlider.valueProperty().addListener((obv, ov, nv) -> {
+			if(editSlider.getValue() == 1) {
+				table.setEditable(true);
+			}
+			else {
+				table.setEditable(false);
+			}
+		});
+		
+		
 		table.setItems(mediaController.getAllSongs().getSongs());
 		
 		importButton.setOnAction((event) -> sceneController.openImportWindow(sceneController.openFileChooser(event)));
-		
-		backButton.setOnAction(event -> sceneController.changeBody(event, new BodyLibrary()));
-		
-		header.getChildren().addAll(backButton, headline, importButton);
+				
+		header.getChildren().addAll(backButton, headline, editLabel, editSlider, new Rectangle(12,0), importButton);
 		this.getChildren().addAll(header, table);
 		
 		applyStyle();
@@ -56,14 +81,7 @@ public class BodyAdmin extends VBox {
 		header.setAlignment(Pos.CENTER_LEFT);
 		HBox.setHgrow(headline, Priority.ALWAYS);
 		headline.setMaxWidth(Double.MAX_VALUE);
-		
-		ImageView backGraphic = new ImageView(new Image("/back.png"));
-		backGraphic.setFitWidth(10);
-		backGraphic.setPreserveRatio(true);
-		backButton.setGraphic(backGraphic);
-		backButton.setStyle(defaultStyle);
-		backButton.setOnMousePressed(e -> backButton.setStyle(pressStyle));
-		backButton.setOnMouseReleased(e -> backButton.setStyle(defaultStyle));
+
 	}
 	
 }
