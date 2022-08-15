@@ -23,7 +23,7 @@ public class SceneController {
 	}
 	
 	
-	public void changeBody(ActionEvent e, Node body) {
+	public void changeBody(ActionEvent e, Node body) {			//EVENT WEG?
 		Scaffold scaffold = Scaffold.getInstance();
 		scaffold.setBody(body);
 	}

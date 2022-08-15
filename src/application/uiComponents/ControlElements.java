@@ -50,7 +50,7 @@ public class ControlElements extends VBox {
 			
 		});
 		
-		pauseButton.setOnAction((event)->{
+		pauseButton.setOnAction((event) -> {
 			playerController.pause();
 			buttonArea.getChildren().remove(pauseButton);
 			buttonArea.getChildren().add(1, playButton);
