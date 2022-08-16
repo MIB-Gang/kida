@@ -1,5 +1,6 @@
 package application;
 
+import application.controller.TestController;
 import application.stages.MainStage;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,6 +15,7 @@ public class Main extends Application{
 	}
 
 	public static void main(String[] args) {
+		TestController.generateExampleSongs();
 		launch(args);
 	}
 
