@@ -1,16 +1,13 @@
 package application.uiComponents;
 
+import java.util.stream.Collectors;
+
 import application.Playlist;
 import application.Song;
 import application.controller.MediaController;
 import application.controller.PlayerController;
 import application.controller.SceneController;
 import javafx.beans.binding.Bindings;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -19,11 +16,9 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.skin.TableColumnHeader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -75,23 +70,48 @@ public class KSongTable extends TableView<Song> {
 	            final TableRow<Song> row = new TableRow<>();
 	            
 	            ContextMenu menu = new ContextMenu();
-	            MenuItem deleteItem = new MenuItem("Aus Playlist entfernen");
+	            Menu deleteMenu = new Menu("Entfernen");
+	            Menu addMenu = new Menu("Zu Playlist hinzufuegen");
 	            
-	            Menu addItem = new Menu("Zu Playlist hinzufuegen");
+	            MenuItem allSongsItem = new MenuItem ("Aus Bibliothek entfernen");
+	            deleteMenu.getItems().add(allSongsItem);
+	           
+	            
 	            
 	            for (Playlist playlist: mediaController.getAllPlaylists()) {
-	            	MenuItem temp = new MenuItem(playlist.getName()); 
+	            	MenuItem deleteP = new MenuItem(playlist.getName());
 	            	
-	            	temp.setOnAction(event -> {
-	            		mediaController.addSong(getSelectionModel().getSelectedItem(), playlist);
-//		            	System.out.println(playlist.getSongs());
+	            	deleteP.setOnAction(event -> {
+		            	if(playlist.getSongs().contains(getSelectionModel().getSelectedItem())) {
+		            		mediaController.removeSong(getSelectionModel().getSelectedItem(), playlist);
+		            	} else {
+		            		
+		            	}
 	            	});
-	            	addItem.getItems().add(temp);
+		            	deleteMenu.getItems().add(deleteP);
 	            }
 	            
-	            // TODO: Check if allSongs
 	            
-	            menu.getItems().addAll(deleteItem, addItem);
+	            allSongsItem.setOnAction(event -> {
+	            	mediaController.deleteFromAllSongs(getSelectionModel().getSelectedItem());
+	            });
+	            
+	            
+	            
+	            for (Playlist playlist: mediaController.getAllPlaylists()) {
+	            	MenuItem addP = new MenuItem(playlist.getName()); 
+	            	
+	            	addP.setOnAction(event -> {
+	            		if (!playlist.getSongs().contains(getSelectionModel().getSelectedItem())) {
+		            		mediaController.addSong(getSelectionModel().getSelectedItem(), playlist);
+	            		}
+	            	});
+	            	addMenu.getItems().add(addP);
+	            }
+	            	            
+	            
+	            
+	            menu.getItems().addAll(deleteMenu, addMenu);
 	            
 	            
 	            

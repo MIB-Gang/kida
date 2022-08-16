@@ -50,6 +50,11 @@ public class MediaController {
 		allSongs.getSongs().add(song);
 		saveAllToFile();
 	}
+	
+	public void deleteFromAllSongs(Song song) {
+		allSongs.getSongs().remove(song);
+		saveAllToFile();
+	}
 
 	public Playlist getAllSongs() {
 		return allSongs;
