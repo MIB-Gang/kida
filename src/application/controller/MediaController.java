@@ -260,4 +260,7 @@ public class MediaController {
 		}
 	}
 	
+	public String randomVideoPath() {
+		return "gibts noch nicht";
+	}
 }
