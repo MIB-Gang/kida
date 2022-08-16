@@ -5,32 +5,27 @@ import java.util.TimerTask;
 
 import application.controller.MediaController;
 import application.controller.PlayerController;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.media.MediaPlayer.Status;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 public class BottomBar extends HBox {
-		
+	
+	private static BottomBar bottomBar = new BottomBar();
+	public static BottomBar getInstance() {
+		return bottomBar;
+	};
+	
+	
 	private Label currentTimeLabel = new Label("00:00");
 	private KProgressSlider seekbar = new KProgressSlider();
 	private Label endTimeLabel = new Label("00:00");
@@ -38,16 +33,16 @@ public class BottomBar extends HBox {
 	private KProgressSlider volumeSlider = new KProgressSlider();
 	
 	private Button starButton = new Button();
-	private ImageView starView = new ImageView();
+	public Button getStarButton(){return starButton;}
 	
 	private PlayerController playerController = PlayerController.getInstance();
 	private MediaController mediaController = MediaController.getInstance();
 	
 	Timer timer = new Timer();
 	boolean dragDetected = false;
-	boolean clickDetected = false;
 
-
+	
+	
 	public BottomBar() {
 		
 		this.getChildren().addAll(
@@ -69,17 +64,14 @@ public class BottomBar extends HBox {
 		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
 		
 		starButton.setOnAction(event -> {
-            	if(clickDetected){
-            		starView.setImage(new Image("like.png"));
-            		clickDetected=false;
-            		mediaController.setOnFavorites(playerController.getCurrentSong());
-            	}else{
-            		starView.setImage(new Image("like_outline.png"));
-            		clickDetected=true;
-            		mediaController.deleteOnFavorites(playerController.getCurrentSong());
-            	}
+				if(!playerController.getCurrentSong().isLike()) {
+					mediaController.setOnFavorites(playerController.getCurrentSong());
+				}else{
+		    		mediaController.deleteOnFavorites(playerController.getCurrentSong());
+				}
+				playerController.checkLike(starButton);
 	    });
-			
+		
 		
 		seekbar.setOnDragDetected(event -> {playerController.getAudioPlayer().pause();
         	if (timer != null) timer.cancel();
@@ -125,6 +117,10 @@ public class BottomBar extends HBox {
 
 	}
 	
+	public boolean switchStar() {
+		return playerController.getCurrentSong().isLike();
+	}
+	
 	private void applyStyle() {
 		this.setAlignment(Pos.CENTER);
 		this.setMinHeight(64);
@@ -134,11 +130,8 @@ public class BottomBar extends HBox {
 		volumeIcon.setFitWidth(24);
 		volumeIcon.setPreserveRatio(true);
 		
-		starView.setImage(new Image("like_outline.png"));
-		starButton.setGraphic(starView);
-		starView.setFitWidth(24);
-		starView.setPreserveRatio(true);
 		starButton.setStyle("-fx-background-color:transparent;");
+		playerController.checkLike(starButton);
 		
 		volumeSlider.setMaxWidth(64);
 				
