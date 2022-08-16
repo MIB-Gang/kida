@@ -1,6 +1,5 @@
 package application.controller;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
 
