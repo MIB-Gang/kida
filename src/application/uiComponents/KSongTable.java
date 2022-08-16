@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -75,11 +76,24 @@ public class KSongTable extends TableView<Song> {
 	            
 	            ContextMenu menu = new ContextMenu();
 	            MenuItem deleteItem = new MenuItem("Aus Playlist entfernen");
-	            MenuItem addItem = new MenuItem("Zu Playlist hinzufuegen");
+	            
+	            Menu addItem = new Menu("Zu Playlist hinzufuegen");
+	            
+	            for (Playlist playlist: mediaController.getAllPlaylists()) {
+	            	MenuItem temp = new MenuItem(playlist.getName()); 
+	            	
+	            	temp.setOnAction(event -> {
+	            		mediaController.addSong(getSelectionModel().getSelectedItem(), playlist);
+//		            	System.out.println(playlist.getSongs());
+	            	});
+	            	addItem.getItems().add(temp);
+	            }
 	            
 	            // TODO: Check if allSongs
 	            
 	            menu.getItems().addAll(deleteItem, addItem);
+	            
+	            
 	            
 	            row.setOnMouseClicked(event -> {
 	            	

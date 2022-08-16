@@ -90,11 +90,11 @@ public class MediaController {
 
 
 	public void addSong(Song song, Playlist playlist) {
-		getPlaylistByName(playlist.getName()).getSongs().add(song);
+		playlist.getSongs().add(song);
 	}
 	
 	public void removeSong(Song song, Playlist playlist) {
-		getPlaylistByName(playlist.getName()).getSongs().remove(song);
+		playlist.getSongs().remove(song);
 	}
 	
 	public void setOnFavorites(Song s) {

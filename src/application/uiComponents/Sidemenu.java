@@ -1,14 +1,11 @@
 package application.uiComponents;
 
-import application.scenes.BodyExplore;
 import application.scenes.BodyGenre;
 import application.scenes.BodyHome;
-import application.scenes.BodyAdmin;
 import application.scenes.BodyAlbums;
 import application.scenes.BodyArtists;
 import application.scenes.BodySearch;
 import javafx.geometry.Insets;
-import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
