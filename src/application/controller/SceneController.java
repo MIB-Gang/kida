@@ -1,6 +1,8 @@
 package application.controller;
 
 import java.io.File;
+import java.net.URL;
+import java.nio.file.Paths;
 import java.util.List;
 
 import application.scenes.Scaffold;
@@ -35,7 +37,7 @@ public class SceneController {
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 		chooser.setTitle("Wähle Songs zum Importieren aus");
 		chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("kida-Dateien", "*.mp3"));
-		chooser.setInitialDirectory(new File("C:/Users/" + System.getProperty("user.name") + "/Music"));
+		chooser.setInitialDirectory(new File("./examplesSongs")); // "C:/Users/" + System.getProperty("user.name") + "/Music"
 		List<File> files = chooser.showOpenMultipleDialog(stage);
 		return files;
 	}

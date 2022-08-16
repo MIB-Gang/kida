@@ -83,10 +83,10 @@ public class KSongTable extends TableView<Song> {
 	            
 	            row.setOnMouseClicked(event -> {
 	            	
-					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 1){
+					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
 						playerController.updateCurrentSong(getSelectionModel().getSelectedItem());
 						playerController.play();
-						System.out.println(getSelectionModel().getSelectedItem().getAlbum());
+						System.out.println(getSelectionModel().getSelectedItem().getAudioFilePath());
 					}
 	            }); 
 	            

@@ -2,6 +2,7 @@ package application.stages;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.nio.file.Paths;
 import java.util.List;
 
 import javax.swing.GroupLayout.Alignment;
@@ -174,13 +175,15 @@ public class ImportStage extends Stage {
 
 	private void updateHeadline(File newFile) {
 		try {
-			selectedFilePath = fileTable.getSelectionModel().getSelectedItem().toURI().toURL().toExternalForm();
+			selectedFilePath = Paths.get("").toAbsolutePath().relativize(Paths.get(newFile.getPath())).toUri().toURL().toExternalForm();
 		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}// .toURL().toExternalForm();
+		System.out.println(selectedFilePath);
 		String[] splittedPath = selectedFilePath.split("/");
 		String formatted = splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("%20", " ").replace("-", " ").replace("_", " ");
-		headline.setText(formatted.length() > 28 ? formatted.substring(0, 24) + " ..." : formatted);
+		headline.setText(formatted.length() > 24 ? formatted.substring(0, 24) + " ..." : formatted);
 		toggleElements(true);
 	}
 
