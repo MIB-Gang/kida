@@ -20,7 +20,7 @@ public class BodySearch extends VBox {
 	private KHeadline headline = new KHeadline("Suche", "h1");
 	private HBox searchArea = new HBox();
 	private KTextField searchField = new KTextField();
-	private KSongTable table = new KSongTable();
+	private KSongTable table = new KSongTable(mediaController.getAllSongs());
 	private KChoiceBox choiceBox = new KChoiceBox();
 	
 	public BodySearch() {
@@ -32,9 +32,7 @@ public class BodySearch extends VBox {
 		
 		searchArea.getChildren().addAll(searchField, choiceBox);
 		this.getChildren().addAll(headline, searchArea, table);
-		
-		table.setItems(mediaController.getAllSongs().getSongs());
-	
+			
 		searchField.textProperty().addListener((observableText, oldText, newText) -> {
 			table.setItems(mediaController.search(newText,choiceBox.getValue()));
 		});

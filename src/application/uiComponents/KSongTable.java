@@ -21,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Callback;
 
 public class KSongTable extends TableView<Song> {
@@ -36,7 +37,7 @@ public class KSongTable extends TableView<Song> {
 	TableColumn<Song, String> genreColumn = new TableColumn<>("Genre");
 
 	@SuppressWarnings("unchecked")
-	public KSongTable() {
+	public KSongTable(Playlist tablePlaylist) {
 		
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		titleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -62,6 +63,9 @@ public class KSongTable extends TableView<Song> {
 			event.getTableView().getItems().get(event.getTablePosition().getRow()).setGenre(event.getNewValue());
 			mediaController.saveAllToFile();
 		});
+		
+		this.setItems(tablePlaylist.getSongs());
+		
 		this.getColumns().addAll(titleColumn, artistColumn, albumColumn, genreColumn);
 						
 		this.setRowFactory(new Callback<TableView<Song>, TableRow<Song>>() {
@@ -115,6 +119,12 @@ public class KSongTable extends TableView<Song> {
 	            row.setOnMouseClicked(event -> {
 	            	BottomBar bottomBar = BottomBar.getInstance();
 					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
+						playerController.setCurrentPlaylist(tablePlaylist);
+						if (playerController.getAudioPlayer() != null) {
+							if (playerController.getAudioPlayer().getStatus().equals(MediaPlayer.Status.PLAYING)) {
+								playerController.getAudioPlayer().stop();
+							}
+						}
 						playerController.updateCurrentSong(getSelectionModel().getSelectedItem());
 						playerController.play();
 						playerController.checkLike(bottomBar.getStarButton());

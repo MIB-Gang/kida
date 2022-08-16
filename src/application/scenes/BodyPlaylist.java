@@ -23,9 +23,11 @@ public class BodyPlaylist extends VBox {
 	private HBox header = new HBox();
 	private KBackButton backButton = new KBackButton();
 	private KTextField nameField = new KTextField();
-	private KSongTable table = new KSongTable();
+	private KSongTable table;
 	
 	public BodyPlaylist(Playlist playlist) {
+		
+		table = new KSongTable(playlist);
 		
 		nameField.setText(playlist.getName());
 		
@@ -46,11 +48,10 @@ public class BodyPlaylist extends VBox {
 				
 		header.getChildren().addAll(backButton, nameField);
 		this.getChildren().addAll(header, table);
-		
-		table.setItems(playlist.getSongs());
-	
+			
 		nameField.textProperty().addListener((observableText, oldText, newText) -> {
 			playlist.setName(newText);
+			mediaController.saveAllToFile();
 			int maxChars = 16;
 			if (nameField.getText().length() > maxChars) nameField.setText(nameField.getText().substring(0, maxChars));
 		});

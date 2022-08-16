@@ -85,7 +85,7 @@ public class ImportStage extends Stage {
 				titleAlert.setContentText("Bitte gib einen Titel ein, damit du dein Lied wiederfindest.");
 				titleAlert.showAndWait();
 			} else {
-				mediaController.addToAllSongs(new Song(
+				mediaController.addToAllSongsAndSave(new Song(
 						titleField.getText(), 
 						artistField.getText().isEmpty() ? "Unbekannter Interpret" : artistField.getText(), 
 						albumField.getText().isEmpty() ? "Unbekanntes Album" : albumField.getText(), 

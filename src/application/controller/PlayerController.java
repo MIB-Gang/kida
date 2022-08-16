@@ -1,5 +1,6 @@
 package application.controller;
 
+import java.io.File;
 import java.net.MalformedURLException;
 
 import application.Playlist;
@@ -16,7 +17,7 @@ import javafx.util.Duration;
 
 public class PlayerController {
 
-	private static PlayerController playerController = new PlayerController();
+	private static final PlayerController playerController = new PlayerController();
 
 	public static PlayerController getInstance() {
 		return playerController;
@@ -43,29 +44,31 @@ public class PlayerController {
 	}	
 
 	public Song getCurrentSong() {
-		return currentSong;
+		MediaController mediaController = MediaController.getInstance();
+		return currentSong == null ? mediaController.getAllSongs().getSongs().get(0) : currentSong;
 	}
 	
 	public void setCurrentSong(Song currentSong) {
 		this.currentSong = currentSong;
 	}
 	
-	public void initCurrentSong() {
+	public void initCurrent() {
+		MediaController mediaController = MediaController.getInstance();
 		// TODO: ist allSongs (bzw. currentPlaylist?) empty??? =>> FEHLERMELDUNG: "Du hast noch keine Songs hinzugefügt..."
-		if (currentPlaylist.getSongs().isEmpty()) {
-			updateCurrentSong(currentPlaylist.getSongs().get(0));
-		}
-		else {
+		File file = new File("./saves/currentSongFile.txt");
+		
+		if (!file.exists() /* || currentPlaylist.getSongs().isEmpty() */) {
+			setCurrentPlaylist(mediaController.getAllSongs());
+			updateCurrentSong(mediaController.getAllSongs().getSongs().get(0));
 		}
 	}
 
 	public void updateCurrentSong(Song currentSong) {
 		this.currentSong = currentSong;
-		if (audioPlayer != null)
-			if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING)
-				return;
+		MediaController mediaController = MediaController.getInstance();
+		if (getCurrentPlaylist() != null) mediaController.saveAllToFile();
 
-		audio = new Media(currentSong.getAudioFilePath());
+		audio = new Media(this.currentSong.getAudioFilePath());
 		// video = new Media("file:///" + song.getVideoFilePath());
 		audioPlayer = new MediaPlayer(audio);
 		// videoPlayer = new MediaPlayer(video);

@@ -22,7 +22,7 @@ import javafx.collections.ObservableList;
 
 public class MediaController {
 	
-	private static MediaController mediaController = new MediaController();
+	private static final MediaController mediaController = new MediaController();
 
 	private PlayerController playerController = PlayerController.getInstance();
 	
@@ -48,6 +48,10 @@ public class MediaController {
 	
 	public void addToAllSongs(Song song) {
 		allSongs.getSongs().add(song);
+	}
+	
+	public void addToAllSongsAndSave(Song song) {
+		allSongs.getSongs().add(song);
 		saveAllToFile();
 	}
 	
@@ -66,6 +70,7 @@ public class MediaController {
 
 	public void setAllPlaylists(ObservableList<Playlist> allPlaylists) {
 		this.myPlaylists = allPlaylists;
+		saveAllToFile();
 	}
 	
 	public Playlist getPlaylistByName(String name) {
@@ -78,27 +83,33 @@ public class MediaController {
 
 	public void setSelectedPlaylist(Playlist selectedPlaylist) {
 		this.selectedPlaylist = selectedPlaylist;
+		saveAllToFile();
 	}
 	
 	public void createPlaylist(String name) {
 		myPlaylists.add(new Playlist(name));
+		saveAllToFile();
 	}
 	
 	public void deletePlaylist(Playlist playlist) {
 		myPlaylists.remove(playlist);
+		saveAllToFile();
 	}
 	
 	public void deletePlaylistByName(String name) {
 		myPlaylists.remove(getPlaylistByName(name));
+		saveAllToFile();
 	}
 
 
 	public void addSong(Song song, Playlist playlist) {
 		playlist.getSongs().add(song);
+		saveAllToFile();
 	}
 	
 	public void removeSong(Song song, Playlist playlist) {
 		playlist.getSongs().remove(song);
+		saveAllToFile();
 	}
 	
 	public void setOnFavorites(Song s) {
@@ -137,13 +148,17 @@ public class MediaController {
 		return  FXCollections.observableArrayList(result.collect(Collectors.toList()));
 	}
 	
-	public void saveAllToFile() {
+	public void saveAllToFile() {	
 		saveToFile(allSongsFile, new ArrayList<Song>(allSongs.getSongs()));
-		Map<String, List<Song>> toSave = new HashMap<>();
-		for (Playlist playlist: myPlaylists) toSave.put(playlist.getName(), new ArrayList<>(playlist.getSongs()));
-		saveToFile(myPlaylistsFile, toSave);
+		Map<String, List<Song>> myPlaylistsToSave = new HashMap<>();
+		for (Playlist playlist: myPlaylists) myPlaylistsToSave.put(playlist.getName(), new ArrayList<>(playlist.getSongs()));
+		saveToFile(myPlaylistsFile, myPlaylistsToSave);
 		saveToFile(currentSongFile, playerController.getCurrentSong());
-		//saveToFile(currentPlaylistFile, new ArrayList<Song>(playerController.getCurrentPlaylist().getSongs()));
+		//Map<String, List<Song>> currentPlaylistToSave = new HashMap<>();
+		//List<Song> tempList = new ArrayList<>();
+		//for (Song song : playerController.getCurrentPlaylist().getSongs()) tempList.add(song);
+		//currentPlaylistToSave.put(playerController.getCurrentPlaylist().getName(), tempList);
+		saveToFile(currentPlaylistFile, playerController.getCurrentPlaylist().getName());
 	}
 
 	private void saveToFile(File file, Object object) {
@@ -164,9 +179,9 @@ public class MediaController {
 		readAllSongsFromFile();
 		readMyPlaylistsFromFile();
 		readCurrentSongFromFile();
-		//readCurrentPlaylistFromFile();
+		readCurrentPlaylistFromFile();
 		// TODO: Set currentPlaylist to saved playlist in file
-		playerController.setCurrentPlaylist(allSongs);
+		//playerController.setCurrentPlaylist(allSongs);
 
 	}
 
@@ -202,25 +217,26 @@ public class MediaController {
             FileInputStream fis = new FileInputStream(currentSongFile);
             ObjectInputStream ois = new ObjectInputStream(fis);
             playerController.setCurrentSong((Song) ois.readObject());
+            playerController.updateCurrentSong((Song) ois.readObject());
             ois.close(); fis.close();
         } catch (Exception e) {
             System.out.println("\n(!) CURRENTSONG: " + e.getMessage());
         }
     }
     
-//    @SuppressWarnings("unchecked")
-//	private void readCurrentPlaylistFromFile() {
-//        try {
-//            FileInputStream fis = new FileInputStream(currentPlaylistFile);
-//            ObjectInputStream ois = new ObjectInputStream(fis);
-//            //playerController.setCurrentPlaylist((Playlist) ois.readObject());
-//            playerController.setCurrentPlaylist();
-//            //playerController.setCurrentPlaylist(FXCollections.observableArrayList((ArrayList<Song>) ois.readObject()));
-//            ois.close(); fis.close();
-//        } catch (Exception e) {
-//            System.out.println("\n(!) CURRENTPLAYLIST: " + e.getMessage());
-//        }
-//    }
+	private void readCurrentPlaylistFromFile() {
+		try {
+			FileInputStream fis = new FileInputStream(currentPlaylistFile);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			////playerController.setCurrentPlaylist((Playlist) ois.readObject());
+			//Map<String, List<Song>> rawInput = ((Map<String, List<Song>>) ois.readObject());
+			playerController.setCurrentPlaylist(getPlaylistByName((String) ois.readObject()));
+			////playerController.setCurrentPlaylist(FXCollections.observableArrayList((ArrayList<Song>) ois.readObject()));
+			ois.close(); fis.close();
+		} catch (Exception e) {
+			System.out.println("\n(!) CURRENTPLAYLIST: " + e.getMessage());
+		}
+	}
 
 	public ObservableList <Playlist> getArtistPlaylists() {
 		return artistPlaylists;

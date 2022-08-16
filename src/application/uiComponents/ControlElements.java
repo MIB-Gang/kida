@@ -48,6 +48,7 @@ public class ControlElements extends VBox {
 		
 	
 		playButton.setOnAction((event) -> {
+			if (playerController.getAudioPlayer() == null || playerController.getCurrentSong() == null) playerController.updateCurrentSong(playerController.getCurrentSong());
 			playerController.play();
 			BottomBar bottomBar = BottomBar.getInstance();
 			playerController.checkLike(bottomBar.getStarButton());

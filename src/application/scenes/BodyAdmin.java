@@ -40,7 +40,7 @@ public class BodyAdmin extends VBox {
 	private KBackButton backButton = new KBackButton();
 	
 		
-	private KSongTable table = new KSongTable();
+	private KSongTable table = new KSongTable(mediaController.getAllSongs());
 	
 	
 	public BodyAdmin() {
@@ -62,9 +62,7 @@ public class BodyAdmin extends VBox {
 			}
 		});
 		
-		
-		table.setItems(mediaController.getAllSongs().getSongs());
-		
+				
 		importButton.setOnAction((event) -> sceneController.openImportStage(sceneController.openFileChooser(event)));
 				
 		header.getChildren().addAll(backButton, headline, editLabel, editSlider, new Rectangle(12,0), importButton);
