@@ -1,5 +1,6 @@
 package application.controller;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.nio.file.Paths;
 
@@ -14,6 +15,9 @@ public class TestController {
 	 */
 	public static void generateExampleSongs() {
 		MediaController mediaController = MediaController.getInstance();
+
+		File file = new File("./saves/allSongsFile.txt");
+		if (file.exists()) return;
 
 		mediaController.addToAllSongs(new Song(
 					"Dancing Queen", "ABBA", "Gold", "Pop",
