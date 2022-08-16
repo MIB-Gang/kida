@@ -74,16 +74,12 @@ public class KSongTable extends TableView<Song> {
 	            final TableRow<Song> row = new TableRow<>();
 	            
 	            ContextMenu menu = new ContextMenu();
-	            MenuItem editItem = new MenuItem("Bearbeiten");
+	            MenuItem deleteItem = new MenuItem("Aus Playlist entfernen");
 	            MenuItem addItem = new MenuItem("Zu Playlist hinzufuegen");
 	            
-	            menu.getItems().addAll(editItem, addItem);
+	            // TODO: Check if allSongs
 	            
-//	            editItem.setOnAction(event -> {
-//	            	sceneController.openEditWindow(getSelectionModel().getSelectedItem());
-//	            	getItems().clear();
-//	            	setItems(mediaController.getAllSongs().getSongs());
-//	            });
+	            menu.getItems().addAll(deleteItem, addItem);
 	            
 	            row.setOnMouseClicked(event -> {
 	            	
@@ -126,5 +122,10 @@ public class KSongTable extends TableView<Song> {
 		genreColumn.setStyle("-fx-text-fill: white;");
 	
 	}	
+	
+	
+	private boolean checkIfAllSongs() {
+		return getItems().equals(mediaController.getAllSongs().getSongs());
+	}
 	
 }
