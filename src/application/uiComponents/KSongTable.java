@@ -89,14 +89,15 @@ public class KSongTable extends TableView<Song> {
 		            	}
 	            	});
 		            	deleteMenu.getItems().add(deleteP);
-	            }
-	            
-	            
+	            }	            
 	            allSongsItem.setOnAction(event -> {
+	            	for(Playlist playlist : mediaController.getAllPlaylists()) {
+	            		while(playlist.getSongs().contains(getSelectionModel().getSelectedItem())) {
+	            			playlist.getSongs().remove(getSelectionModel().getSelectedItem());
+	            		}
+	            	}
 	            	mediaController.deleteFromAllSongs(getSelectionModel().getSelectedItem());
 	            });
-	            
-	            
 	            
 	            for (Playlist playlist: mediaController.getAllPlaylists()) {
 	            	MenuItem addP = new MenuItem(playlist.getName()); 
@@ -108,13 +109,9 @@ public class KSongTable extends TableView<Song> {
 	            	});
 	            	addMenu.getItems().add(addP);
 	            }
-	            	            
-	            
-	            
+	            	            	            
 	            menu.getItems().addAll(deleteMenu, addMenu);
-	            
-	            
-	            
+	            	            
 	            row.setOnMouseClicked(event -> {
 	            	
 					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
