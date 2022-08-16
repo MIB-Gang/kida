@@ -19,7 +19,7 @@ public class Scaffold extends BorderPane {
 	}
 	
 	private BorderPane secondaryPane = new BorderPane();
-	private BottomBar bottomBar = new BottomBar();
+	private BottomBar bottomBar = BottomBar.getInstance();
 	private Sidemenu sidemenu = new Sidemenu();
 	
 	public Node getBody() {

@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import application.Playlist;
 import application.Song;
 import application.uiComponents.KProgressSlider;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -155,5 +156,18 @@ public class PlayerController {
 	public void volumeChange(KProgressSlider volumeSlider) {
 		if (audioPlayer != null)
 			audioPlayer.setVolume(volumeSlider.getValue() * 0.01);
+	}
+	
+	public void checkLike(Button button) {	
+		ImageView view = new ImageView();
+		view.setFitWidth(24);
+		view.setPreserveRatio(true);
+		
+		if(getCurrentSong().isLike()){
+			view.setImage(new Image("like.png"));          		
+    	}else{
+    		view.setImage(new Image("like_outline.png"));
+    	}
+		button.setGraphic(view);
 	}
 }

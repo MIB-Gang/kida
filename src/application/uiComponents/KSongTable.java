@@ -113,10 +113,11 @@ public class KSongTable extends TableView<Song> {
 	            menu.getItems().addAll(deleteMenu, addMenu);
 	            	            
 	            row.setOnMouseClicked(event -> {
-	            	
+	            	BottomBar bottomBar = BottomBar.getInstance();
 					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
 						playerController.updateCurrentSong(getSelectionModel().getSelectedItem());
 						playerController.play();
+						playerController.checkLike(bottomBar.getStarButton());
 						System.out.println(getSelectionModel().getSelectedItem().getAudioFilePath());
 					}
 	            }); 
