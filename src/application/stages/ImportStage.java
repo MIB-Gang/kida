@@ -173,18 +173,14 @@ public class ImportStage extends Stage {
 	}
 
 	private void updateHeadline(File newFile) {
-		@SuppressWarnings("unchecked")
-		TablePosition<File, String> selectedCell = fileTable.getSelectionModel().getSelectedCells().get(0);
-		// TODO: Illegal Character Kram
-//		try {
-//			selectedFilePath = newFile.toURI().toURL().toExternalForm();
-//		} catch (MalformedURLException e) {
-//			e.printStackTrace();
-//		}
-		selectedFilePath = selectedCell.getTableColumn().getCellData(newFile).replace("\\", "/");
+		try {
+			selectedFilePath = fileTable.getSelectionModel().getSelectedItem().toURI().toURL().toExternalForm();
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		String[] splittedPath = selectedFilePath.split("/");
-		headline.setText(splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("-", " ").replace("_", " "));
-//		headline.setText(selectedFilePath);
+		String formatted = splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("%20", " ").replace("-", " ").replace("_", " ");
+		headline.setText(formatted.length() > 28 ? formatted.substring(0, 24) + " ..." : formatted);
 		toggleElements(true);
 	}
 

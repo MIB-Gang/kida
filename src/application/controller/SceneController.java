@@ -41,6 +41,7 @@ public class SceneController {
 	}
 	
 	public void openImportStage(List<File> files) {
+		if (files == null) return;
 		importStage = new ImportStage(files);	
 		importStage.show();
 	}

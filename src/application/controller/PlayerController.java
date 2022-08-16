@@ -64,7 +64,7 @@ public class PlayerController {
 			if (audioPlayer.getStatus() == MediaPlayer.Status.PLAYING)
 				return;
 
-		audio = new Media("file:///" + currentSong.getAudioFilePath());
+		audio = new Media(currentSong.getAudioFilePath());
 		// video = new Media("file:///" + song.getVideoFilePath());
 		audioPlayer = new MediaPlayer(audio);
 		// videoPlayer = new MediaPlayer(video);
@@ -72,7 +72,8 @@ public class PlayerController {
 	}
 	
 	public void startPlaylist() {
-		updateCurrentSong(currentPlaylist.getSongs().get(0));
+		MediaController mediaController = MediaController.getInstance();
+		updateCurrentSong(mediaController.getAllSongs().getSongs().get(0));
 		play();
 	}
 
@@ -109,7 +110,7 @@ public class PlayerController {
 		if (currentPlaylist.getSongs().indexOf(currentSong) + 1 != currentPlaylist.getSongs().size()) {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1));
+			audio = new Media(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1).getAudioFilePath());
 			setCurrentSong(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1));
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
@@ -120,7 +121,7 @@ public class PlayerController {
 		} else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + currentPlaylist.getSongs().get(0).getAudioFilePath());
+			audio = new Media(currentPlaylist.getSongs().get(0).getAudioFilePath());
 			setCurrentSong(currentPlaylist.getSongs().get(0));
 			// video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -139,7 +140,7 @@ public class PlayerController {
 		else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) - 1).getAudioFilePath());
+			audio = new Media(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) - 1).getAudioFilePath());
 			setCurrentSong(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) - 1));
 
 			// video = new Media ("file:///" +
