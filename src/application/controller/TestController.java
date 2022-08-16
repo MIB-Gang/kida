@@ -24,7 +24,7 @@ public class TestController {
 					false, addKidaPath("01 Dancing Queen.mp3"), 
 					mediaController.randomVideoPath()));
 		mediaController.addToAllSongs(new Song(
-				"Knowing Me, Knowing You", "ABBA", "Gold", "Pop",
+				"Knowing Me, Knowing You", "ABBA", "Greatest Hits", "Pop",
 				false, addKidaPath("02 Knowing Me, Knowing You.mp3"), 
 				mediaController.randomVideoPath()));
 		mediaController.addToAllSongs(new Song(
@@ -32,7 +32,7 @@ public class TestController {
 				false, addKidaPath("04 Mamma Mia.mp3"), 
 				mediaController.randomVideoPath()));
 		mediaController.addToAllSongs(new Song(
-				"I Walk The Line", "Johnny Cash", "The Greatest Hits", "Country",
+				"I Walk The Line", "Johnny Cash", "I Walk The Line", "Country",
 				false, addKidaPath("01 I Walk the Line.mp3"), 
 				mediaController.randomVideoPath()));
 		mediaController.addToAllSongs(new Song(
@@ -40,7 +40,7 @@ public class TestController {
 				false, addKidaPath("04 I Got Stripes.mp3"), 
 				mediaController.randomVideoPath()));
 		mediaController.addToAllSongs(new Song(
-				"Jackson", "Johnny Cash", "The Greatest Hits", "Country",
+				"Jackson", "Johnny Cash", "At Folsom Prison", "Country",
 				false, addKidaPath("14 Jackson.mp3"), 
 				mediaController.randomVideoPath()));
 		mediaController.addToAllSongs(new Song(
@@ -66,6 +66,14 @@ public class TestController {
 		mediaController.addToAllSongs(new Song(
 				"Ah, La Paterna Mano", "Andrea Bocelli", "Il Mare Calmo Della Sera", "KlassikPop",
 				false, addKidaPath("Ah, La Paterna Mano (from 'Macbeth').mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"I Found A Boy", "Adele", "21", "Pop",
+				false, addKidaPath("14 Adele - I Found A Boy.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Rumor Has It", "Adele", "21", "Pop",
+				false, addKidaPath("02 Adele - Rumor Has It.mp3"), 
 				mediaController.randomVideoPath()));
 	}
 	
