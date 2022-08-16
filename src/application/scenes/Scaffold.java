@@ -34,7 +34,7 @@ public class Scaffold extends BorderPane {
 		this.getStylesheets().add("application.css");
 		
 		secondaryPane.setBottom(bottomBar);
-		secondaryPane.setCenter(new BodyLibrary());
+		secondaryPane.setCenter(new BodyHome());
 		
 		this.setLeft(sidemenu);
 		this.setCenter(secondaryPane);

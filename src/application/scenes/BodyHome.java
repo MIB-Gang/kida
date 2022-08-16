@@ -11,6 +11,7 @@ import application.controller.SceneController;
 import application.uiComponents.KButton;
 import application.uiComponents.KHeadline;
 import application.uiComponents.KPlaylistButton;
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -25,13 +26,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
-public class BodyLibrary extends VBox {
+public class BodyHome extends VBox {
 	
 	private MediaController mediaController = MediaController.getInstance();
 	private PlayerController playerController = PlayerController.getInstance();
 	private SceneController sceneController = SceneController.getInstance();
 	
-	private KHeadline headline = new KHeadline("Bibliothek", "h1");
+	private KHeadline headline = new KHeadline("Home", "h1");
 	private KButton adminButton = new KButton("Alle Songs verwalten");
 	private KHeadline myPlaylistsHeadline = new KHeadline("Meine Playlists", "h3");
 	
@@ -40,20 +41,28 @@ public class BodyLibrary extends VBox {
 	private KPlaylistButton favoritesButton = new KPlaylistButton(new Image("/like_outline.png"));
 	
 
-	public BodyLibrary() {		
+	public BodyHome() {		
 		adminButton.setOnAction((event) -> sceneController.changeBody(new BodyAdmin()));
 		initTiles();
 				
-		this.visibleProperty().addListener((obv, ov, nv) -> {
-			initTiles();
-			System.out.println("Hi");
-		});
+//		this.visibleProperty().addListener((obv, ov, nv) -> {
+//			initTiles();
+//			System.out.println("Hi");
+//		});
+		
+		mediaController.getAllPlaylists().addListener(new ListChangeListener<Playlist>() {
+            @Override
+            public void onChanged(ListChangeListener.Change change) {
+                System.out.println("change!");
+                initTiles();
+            }
+        });
 		
 		addButton.getButton().setOnAction(event -> {
 			String newPlaylistName = "Neue Playlist " + (mediaController.getAllPlaylists().size() + 1);
 			mediaController.createPlaylist(newPlaylistName);
 			initTiles();
-			setVisible(false);
+//			setVisible(false);
 			sceneController.changeBody(new BodyPlaylist(mediaController.getPlaylistByName(newPlaylistName)));
 		});
 				

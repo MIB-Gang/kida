@@ -1,7 +1,7 @@
 package application.uiComponents;
 
 import application.controller.SceneController;
-import application.scenes.BodyLibrary;
+import application.scenes.BodyHome;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -17,7 +17,7 @@ public class KBackButton extends Button {
 
 	
 	public KBackButton() {
-		this.setOnAction(event -> sceneController.changeBody(new BodyLibrary()));
+		this.setOnAction(event -> sceneController.changeBody(new BodyHome()));
 		
 		applyStyle();
 	}

@@ -23,7 +23,7 @@ public class KPlaylistButton extends VBox {
 	}
 	
 	public KPlaylistButton(Playlist playlist) {
-		button.setText(playlist.getName().substring(0, 1));
+		button.setText(playlist.getName().substring(0, 1).toUpperCase());
 		nameLabel.setText(playlist.getName());
 		this.getChildren().addAll(button, nameLabel);
 		applyStyle();
@@ -35,14 +35,7 @@ public class KPlaylistButton extends VBox {
 
 		applyStyle();
 	}
-	
-	public KPlaylistButton(String text) {
-		button.setGraphic(new ImageView(new Image("/disc.png")));
-		nameLabel.setText(text);
-		this.getChildren().addAll(button, nameLabel);
 
-		applyStyle();
-	}
 	
 	private void applyStyle() {
 		//nameLabel.setFont(new Font(18));
@@ -51,6 +44,8 @@ public class KPlaylistButton extends VBox {
 		button.setMinWidth(96);
 		button.setMaxHeight(Double.MAX_VALUE);
 		button.setMaxWidth(Double.MAX_VALUE);
+		
+		button.setFont(new Font(32));
 		
 		// TODO: bold font
 		//this.setStyle("-fx-font-weight: bold");

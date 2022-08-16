@@ -25,12 +25,11 @@ public class MediaController {
 	private static MediaController mediaController = new MediaController();
 	
 	private Playlist allSongs = new Playlist("All Songs");
-	private List<Playlist> allPlaylists = new ArrayList<>();
-	private Playlist favorite = new Playlist("Favoriten");
-	private List <Playlist> artistPlaylists = new ArrayList<>();
-	private List <Playlist> albumPlaylists = new ArrayList<>();
-
-	private List <Playlist> genrePlaylists = new ArrayList<>();
+	private Playlist favorites = new Playlist("Favoriten");
+	private ObservableList<Playlist> myPlaylists = FXCollections.observableArrayList();
+	private ObservableList<Playlist> artistPlaylists = FXCollections.observableArrayList();
+	private ObservableList<Playlist> albumPlaylists = FXCollections.observableArrayList();
+	private ObservableList<Playlist> genrePlaylists = FXCollections.observableArrayList();
 	private Playlist selectedPlaylist;
 	private File allSongsFile = new File("./allSongsFile.txt");
 	
@@ -51,16 +50,16 @@ public class MediaController {
 		return allSongs;
 	}	
 
-	public List<Playlist> getAllPlaylists() {
-		return allPlaylists;
+	public ObservableList<Playlist> getAllPlaylists() {
+		return myPlaylists;
 	}
 
-	public void setAllPlaylists(List<Playlist> allPlaylists) {
-		this.allPlaylists = allPlaylists;
+	public void setAllPlaylists(ObservableList<Playlist> allPlaylists) {
+		this.myPlaylists = allPlaylists;
 	}
 	
 	public Playlist getPlaylistByName(String name) {
-		return allPlaylists.stream().filter(element-> element.getName().equals(name)).findFirst().orElse(null);
+		return myPlaylists.stream().filter(element-> element.getName().equals(name)).findFirst().orElse(null);
 	}
 	
 	public Playlist getSelectedPlaylist() {
@@ -72,15 +71,15 @@ public class MediaController {
 	}
 	
 	public void createPlaylist(String name) {
-		allPlaylists.add(new Playlist(name));
+		myPlaylists.add(new Playlist(name));
 	}
 	
 	public void deletePlaylist(Playlist playlist) {
-		allPlaylists.remove(playlist);
+		myPlaylists.remove(playlist);
 	}
 	
 	public void deletePlaylistByName(String name) {
-		allPlaylists.remove(getPlaylistByName(name));
+		myPlaylists.remove(getPlaylistByName(name));
 	}
 
 
@@ -101,8 +100,8 @@ public class MediaController {
 	}
 	
 	public Playlist getOnFavorite() {
-		favorite = (Playlist) allSongs.getSongs().stream().filter(element->element.isLike());
-		return favorite;
+		favorites = (Playlist) allSongs.getSongs().stream().filter(element->element.isLike());
+		return favorites;
 	}
 	
 	public ObservableList<Song> search(String input, String type) {
@@ -162,15 +161,15 @@ public class MediaController {
         System.out.println("read: " + allSongs.getSongs());
     }
 
-	public List <Playlist> getArtistPlaylists() {
+	public ObservableList <Playlist> getArtistPlaylists() {
 		return artistPlaylists;
 	}
 	
-	public List<Playlist> getAlbumPlaylists() {
+	public ObservableList<Playlist> getAlbumPlaylists() {
 		return albumPlaylists;
 	}
 
-	public List<Playlist> getGenrePlaylists() {
+	public ObservableList<Playlist> getGenrePlaylists() {
 		return genrePlaylists;
 	}
 
