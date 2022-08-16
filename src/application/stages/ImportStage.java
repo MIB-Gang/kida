@@ -177,9 +177,8 @@ public class ImportStage extends Stage {
 		try {
 			selectedFilePath = Paths.get("").toAbsolutePath().relativize(Paths.get(newFile.getPath())).toUri().toURL().toExternalForm();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}// .toURL().toExternalForm();
+		}
 		System.out.println(selectedFilePath);
 		String[] splittedPath = selectedFilePath.split("/");
 		String formatted = splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("%20", " ").replace("-", " ").replace("_", " ");
