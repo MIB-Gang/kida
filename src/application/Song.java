@@ -1,9 +1,9 @@
 package application;
 
+import java.io.File;
 import java.io.Serializable;
 
-public class Song implements Serializable{
-	private int id;
+public class Song implements Serializable {
 	private String title;
 	//private double duration;
 	private String artist;
@@ -49,15 +49,6 @@ public class Song implements Serializable{
 
 	public void setVideoFilePath(String videoFilePath) {
 		this.videoFilePath = videoFilePath;
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getTitle() {

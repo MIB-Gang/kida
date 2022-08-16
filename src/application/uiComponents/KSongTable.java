@@ -46,25 +46,25 @@ public class KSongTable extends TableView<Song> {
 		titleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		titleColumn.setOnEditCommit(event -> {
 			event.getTableView().getItems().get(event.getTablePosition().getRow()).setTitle(event.getNewValue());
-			mediaController.saveToFile();
+			mediaController.saveAllToFile();
 		});
 		artistColumn.setCellValueFactory(new PropertyValueFactory<>("artist"));
 		artistColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		artistColumn.setOnEditCommit(event -> {
 			event.getTableView().getItems().get(event.getTablePosition().getRow()).setArtist(event.getNewValue());
-			mediaController.saveToFile();
+			mediaController.saveAllToFile();
 		});
 		albumColumn.setCellValueFactory(new PropertyValueFactory<>("album"));
 		albumColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		albumColumn.setOnEditCommit(event -> {
 			event.getTableView().getItems().get(event.getTablePosition().getRow()).setAlbum(event.getNewValue());
-			mediaController.saveToFile();
+			mediaController.saveAllToFile();
 		});
 		genreColumn.setCellValueFactory(new PropertyValueFactory<>("genre"));
 		genreColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 		genreColumn.setOnEditCommit(event -> {
 			event.getTableView().getItems().get(event.getTablePosition().getRow()).setGenre(event.getNewValue());
-			mediaController.saveToFile();
+			mediaController.saveAllToFile();
 		});
 		this.getColumns().addAll(titleColumn, artistColumn, albumColumn, genreColumn);
 						

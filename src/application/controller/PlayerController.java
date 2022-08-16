@@ -1,5 +1,7 @@
 package application.controller;
 
+import java.net.MalformedURLException;
+
 import application.Playlist;
 import application.Song;
 import application.uiComponents.KProgressSlider;
@@ -13,7 +15,7 @@ import javafx.util.Duration;
 
 public class PlayerController {
 
-	private static final PlayerController playerController = new PlayerController();
+	private static PlayerController playerController = new PlayerController();
 
 	public static PlayerController getInstance() {
 		return playerController;
@@ -107,7 +109,7 @@ public class PlayerController {
 		if (currentPlaylist.getSongs().indexOf(currentSong) + 1 != currentPlaylist.getSongs().size()) {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media("file:///" + currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1).getAudioFilePath());
+			audio = new Media("file:///" + currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1));
 			setCurrentSong(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1));
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());

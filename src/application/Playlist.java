@@ -1,13 +1,14 @@
 package application;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 @SuppressWarnings("serial")
-public class Playlist  implements Serializable{
+public class Playlist  implements Serializable {
 	
 	private ObservableList<Song> songs = FXCollections.observableArrayList();
 	private String name;
@@ -16,6 +17,11 @@ public class Playlist  implements Serializable{
 	public Playlist(String name){
 		
 		this.name = name;
+	}
+	
+	public Playlist(String name, ObservableList<Song> songs){
+		this.name = name;
+		this.songs = songs;
 	}
 
 	public String getName() {

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,11 +19,13 @@ import application.Playlist;
 import application.Song;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+
 
 public class MediaController {
 	
 	private static MediaController mediaController = new MediaController();
+
+	private PlayerController playerController = PlayerController.getInstance();
 	
 	private Playlist allSongs = new Playlist("All Songs");
 	private Playlist favorites = new Playlist("Favoriten");
@@ -31,19 +34,22 @@ public class MediaController {
 	private ObservableList<Playlist> albumPlaylists = FXCollections.observableArrayList();
 	private ObservableList<Playlist> genrePlaylists = FXCollections.observableArrayList();
 	private Playlist selectedPlaylist;
-	private File allSongsFile = new File("./allSongsFile.txt");
+	private File allSongsFile = new File("./saves/allSongsFile.txt");
+	private File myPlaylistsFile = new File("./saves/myPlaylistsFile.txt");
+	private File currentSongFile = new File("./saves/currentSongFile.txt");
+	private File currentPlaylistFile = new File("./saves/currentPlaylistFile.txt");
 	
 	public static MediaController getInstance() {
 		return mediaController;
 	}
 	
 	public MediaController() {
-		readFromFile();
+		readAllFromFile();
 	}
 	
 	public void addToAllSongs(Song song) {
 		allSongs.getSongs().add(song);
-		saveToFile();
+		saveAllToFile();
 	}
 
 	public Playlist getAllSongs() {
@@ -126,40 +132,91 @@ public class MediaController {
 		}
 		return  FXCollections.observableArrayList(result.collect(Collectors.toList()));
 	}
+	
+	public void saveAllToFile() {
+		saveToFile(allSongsFile, new ArrayList<Song>(allSongs.getSongs()));
+		Map<String, List<Song>> toSave = new HashMap<>();
+		for (Playlist playlist: myPlaylists) toSave.put(playlist.getName(), new ArrayList<>(playlist.getSongs()));
+		saveToFile(myPlaylistsFile, toSave);
+		saveToFile(currentSongFile, playerController.getCurrentSong());
+		//saveToFile(currentPlaylistFile, new ArrayList<Song>(playerController.getCurrentPlaylist().getSongs()));
+	}
 
-	public void saveToFile() {
-		
+	private void saveToFile(File file, Object object) {
         try {
-        	if (!allSongsFile.exists()) {
-        		allSongsFile.createNewFile();
-        		}
-            FileOutputStream fos = new FileOutputStream(allSongsFile);
+        	if (!file.exists()) file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(new ArrayList<Song>(allSongs.getSongs()));
+            oos.writeObject(object);
             System.out.println("\n(i) Data has been saved to file!");
             oos.close();
             fos.close();
         } catch (Exception e) {
-            System.out.println("\n(!) " + e.getMessage());
+            System.out.println("\n(!) " + file.getName() + ": "+ e.getMessage());
         }
-        System.out.println("save: " + allSongs.getSongs());
     }
+	
+	public void readAllFromFile() {
+		readAllSongsFromFile();
+		readMyPlaylistsFromFile();
+		readCurrentSongFromFile();
+		//readCurrentPlaylistFromFile();
+		// TODO: Set currentPlaylist to saved playlist in file
+		playerController.setCurrentPlaylist(allSongs);
+
+	}
 
     @SuppressWarnings("unchecked")
-	public void readFromFile() {
+    private void readAllSongsFromFile() {
         try {
             FileInputStream fis = new FileInputStream(allSongsFile);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            List<Song> so = (ArrayList<Song>)ois.readObject();
-            allSongs.setSongs(FXCollections.observableArrayList(so));
-            System.out.println("\n(i) Data has been read from file!");
-            ois.close();
-            fis.close();
+            allSongs.setSongs(FXCollections.observableArrayList((ArrayList<Song>) ois.readObject()));
+            ois.close(); fis.close();
         } catch (Exception e) {
-            System.out.println("\n(!) " + e.getMessage());
+            System.out.println("\n(!) ALLSONGS: " + e.getMessage());
         }
-        System.out.println("read: " + allSongs.getSongs());
     }
+    
+    @SuppressWarnings("unchecked")
+    private void readMyPlaylistsFromFile() {
+        try {
+            FileInputStream fis = new FileInputStream(myPlaylistsFile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Map<String, List<Song>> rawInput = ((Map<String, List<Song>>) ois.readObject());
+            List<Playlist> input = new ArrayList<>();
+            for (String name : rawInput.keySet()) input.add(new Playlist(name, FXCollections.observableArrayList(rawInput.get(name))));
+            setAllPlaylists(FXCollections.observableArrayList(input));
+            ois.close(); fis.close();
+        } catch (Exception e) {
+            System.out.println("\n(!) MYPLAYLISTS: " + e.getMessage());
+        }
+    }
+    
+    private void readCurrentSongFromFile() {
+        try {
+            FileInputStream fis = new FileInputStream(currentSongFile);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            playerController.setCurrentSong((Song) ois.readObject());
+            ois.close(); fis.close();
+        } catch (Exception e) {
+            System.out.println("\n(!) CURRENTSONG: " + e.getMessage());
+        }
+    }
+    
+//    @SuppressWarnings("unchecked")
+//	private void readCurrentPlaylistFromFile() {
+//        try {
+//            FileInputStream fis = new FileInputStream(currentPlaylistFile);
+//            ObjectInputStream ois = new ObjectInputStream(fis);
+//            //playerController.setCurrentPlaylist((Playlist) ois.readObject());
+//            playerController.setCurrentPlaylist();
+//            //playerController.setCurrentPlaylist(FXCollections.observableArrayList((ArrayList<Song>) ois.readObject()));
+//            ois.close(); fis.close();
+//        } catch (Exception e) {
+//            System.out.println("\n(!) CURRENTPLAYLIST: " + e.getMessage());
+//        }
+//    }
 
 	public ObservableList <Playlist> getArtistPlaylists() {
 		return artistPlaylists;

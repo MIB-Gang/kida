@@ -1,6 +1,7 @@
 package application.stages;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.util.List;
 
 import javax.swing.GroupLayout.Alignment;
@@ -55,22 +56,21 @@ public class ImportStage extends Stage {
 	private BorderPane secondaryPane = new BorderPane();
 
 	private TableView<File> fileTable = new TableView<>();
-	TableColumn<File, String> column;
+	private TableColumn<File, String> column;
 
 	private VBox textFieldArea = new VBox();
 	private StackPane buttonArea = new StackPane();
 
-	KHeadline headline = new KHeadline("", "h3");
-	KTextField titleField = new KTextField();
-	KTextField artistField = new KTextField();
-	KTextField albumField = new KTextField();
-	KTextField genreField = new KTextField();
-	KButton saveEntryButton = new KButton("Speichern");
-	KButton closeButton = new KButton("Beenden");
+	private KHeadline headline = new KHeadline("", "h3");
+	private KTextField titleField = new KTextField();
+	private KTextField artistField = new KTextField();
+	private KTextField albumField = new KTextField();
+	private KTextField genreField = new KTextField();
+	private KButton saveEntryButton = new KButton("Speichern");
+	private KButton closeButton = new KButton("Beenden");
 
 	
-	String selectedFilePath = "";
-	
+	private String selectedFilePath = "";	
 	
 
 	public ImportStage(List<File> files) {
@@ -175,9 +175,16 @@ public class ImportStage extends Stage {
 	private void updateHeadline(File newFile) {
 		@SuppressWarnings("unchecked")
 		TablePosition<File, String> selectedCell = fileTable.getSelectionModel().getSelectedCells().get(0);
+		// TODO: Illegal Character Kram
+//		try {
+//			selectedFilePath = newFile.toURI().toURL().toExternalForm();
+//		} catch (MalformedURLException e) {
+//			e.printStackTrace();
+//		}
 		selectedFilePath = selectedCell.getTableColumn().getCellData(newFile).replace("\\", "/");
 		String[] splittedPath = selectedFilePath.split("/");
 		headline.setText(splittedPath[splittedPath.length - 1].replace(".mp3", "").replace("-", " ").replace("_", " "));
+//		headline.setText(selectedFilePath);
 		toggleElements(true);
 	}
 

@@ -3,14 +3,10 @@ package application.controller;
 import java.io.File;
 import java.util.List;
 
-import application.Song;
-import application.scenes.BodyHome;
 import application.scenes.Scaffold;
-import application.stages.EditStage;
 import application.stages.ImportStage;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -19,8 +15,6 @@ public class SceneController {
 	private static SceneController sceneController = new SceneController();	
 	
 	private Stage importStage;
-	private Stage editStage;
-	private Scene scene;
 	
 	public static SceneController getInstance() {
 		return sceneController;
@@ -46,14 +40,9 @@ public class SceneController {
 		return files;
 	}
 	
-	public void openImportWindow(List<File> files) {
+	public void openImportStage(List<File> files) {
 		importStage = new ImportStage(files);	
 		importStage.show();
-	}
-	
-	public void openEditWindow(Song song) {
-		editStage = new EditStage(song);	
-		editStage.showAndWait();
 	}
 
 }
