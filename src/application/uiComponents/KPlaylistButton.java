@@ -1,6 +1,8 @@
 package application.uiComponents;
 
 import application.Playlist;
+import application.controller.SceneController;
+import application.scenes.BodyPlaylist;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,23 +11,20 @@ import javafx.scene.text.Font;
 
 public class KPlaylistButton extends VBox {
 
+	private SceneController sceneController = SceneController.getInstance();
+	
 	private KButton button = new KButton();
 	private Label nameLabel = new Label();
 	
 	public KButton getButton() {
 		return button;
 	}
-
-	public KPlaylistButton() {
-		button.setGraphic(new ImageView(new Image("/disc.png")));
-		this.getChildren().addAll(button, nameLabel);
-		applyStyle();
-	}
 	
 	public KPlaylistButton(Playlist playlist) {
 		button.setText(playlist.getName().substring(0, 1).toUpperCase());
 		nameLabel.setText(playlist.getName());
 		this.getChildren().addAll(button, nameLabel);
+		button.setOnAction(event -> sceneController.changeBody(new BodyPlaylist(playlist)));
 		applyStyle();
 	}
 	
