@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import application.Song;
+import application.scenes.BodyHome;
 import application.scenes.Scaffold;
 import application.stages.EditStage;
 import application.stages.ImportStage;
@@ -20,18 +21,21 @@ public class SceneController {
 	private Stage importStage;
 	private Stage editStage;
 	private Scene scene;
-
+	
 	public static SceneController getInstance() {
 		return sceneController;
 	}
 	
+	private SceneController() {
+		//System.out.println(previousBody);
+	}
 	
 	public void changeBody(Node body) {
 		Scaffold scaffold = Scaffold.getInstance();
 		body.setVisible(true);
 		scaffold.setBody(body);
 	}
-		
+
 	public List<File> openFileChooser(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
 		Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

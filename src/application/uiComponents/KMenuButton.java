@@ -16,7 +16,7 @@ public class KMenuButton extends Button {
 	private String hoverStyle = "-fx-background-color: transparent; -fx-text-fill: #FFFFFF;" + styleBase;
 	private String pressStyle = "-fx-background-color: #292929; -fx-text-fill: #FFFFFF;" + styleBase;
 
-	private SceneController controller = new SceneController();
+	private SceneController sceneController = SceneController.getInstance();
 	private ImageView icon;
 	private VBox graphic = new VBox();
 
@@ -25,7 +25,7 @@ public class KMenuButton extends Button {
 		graphic.getChildren().addAll(this.icon, new Rectangle(32,0));
 		this.setText(text);
 		this.setGraphic(graphic);
-		this.setOnAction((event) -> controller.changeBody(body));
+		this.setOnAction((event) -> sceneController.changeBody(body));
 
 		applyStyle();
 	}
