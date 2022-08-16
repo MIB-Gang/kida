@@ -16,10 +16,53 @@ public class TestController {
 		MediaController mediaController = MediaController.getInstance();
 
 		mediaController.addToAllSongs(new Song(
-					"Titel", "Interpret", "Album", "Genre",
-					false, addKidaPath("Dateinamen"), 
+					"Dancing Queen", "ABBA", "Gold", "Pop",
+					false, addKidaPath("01 Dancing Queen.mp3"), 
 					mediaController.randomVideoPath()));
-		
+		mediaController.addToAllSongs(new Song(
+				"Knowing Me, Knowing You", "ABBA", "Gold", "Pop",
+				false, addKidaPath("02 Knowing Me, Knowing You.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Mamma Mia", "ABBA", "Gold", "Pop",
+				false, addKidaPath("04 Mamma Mia.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"I Walk The Line", "Johnny Cash", "The Greatest Hits", "Country",
+				false, addKidaPath("01 I Walk the Line.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"I Got Stripes", "Johnny Cash", "The Greatest Hits", "Country",
+				false, addKidaPath("04 I Got Stripes.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Jackson", "Johnny Cash", "The Greatest Hits", "Country",
+				false, addKidaPath("14 Jackson.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Jet Blue Jet", "Major Lazer", "Free The Universe", "Electronic",
+				false, addKidaPath("Major Lazer - Jet Blue Jet (feat. Leftside, GTA, Razz & Biggy).mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Bubble But", "Major Lazer", "Free The Universe", "Electronic",
+				false, addKidaPath("Major Lazer - Bubble Butt (feat. Bruno Mars, Tyga & Mystic).mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Scare Me", "Major Lazer", "Free The Universe", "Electronic",
+				false, addKidaPath("Major Lazer - Scare Me (feat. Peaches & Timberlee).mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Tu Amor", "Andrea Bocelli", "Bocelli Al Colosseo", "KlassikPop",
+				false, addKidaPath("Tu Amor.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"O Mio Babbino", "Andrea Bocelli", "Bocelli Al Colosseo", "KlassikPop",
+				false, addKidaPath("O Mio Babbino.mp3"), 
+				mediaController.randomVideoPath()));
+		mediaController.addToAllSongs(new Song(
+				"Ah, La Paterna Mano", "Andrea Bocelli", "Il Mare Calmo Della Sera", "KlassikPop",
+				false, addKidaPath("Ah, La Paterna Mano (from 'Macbeth').mp3"), 
+				mediaController.randomVideoPath()));
 	}
 	
 	
