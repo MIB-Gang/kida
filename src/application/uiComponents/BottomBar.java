@@ -58,8 +58,9 @@ public class BottomBar extends HBox {
 				new Rectangle(32, 0)
 		);
 		
-		/* VOLUMESLIDER FUNKTIONIERT NOCH NICHT SO RICHTIG BEI SCENENWECHSEL */
-		if (playerController.getAudioPlayer() != null) volumeSlider.setValue(playerController.getAudioPlayer().getVolume() * 100);		
+		volumeSlider.setValue(10);		
+
+
 		
 		timer.scheduleAtFixedRate(getSeekbarProgressTask(), 0, 250);
 		

@@ -8,6 +8,7 @@ import application.controller.MediaController;
 import application.controller.PlayerController;
 import application.controller.SceneController;
 import javafx.beans.binding.Bindings;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
@@ -19,6 +20,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
@@ -118,6 +120,7 @@ public class KSongTable extends TableView<Song> {
 	            	            
 	            row.setOnMouseClicked(event -> {
 	            	BottomBar bottomBar = BottomBar.getInstance();
+	            	ControlElements controlElements = ControlElements.getInstance();
 					if (event.getButton().equals(MouseButton.PRIMARY) && event.getClickCount() == 2){
 						playerController.setCurrentPlaylist(tablePlaylist);
 						if (playerController.getAudioPlayer() != null) {
@@ -128,6 +131,7 @@ public class KSongTable extends TableView<Song> {
 						playerController.updateCurrentSong(getSelectionModel().getSelectedItem());
 						playerController.play();
 						playerController.checkLike(bottomBar.getStarButton());
+						playerController.onPlaylistPlay(controlElements.getPlayButton(), controlElements.getPauseButton(), controlElements.getButtonArea());
 						System.out.println(getSelectionModel().getSelectedItem().getAudioFilePath());
 					}
 	            }); 

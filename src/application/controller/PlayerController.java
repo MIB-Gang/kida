@@ -5,10 +5,13 @@ import java.net.MalformedURLException;
 
 import application.Playlist;
 import application.Song;
+import application.uiComponents.BottomBar;
+import application.uiComponents.ControlElements;
 import application.uiComponents.KProgressSlider;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -99,6 +102,9 @@ public class PlayerController {
 
 	public void play() {
 		if(currentSong != null) {
+			ControlElements controlElements = ControlElements.getInstance();
+			controlElements.getTitle().setText(currentSong.getTitle());
+			controlElements.getSubtitle().setText(currentSong.getArtist());
 			audioPlayer.play();
 		}
 	}
@@ -111,11 +117,14 @@ public class PlayerController {
 	}
 
 	public void nextSong() {
-		if (currentPlaylist.getSongs().indexOf(currentSong) + 1 != currentPlaylist.getSongs().size()) {
+		MediaController mediaController = MediaController.getInstance();
+		Playlist tempPlaylist = mediaController.getAllSongs();
+		if (currentPlaylist != null) tempPlaylist = currentPlaylist;
+		if (tempPlaylist.getSongs().indexOf(currentSong) + 1 != tempPlaylist.getSongs().size()) {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1).getAudioFilePath());
-			setCurrentSong(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) + 1));
+			audio = new Media(tempPlaylist.getSongs().get(tempPlaylist.getSongs().indexOf(currentSong) + 1).getAudioFilePath());
+			setCurrentSong(tempPlaylist.getSongs().get(tempPlaylist.getSongs().indexOf(currentSong) + 1));
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)+1).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
@@ -125,8 +134,8 @@ public class PlayerController {
 		} else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media(currentPlaylist.getSongs().get(0).getAudioFilePath());
-			setCurrentSong(currentPlaylist.getSongs().get(0));
+			audio = new Media(tempPlaylist.getSongs().get(0).getAudioFilePath());
+			setCurrentSong(tempPlaylist.getSongs().get(0));
 			// video = new Media ("file:///" + allSongs.get(0).getVideoFilePath());
 			audioPlayer = new MediaPlayer(audio);
 			// videoPlayer = new MediaPlayer(video);
@@ -136,16 +145,19 @@ public class PlayerController {
 	}
 
 	public void previousSong() {
+		MediaController mediaController = MediaController.getInstance();
+		Playlist tempPlaylist = mediaController.getAllSongs();
+		if (currentPlaylist != null) tempPlaylist = currentPlaylist;
 
-		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || currentPlaylist.getSongs().indexOf(currentSong) == 0) {
+		if (audioPlayer.getCurrentTime().greaterThanOrEqualTo(Duration.seconds(5)) || tempPlaylist.getSongs().indexOf(currentSong) == 0) {
 			audioPlayer.seek(Duration.seconds(0));
 			// videoPlayer.seek(Duration.seconds(0));
 		}
 		else {
 			audioPlayer.stop();
 			// videoPlayer.stop();
-			audio = new Media(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) - 1).getAudioFilePath());
-			setCurrentSong(currentPlaylist.getSongs().get(currentPlaylist.getSongs().indexOf(currentSong) - 1));
+			audio = new Media(tempPlaylist.getSongs().get(tempPlaylist.getSongs().indexOf(currentSong) - 1).getAudioFilePath());
+			setCurrentSong(tempPlaylist.getSongs().get(tempPlaylist.getSongs().indexOf(currentSong) - 1));
 
 			// video = new Media ("file:///" +
 			// allSongs.get(allSongs.indexOf(song)-1).getVideoFilePath());
@@ -172,5 +184,14 @@ public class PlayerController {
     		view.setImage(new Image("like_outline.png"));
     	}
 		button.setGraphic(view);
+	}
+	
+	public void onPlaylistPlay(Button playButton, Button pauseButton, HBox buttonArea) {	
+		if (getAudioPlayer() == null || getCurrentSong() == null) updateCurrentSong(getCurrentSong());
+		play();
+		BottomBar bottomBar = BottomBar.getInstance();
+		checkLike(bottomBar.getStarButton());
+		buttonArea.getChildren().remove(playButton);
+		if (!buttonArea.getChildren().contains(pauseButton)) buttonArea.getChildren().add(1, pauseButton);
 	}
 }

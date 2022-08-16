@@ -16,8 +16,14 @@ import javafx.scene.shape.Rectangle;
 
 public class Sidemenu extends BorderPane {
 	
+	private static Sidemenu sidemenu = new Sidemenu();
+	public static Sidemenu getInstance() {
+		return sidemenu;
+	};
+
+	
 	private VBox menuContent = new VBox();
-	private ControlElements controlElements = new ControlElements();
+	private ControlElements controlElements = ControlElements.getInstance();
 	private ImageView logoContainer = new ImageView();
 		
 	

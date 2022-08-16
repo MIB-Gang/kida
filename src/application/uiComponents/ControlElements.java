@@ -12,18 +12,29 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class ControlElements extends VBox {
+	
+	private static ControlElements controlElements = new ControlElements();
+	public static ControlElements getInstance() {
+		return controlElements;
+	};
+
 
 	private ImageView videoPlaceholder = new ImageView();
 	private HBox infoArea = new HBox();
 	private ImageView like = new ImageView();
 	private VBox titles = new VBox();
 	private Label title = new Label();
+	public  Label getTitle() { return title; }
 	private Label subtitle = new Label();
+	public  Label getSubtitle() { return subtitle; }
 	private HBox buttonArea = new HBox();
+	public  HBox getButtonArea() { return buttonArea; }
 	private Button prevButton = new Button();
 	private Button playButton = new Button();
+	public  Button getPlayButton() { return playButton; }
 	private Button nextButton = new Button();
 	private Button pauseButton = new Button();
+	public  Button getPauseButton() { return pauseButton; }
 	private PlayerController playerController = PlayerController.getInstance();
 	
 	private String styleBase = "-fx-background-radius: 8;  -fx-padding: 6 12 6 12;"; // -fx-font-weight: bold;
@@ -32,8 +43,8 @@ public class ControlElements extends VBox {
 
 	
 	public ControlElements() {		
-		title.setText("Never Gonna Give You Up");
-		subtitle.setText("Rick Astley");
+		title.setText("");
+		subtitle.setText("");
 		titles.getChildren().addAll(title, subtitle);
 		
 		infoArea.getChildren().addAll(/* like, new Rectangle(8, 0), */ titles);
