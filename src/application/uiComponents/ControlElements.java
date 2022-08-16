@@ -40,11 +40,17 @@ public class ControlElements extends VBox {
 		
 		buttonArea.getChildren().addAll(prevButton, playButton, nextButton);
 		
-		prevButton.setOnAction((event) -> playerController.previousSong());
+		prevButton.setOnAction((event) -> {
+			playerController.previousSong();
+			BottomBar bottomBar = BottomBar.getInstance();
+			playerController.checkLike(bottomBar.getStarButton());
+		});	
 		
 	
 		playButton.setOnAction((event) -> {
 			playerController.play();
+			BottomBar bottomBar = BottomBar.getInstance();
+			playerController.checkLike(bottomBar.getStarButton());
 			buttonArea.getChildren().remove(playButton);
 			buttonArea.getChildren().add(1, pauseButton);
 			
@@ -52,11 +58,17 @@ public class ControlElements extends VBox {
 		
 		pauseButton.setOnAction((event) -> {
 			playerController.pause();
+			BottomBar bottomBar = BottomBar.getInstance();
+			playerController.checkLike(bottomBar.getStarButton());
 			buttonArea.getChildren().remove(pauseButton);
 			buttonArea.getChildren().add(1, playButton);
 		});
 		
-		nextButton.setOnAction((event) -> playerController.nextSong());
+		nextButton.setOnAction((event) -> {
+			playerController.nextSong();
+			BottomBar bottomBar = BottomBar.getInstance();
+			playerController.checkLike(bottomBar.getStarButton());
+		});
 		
 		this.getChildren().addAll(videoPlaceholder, new Rectangle(0, 16), infoArea, new Rectangle(0, 8), buttonArea);
 		
