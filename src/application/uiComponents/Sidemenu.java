@@ -18,15 +18,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class Sidemenu extends BorderPane {
-
+	
 	private VBox menuContent = new VBox();
 	private ControlElements controlElements = new ControlElements();
 	private ImageView logoContainer = new ImageView();
 		
+	
 	public Sidemenu() {
 		menuContent.getChildren().addAll(logoContainer, new Rectangle(0, 32));
 
-		menuContent.getChildren().add(new KMenuButton("Suche", new Image("/search.png"), new BodySearch()));
+		menuContent.getChildren().add(new KMenuButton("Suche", new Image("/search.png"),  new BodySearch()));
 		menuContent.getChildren().add(new KMenuButton("Home", new Image("/library.png"), new BodyHome()));
 		menuContent.getChildren().add(new KMenuButton("Interpreten", new Image("/toggle_on.png"), new BodyArtists()));
 		menuContent.getChildren().add(new KMenuButton("Alben", new Image("/kida_icon.png"), new BodyAlbums()));
