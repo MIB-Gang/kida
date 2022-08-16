@@ -109,8 +109,8 @@ public class MediaController {
 		s.setLike(false);
 	}
 	
-	public Playlist getOnFavorite() {
-		favorites = (Playlist) allSongs.getSongs().stream().filter(element->element.isLike());
+	public Playlist getFavorites() {
+		favorites.setSongs(FXCollections.observableArrayList(allSongs.getSongs().stream().filter(element -> element.isLike()).collect(Collectors.toList())));
 		return favorites;
 	}
 	

@@ -65,6 +65,8 @@ public class BodyHome extends VBox {
 //			setVisible(false);
 			sceneController.changeBody(new BodyPlaylist(mediaController.getPlaylistByName(newPlaylistName)));
 		});
+		
+		favoritesButton.getButton().setOnAction(event -> sceneController.changeBody(new BodyPlaylist(mediaController.getFavorites())));
 				
 		this.getChildren().addAll(headline, adminButton, new Rectangle(0, 6), myPlaylistsHeadline, tiles);
 		
